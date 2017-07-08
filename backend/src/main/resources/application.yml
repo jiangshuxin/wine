@@ -1,0 +1,52 @@
+server:
+  context-path: /wine
+  port: 8080
+
+spring:
+  datasource:
+      url: jdbc:mysql://123.57.234.184:3309/wine?characterEncoding=utf8
+      username: wine
+      password: wangsong123
+      driver-class-name: com.mysql.jdbc.Driver
+  resources:
+    static-locations: classpath:/static/
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+  jpa:
+    show-sql: true
+  http:
+    multipart:
+      enabled: true # Enable support of multi-part uploads.
+      file-size-threshold: 0 # Threshold after which files will be written to disk. Values can use the suffixed "MB" or "KB" to indicate a Megabyte or Kilobyte size.
+      location: /opt/fdp/upload/ #/Users/sxjiang/Documents/ # Intermediate location of uploaded files.
+      max-file-size: 30MB # Max file size. Values can use the suffixed "MB" or "KB" to indicate a Megabyte or Kilobyte size.
+      max-request-size: 35MB # Max request size. Values can use the suffixed "MB" or "KB" to indicate a Megabyte or Kilobyte size
+      resolve-lazily: false    
+    
+  freemarker:
+    allow-request-override: false
+    cache: false
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: false
+    expose-spring-macro-helpers: true
+    request-context-attribute: rc
+    settings:
+      auto_import: common/datatable.ftl as dt,common/spring.ftl as spring
+handpay:
+  ad:
+    url: ldap://172.16.22.12:389
+    domain: 99wuxian
+    userName: administrator
+    password: handpay76!
+  upload:
+    ftpType: sftp
+    ftpUser: fdp
+    ftpPassword: fdp2018!
+    ftpDir: /upload/
+  report:
+    outputPath: /opt/fdp/report/
+    webPath: http://fdp.99wuxian.com/
