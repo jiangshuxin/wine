@@ -15,22 +15,90 @@ public class Merchant implements Serializable {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
+
+  /**
+   * 酒庄编号，也是后台登录名（总店管理员admin，酒庄管理员M0001）
+   */
   private String merchantid;
+
+  /**
+   * 后台登录密码
+   */
   private String password;
+
+  /**
+   * 酒庄名称(总店，XXX酒庄）
+   */
   private String name;
+
+  /**
+   * 状态，1:正常，0:停用
+   */
   private Long status;
+
+  /**
+   * 庄主
+   */
   private String master;
+
+  /**
+   * 创建时间
+   */
   private String createyear;
+
+  /**
+   * 葡萄园面积
+   */
   private String acreage;
+
+  /**
+   * 土壤类型
+   */
   private String agrotype;
+
+  /**
+   * 葡萄品种
+   */
   private String grapetype;
+
+  /**
+   * 平均树龄
+   */
   private String treeage;
+
+  /**
+   * 酿酒师
+   */
   private String winemaker;
+
+  /**
+   * 酿造工艺
+   */
   private String technology;
+
+  /**
+   * 年产量
+   */
   private String output;
+
+  /**
+   * 橡木桶
+   */
   private String barrel;
+
+  /**
+   * 酒庄地址
+   */
   private String address;
+
+  /**
+   * 接待能力
+   */
   private String capacity;
+
+  /**
+   * 详细描述
+   */
   private String description;
 
   public Long getId() {

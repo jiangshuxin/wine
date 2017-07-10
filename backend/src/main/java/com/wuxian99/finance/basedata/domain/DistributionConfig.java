@@ -15,11 +15,35 @@ public class DistributionConfig implements Serializable {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
+
+  /**
+   * 酒庄编号
+   */
   private String merchantid;
+
+  /**
+   * 商品编号，可不填，代表该酒庄的默认配置
+   */
   private Long mdseid;
+
+  /**
+   * 分销金额，单位分
+   */
   private Long amount;
+
+  /**
+   * 一级返佣比例，0~100
+   */
   private Long rebate1;
+
+  /**
+   * 二级返佣比例，0~100
+   */
   private Long rebate2;
+
+  /**
+   * 三级返佣比例，0~100
+   */
   private Long rebate3;
 
   public Long getId() {

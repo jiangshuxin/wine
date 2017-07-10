@@ -15,10 +15,30 @@ public class UserAddress implements Serializable {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
+
+  /**
+   * 关联的用户ID
+   */
   private Long userid;
+
+  /**
+   * 收货人
+   */
   private String reciver;
+
+  /**
+   * 收货人电话
+   */
   private String phone;
+
+  /**
+   * 省市区
+   */
   private String province;
+
+  /**
+   * 详细地址
+   */
   private String address;
 
   public Long getId() {

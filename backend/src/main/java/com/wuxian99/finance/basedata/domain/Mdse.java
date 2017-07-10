@@ -15,24 +15,100 @@ public class Mdse implements Serializable {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
+
+  /**
+   * 酒庄编号
+   */
   private String merchantid;
+
+  /**
+   * 中文名称
+   */
   private String name;
+
+  /**
+   * 英文名称
+   */
   private String nameen;
+
+  /**
+   * 价格，单位分
+   */
   private Long price;
+
+  /**
+   * 状态，1:上架，0:下架，2:售罄
+   */
   private Long status;
+
+  /**
+   * 分类，1:红葡萄酒，2:白葡萄酒，3:起泡酒，4:冰酒
+   */
   private String catagory;
+
+  /**
+   * 酒品类型
+   */
   private String winetype;
+
+  /**
+   * 葡萄品种
+   */
   private String grapetype;
+
+  /**
+   * 年份
+   */
   private String year;
+
+  /**
+   * 酒精度
+   */
   private String degree;
+
+  /**
+   * 净含量
+   */
   private String ml;
+
+  /**
+   * 平均树龄
+   */
   private String treeage;
+
+  /**
+   * 酿酒师
+   */
   private String winemaker;
+
+  /**
+   * 酒庄名称
+   */
   private String merchantname;
+
+  /**
+   * 产区
+   */
   private String productarea;
+
+  /**
+   * 小图路径，用于列表和购物车展示
+   */
   private String smallpic;
+
+  /**
+   * 大图路径，用于商品详情页展示
+   */
   private String bigpic;
+
+  /**
+   * 推荐理由
+   */
   private String reason;
+
+  /**
+   * 品鉴与酒庄故事，长图
+   */
   private String storypic;
 
   public Long getId() {

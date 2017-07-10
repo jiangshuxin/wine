@@ -15,9 +15,25 @@ public class OrderDetail implements Serializable {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
+
+  /**
+   * 订单号
+   */
   private Long orderid;
+
+  /**
+   * 商品编号
+   */
   private Long mdseid;
+
+  /**
+   * 购买数量
+   */
   private Long count;
+
+  /**
+   * 单价，单位分
+   */
   private Long price;
 
   public Long getId() {

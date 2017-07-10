@@ -15,9 +15,25 @@ public class Banner implements Serializable {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
+
+  /**
+   * 酒庄编号
+   */
   private String merchantid;
+
+  /**
+   * 广告图片
+   */
   private String pic;
+
+  /**
+   * 排序，前端按升序展示
+   */
   private Long sortvalue;
+
+  /**
+   * 链接到该商品详情页
+   */
   private Long mdseid;
 
   public Long getId() {

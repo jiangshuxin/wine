@@ -15,11 +15,35 @@ public class User implements Serializable {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
+
+  /**
+   * 分销上级用户ID
+   */
   private Long parentid;
+
+  /**
+   * 登录用户名，即手机号
+   */
   private String username;
+
+  /**
+   * 登录密码
+   */
   private String password;
+
+  /**
+   * 状态，1:正常，0:停用
+   */
   private Long status;
+
+  /**
+   * 角色，1:销售（管理员添加），2:普通用户（前端注册）
+   */
   private Long type;
+
+  /**
+   * 返佣余额，单位分
+   */
   private Long balance;
 
   public Long getId() {

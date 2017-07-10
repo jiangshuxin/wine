@@ -15,15 +15,55 @@ public class Order implements Serializable {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
+
+  /**
+   * 订单时间
+   */
   private String time;
+
+  /**
+   * 买家用户ID
+   */
   private Long userid;
+
+  /**
+   * 收货地址ID
+   */
   private Long addressid;
+
+  /**
+   * 酒庄编号
+   */
   private String merchantid;
+
+  /**
+   * 订单金额，单位分
+   */
   private Long amount;
+
+  /**
+   * 支付金额，单位分，暂时不考虑优惠券和运费，所以订单金额等于支付金额
+   */
   private Long payamount;
+
+  /**
+   * 1:待支付，2:待发货，3:已完成，4:已过期
+   */
   private Long status;
+
+  /**
+   * 支付时间
+   */
   private String paytime;
+
+  /**
+   * 支付流水号
+   */
   private String payseqs;
+
+  /**
+   * 买家备注
+   */
   private String comment;
 
   public Long getId() {

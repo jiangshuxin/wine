@@ -15,9 +15,25 @@ public class Discover implements Serializable {
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
+
+  /**
+   * 酒庄编号
+   */
   private String merchantid;
+
+  /**
+   * 图片，用于列表展示
+   */
   private String pic;
+
+  /**
+   * 详情图片，长图
+   */
   private String detailpic;
+
+  /**
+   * 类型，1:发现，2:动态
+   */
   private Long type;
 
   public Long getId() {
