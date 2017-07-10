@@ -1,11 +1,9 @@
 package com.wuxian99.finance.basedata.service;
 
-import com.wuxian99.finance.basedata.domain.entity.system.OperationLogEntity;
 import com.wuxian99.finance.basedata.domain.model.ExecuteInfo;
 import com.wuxian99.finance.basedata.domain.model.MetadataInfo;
 import com.wuxian99.finance.basedata.domain.model.Select;
 import com.wuxian99.finance.basedata.domain.model.SigninUser;
-import com.wuxian99.finance.basedata.repository.system.OperationLogRepository;
 import com.wuxian99.finance.basedata.support.annotation.Ddic;
 import com.wuxian99.finance.basedata.support.convert.ExecuteConvert;
 import com.wuxian99.finance.basedata.support.util.ClassUtil;
@@ -27,8 +25,6 @@ public class ServiceImpl implements IService {
 	ApplicationContext context;
 	@Autowired
 	ExecuteConvert convert;
-	@Autowired
-    OperationLogRepository operationLogRepository;
 
 	/*
 	 * 1.组合方法执行要素 2.执行方法返回结果 3.将结果转化为view层Result
@@ -46,19 +42,8 @@ public class ServiceImpl implements IService {
 		}
 		// 方法执行
 		Object obj = execute(info);
-		if (info.getMetadata().getNeedLog() == IsOrNot.IS.ordinal())
-			saveOperateLog(command.getPreAction(), info, obj);
-		
-		return afterExecute(obj, command);
-	}
 
-	private void saveOperateLog(String operateType, ExecuteInfo info, Object postPersist) {
-		OperationLogEntity entity = new OperationLogEntity();
-		entity.setOperateTable(info.getMetadata().getTableName());
-		entity.setOperateType(operateType);
-		entity.setPrePersist(info.getArgs()[0].toString());
-		entity.setPostPersist(ObjectUtils.isEmpty(postPersist) ? null : postPersist.toString());
-		operationLogRepository.save(entity);
+		return afterExecute(obj, command);
 	}
 
 	@Override

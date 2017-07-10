@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity(name = "ddic_item")
 public class DdicItemEntity {
 	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
 	@Column
 	private String key;
