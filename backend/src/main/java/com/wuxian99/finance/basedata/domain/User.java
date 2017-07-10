@@ -46,6 +46,26 @@ public class User implements Serializable {
    */
   private Long balance;
 
+  /**
+   * 昵称
+   */
+  private String nickname;
+
+  /**
+   * 姓名
+   */
+  private String realname;
+
+  /**
+   * 性别
+   */
+  private String gender;
+
+  /**
+   * 生日
+   */
+  private String birthday;
+
   public Long getId() {
     return id;
   }
