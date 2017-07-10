@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name="distribution_config")
-public class DistributionConfig implements Serializable {
+public class DistributionConfigEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)

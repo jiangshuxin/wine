@@ -9,8 +9,6 @@ import javax.persistence.*;
 @Entity(name = "ddic_item")
 public class DdicItemEntity {
 	@Id
-	@GeneratedValue(generator="DDIC_ITEM_SEQ")
-	@SequenceGenerator(name = "DDIC_ITEM_SEQ", sequenceName = "DDIC_ITEM_SEQ", allocationSize = 1)
 	private Integer id;
 	@Column
 	private String key;

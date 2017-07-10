@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name="order_detail")
-public class OrderDetail implements Serializable {
+public class OrderDetailEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
