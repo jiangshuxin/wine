@@ -32,7 +32,7 @@ public class BannerEntity implements Serializable {
   private Long sortValue;
 
   /**
-   * 链接到该商品详情页
+   * 关联的商品ID，点击后跳转到该商品详情页
    */
   private Long mdseId;
 

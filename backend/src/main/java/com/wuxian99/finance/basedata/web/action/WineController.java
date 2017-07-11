@@ -19,8 +19,8 @@ public class WineController {
     @Autowired
     BannerService bannerService;
 
-    @RequestMapping("/getBannerByMerchantId/{merchangId}")
-    public Result<List<BannerEntity>> getBannerByMerchantId(@PathVariable String merchangId){
-        return Result.buildSuccess(bannerService.findByMerchantId(merchangId));
+    @RequestMapping("/getBanners/{merchantId}")
+    public Result<List<BannerEntity>> getBanners(@PathVariable String merchantId){
+        return Result.buildSuccess(bannerService.findByMerchantId(merchantId));
     }
 }

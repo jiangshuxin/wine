@@ -42,7 +42,7 @@ public class MdseEntity implements Serializable {
   private Long status;
 
   /**
-   * 分类，1:红葡萄酒，2:白葡萄酒，3:起泡酒，4:冰酒
+   * 分类，1:红葡萄酒，2:白葡萄酒，3:起泡酒，4:冰酒，5:桃红葡萄酒
    */
   private String catagory;
 

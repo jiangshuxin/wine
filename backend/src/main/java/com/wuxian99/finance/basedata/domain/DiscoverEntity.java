@@ -27,9 +27,24 @@ public class DiscoverEntity implements Serializable {
   private String pic;
 
   /**
-   * 详情图片，长图
+   * 标题
    */
-  private String detailPic;
+  private String title;
+
+  /**
+   * 标签，如活动、资讯、专题
+   */
+  private String tag;
+
+  /**
+   * 详情描述
+   */
+  private String description;
+
+  /**
+   * 创建时间
+   */
+  private String createTime;
 
   /**
    * 类型，1:发现，2:动态
@@ -60,12 +75,36 @@ public class DiscoverEntity implements Serializable {
     this.pic = pic;
   }
 
-  public String getDetailPic() {
-    return detailPic;
+  public String getTitle() {
+    return title;
   }
 
-  public void setDetailPic(String detailPic) {
-    this.detailPic = detailPic;
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getTag() {
+    return tag;
+  }
+
+  public void setTag(String tag) {
+    this.tag = tag;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(String createTime) {
+    this.createTime = createTime;
   }
 
   public Long getType() {
