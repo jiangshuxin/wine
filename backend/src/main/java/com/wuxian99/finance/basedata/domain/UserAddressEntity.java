@@ -41,6 +41,11 @@ public class UserAddressEntity implements Serializable {
    */
   private String address;
 
+  /**
+   * 是否为默认地址，1:是，0:否
+   */
+  private Long isDefualt;
+
   public Long getId() {
     return id;
   }
@@ -87,6 +92,14 @@ public class UserAddressEntity implements Serializable {
 
   public void setAddress(String address) {
     this.address = address;
+  }
+
+  public Long getIsDefualt() {
+    return isDefualt;
+  }
+
+  public void setIsDefualt(Long isDefualt) {
+    this.isDefualt = isDefualt;
   }
 
   @Override

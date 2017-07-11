@@ -42,12 +42,17 @@ public class OrderEntityEntity implements Serializable {
   private Long amount;
 
   /**
+   * 商品数量
+   */
+  private Long mdseCount;
+
+  /**
    * 支付金额，单位分，暂时不考虑优惠券和运费，所以订单金额等于支付金额
    */
   private Long payAmount;
 
   /**
-   * 1:待支付，2:待发货，3:已完成，4:已过期
+   * 1:待付款，2:待收货，3:已完成，4:已过期
    */
   private Long status;
 
@@ -108,6 +113,14 @@ public class OrderEntityEntity implements Serializable {
 
   public Long getAmount() {
     return amount;
+  }
+
+  public Long getMdseCount() {
+    return mdseCount;
+  }
+
+  public void setMdseCount(Long mdseCount) {
+    this.mdseCount = mdseCount;
   }
 
   public void setAmount(Long amount) {
