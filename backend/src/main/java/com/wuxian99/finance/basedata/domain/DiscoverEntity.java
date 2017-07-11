@@ -19,7 +19,7 @@ public class DiscoverEntity implements Serializable {
   /**
    * 酒庄编号
    */
-  private String merchantid;
+  private String merchantId;
 
   /**
    * 图片，用于列表展示
@@ -29,7 +29,7 @@ public class DiscoverEntity implements Serializable {
   /**
    * 详情图片，长图
    */
-  private String detailpic;
+  private String detailPic;
 
   /**
    * 类型，1:发现，2:动态
@@ -44,12 +44,12 @@ public class DiscoverEntity implements Serializable {
     this.id = id;
   }
 
-  public String getMerchantid() {
-    return merchantid;
+  public String getMerchantId() {
+    return merchantId;
   }
 
-  public void setMerchantid(String merchantid) {
-    this.merchantid = merchantid;
+  public void setMerchantId(String merchantId) {
+    this.merchantId = merchantId;
   }
 
   public String getPic() {
@@ -60,12 +60,12 @@ public class DiscoverEntity implements Serializable {
     this.pic = pic;
   }
 
-  public String getDetailpic() {
-    return detailpic;
+  public String getDetailPic() {
+    return detailPic;
   }
 
-  public void setDetailpic(String detailpic) {
-    this.detailpic = detailpic;
+  public void setDetailPic(String detailPic) {
+    this.detailPic = detailPic;
   }
 
   public Long getType() {

@@ -19,7 +19,7 @@ public class MdseEntity implements Serializable {
   /**
    * 酒庄编号
    */
-  private String merchantid;
+  private String merchantId;
 
   /**
    * 中文名称
@@ -29,7 +29,7 @@ public class MdseEntity implements Serializable {
   /**
    * 英文名称
    */
-  private String nameen;
+  private String nameEn;
 
   /**
    * 价格，单位分
@@ -49,12 +49,12 @@ public class MdseEntity implements Serializable {
   /**
    * 酒品类型
    */
-  private String winetype;
+  private String wineType;
 
   /**
    * 葡萄品种
    */
-  private String grapetype;
+  private String grapeType;
 
   /**
    * 年份
@@ -74,32 +74,32 @@ public class MdseEntity implements Serializable {
   /**
    * 平均树龄
    */
-  private String treeage;
+  private String treeAge;
 
   /**
    * 酿酒师
    */
-  private String winemaker;
+  private String wineMaker;
 
   /**
    * 酒庄名称
    */
-  private String merchantname;
+  private String merchantName;
 
   /**
    * 产区
    */
-  private String productarea;
+  private String productArea;
 
   /**
    * 小图路径，用于列表和购物车展示
    */
-  private String smallpic;
+  private String smallPic;
 
   /**
    * 大图路径，用于商品详情页展示
    */
-  private String bigpic;
+  private String bigPic;
 
   /**
    * 推荐理由
@@ -109,7 +109,7 @@ public class MdseEntity implements Serializable {
   /**
    * 品鉴与酒庄故事，长图
    */
-  private String storypic;
+  private String storyPic;
 
   public Long getId() {
     return id;
@@ -119,12 +119,12 @@ public class MdseEntity implements Serializable {
     this.id = id;
   }
 
-  public String getMerchantid() {
-    return merchantid;
+  public String getMerchantId() {
+    return merchantId;
   }
 
-  public void setMerchantid(String merchantid) {
-    this.merchantid = merchantid;
+  public void setMerchantId(String merchantId) {
+    this.merchantId = merchantId;
   }
 
   public String getName() {
@@ -135,12 +135,12 @@ public class MdseEntity implements Serializable {
     this.name = name;
   }
 
-  public String getNameen() {
-    return nameen;
+  public String getNameEn() {
+    return nameEn;
   }
 
-  public void setNameen(String nameen) {
-    this.nameen = nameen;
+  public void setNameEn(String nameEn) {
+    this.nameEn = nameEn;
   }
 
   public Long getPrice() {
@@ -167,20 +167,20 @@ public class MdseEntity implements Serializable {
     this.catagory = catagory;
   }
 
-  public String getWinetype() {
-    return winetype;
+  public String getWineType() {
+    return wineType;
   }
 
-  public void setWinetype(String winetype) {
-    this.winetype = winetype;
+  public void setWineType(String wineType) {
+    this.wineType = wineType;
   }
 
-  public String getGrapetype() {
-    return grapetype;
+  public String getGrapeType() {
+    return grapeType;
   }
 
-  public void setGrapetype(String grapetype) {
-    this.grapetype = grapetype;
+  public void setGrapeType(String grapeType) {
+    this.grapeType = grapeType;
   }
 
   public String getYear() {
@@ -207,52 +207,52 @@ public class MdseEntity implements Serializable {
     this.ml = ml;
   }
 
-  public String getTreeage() {
-    return treeage;
+  public String getTreeAge() {
+    return treeAge;
   }
 
-  public void setTreeage(String treeage) {
-    this.treeage = treeage;
+  public void setTreeAge(String treeAge) {
+    this.treeAge = treeAge;
   }
 
-  public String getWinemaker() {
-    return winemaker;
+  public String getWineMaker() {
+    return wineMaker;
   }
 
-  public void setWinemaker(String winemaker) {
-    this.winemaker = winemaker;
+  public void setWineMaker(String wineMaker) {
+    this.wineMaker = wineMaker;
   }
 
-  public String getMerchantname() {
-    return merchantname;
+  public String getMerchantName() {
+    return merchantName;
   }
 
-  public void setMerchantname(String merchantname) {
-    this.merchantname = merchantname;
+  public void setMerchantName(String merchantName) {
+    this.merchantName = merchantName;
   }
 
-  public String getProductarea() {
-    return productarea;
+  public String getProductArea() {
+    return productArea;
   }
 
-  public void setProductarea(String productarea) {
-    this.productarea = productarea;
+  public void setProductArea(String productArea) {
+    this.productArea = productArea;
   }
 
-  public String getSmallpic() {
-    return smallpic;
+  public String getSmallPic() {
+    return smallPic;
   }
 
-  public void setSmallpic(String smallpic) {
-    this.smallpic = smallpic;
+  public void setSmallPic(String smallPic) {
+    this.smallPic = smallPic;
   }
 
-  public String getBigpic() {
-    return bigpic;
+  public String getBigPic() {
+    return bigPic;
   }
 
-  public void setBigpic(String bigpic) {
-    this.bigpic = bigpic;
+  public void setBigPic(String bigPic) {
+    this.bigPic = bigPic;
   }
 
   public String getReason() {
@@ -263,12 +263,12 @@ public class MdseEntity implements Serializable {
     this.reason = reason;
   }
 
-  public String getStorypic() {
-    return storypic;
+  public String getStoryPic() {
+    return storyPic;
   }
 
-  public void setStorypic(String storypic) {
-    this.storypic = storypic;
+  public void setStoryPic(String storyPic) {
+    this.storyPic = storyPic;
   }
 
   @Override

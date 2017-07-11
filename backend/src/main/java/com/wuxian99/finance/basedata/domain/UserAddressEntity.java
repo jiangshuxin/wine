@@ -19,7 +19,7 @@ public class UserAddressEntity implements Serializable {
   /**
    * 关联的用户ID
    */
-  private Long userid;
+  private Long userId;
 
   /**
    * 收货人
@@ -49,12 +49,12 @@ public class UserAddressEntity implements Serializable {
     this.id = id;
   }
 
-  public Long getUserid() {
-    return userid;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setUserid(Long userid) {
-    this.userid = userid;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
   public String getReciver() {

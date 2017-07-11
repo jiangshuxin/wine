@@ -19,12 +19,12 @@ public class DistributionConfigEntity implements Serializable {
   /**
    * 酒庄编号
    */
-  private String merchantid;
+  private String merchantId;
 
   /**
    * 商品编号，可不填，代表该酒庄的默认配置
    */
-  private Long mdseid;
+  private Long mdseId;
 
   /**
    * 分销金额，单位分
@@ -54,20 +54,20 @@ public class DistributionConfigEntity implements Serializable {
     this.id = id;
   }
 
-  public String getMerchantid() {
-    return merchantid;
+  public String getMerchantId() {
+    return merchantId;
   }
 
-  public void setMerchantid(String merchantid) {
-    this.merchantid = merchantid;
+  public void setMerchantId(String merchantId) {
+    this.merchantId = merchantId;
   }
 
-  public Long getMdseid() {
-    return mdseid;
+  public Long getMdseId() {
+    return mdseId;
   }
 
-  public void setMdseid(Long mdseid) {
-    this.mdseid = mdseid;
+  public void setMdseId(Long mdseId) {
+    this.mdseId = mdseId;
   }
 
   public Long getAmount() {
