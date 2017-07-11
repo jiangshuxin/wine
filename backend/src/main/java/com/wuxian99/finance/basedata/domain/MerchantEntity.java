@@ -19,7 +19,7 @@ public class MerchantEntity implements Serializable {
   /**
    * 酒庄编号，也是后台登录名（总店管理员admin，酒庄管理员M0001）
    */
-  private String merchantid;
+  private String merchantId;
 
   /**
    * 后台登录密码
@@ -44,7 +44,7 @@ public class MerchantEntity implements Serializable {
   /**
    * 创建时间
    */
-  private String createyear;
+  private String createYear;
 
   /**
    * 葡萄园面积
@@ -54,22 +54,22 @@ public class MerchantEntity implements Serializable {
   /**
    * 土壤类型
    */
-  private String agrotype;
+  private String agroType;
 
   /**
    * 葡萄品种
    */
-  private String grapetype;
+  private String grapeType;
 
   /**
    * 平均树龄
    */
-  private String treeage;
+  private String treeAge;
 
   /**
    * 酿酒师
    */
-  private String winemaker;
+  private String wineMaker;
 
   /**
    * 酿造工艺
@@ -109,12 +109,12 @@ public class MerchantEntity implements Serializable {
     this.id = id;
   }
 
-  public String getMerchantid() {
-    return merchantid;
+  public String getMerchantId() {
+    return merchantId;
   }
 
-  public void setMerchantid(String merchantid) {
-    this.merchantid = merchantid;
+  public void setMerchantId(String merchantId) {
+    this.merchantId = merchantId;
   }
 
   public String getPassword() {
@@ -149,12 +149,12 @@ public class MerchantEntity implements Serializable {
     this.master = master;
   }
 
-  public String getCreateyear() {
-    return createyear;
+  public String getCreateYear() {
+    return createYear;
   }
 
-  public void setCreateyear(String createyear) {
-    this.createyear = createyear;
+  public void setCreateYear(String createYear) {
+    this.createYear = createYear;
   }
 
   public String getAcreage() {
@@ -165,36 +165,36 @@ public class MerchantEntity implements Serializable {
     this.acreage = acreage;
   }
 
-  public String getAgrotype() {
-    return agrotype;
+  public String getAgroType() {
+    return agroType;
   }
 
-  public void setAgrotype(String agrotype) {
-    this.agrotype = agrotype;
+  public void setAgroType(String agroType) {
+    this.agroType = agroType;
   }
 
-  public String getGrapetype() {
-    return grapetype;
+  public String getGrapeType() {
+    return grapeType;
   }
 
-  public void setGrapetype(String grapetype) {
-    this.grapetype = grapetype;
+  public void setGrapeType(String grapeType) {
+    this.grapeType = grapeType;
   }
 
-  public String getTreeage() {
-    return treeage;
+  public String getTreeAge() {
+    return treeAge;
   }
 
-  public void setTreeage(String treeage) {
-    this.treeage = treeage;
+  public void setTreeAge(String treeAge) {
+    this.treeAge = treeAge;
   }
 
-  public String getWinemaker() {
-    return winemaker;
+  public String getWineMaker() {
+    return wineMaker;
   }
 
-  public void setWinemaker(String winemaker) {
-    this.winemaker = winemaker;
+  public void setWineMaker(String wineMaker) {
+    this.wineMaker = wineMaker;
   }
 
   public String getTechnology() {

@@ -19,6 +19,6 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public List<BannerEntity> findByMerchantId(String merchangid) {
         Sort sort = new Sort("sortvalue");
-        return bannerRepository.findByMerchantid(merchangid,sort);
+        return bannerRepository.findByMerchantId(merchangid,sort);
     }
 }

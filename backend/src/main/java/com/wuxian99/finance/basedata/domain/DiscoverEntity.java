@@ -19,7 +19,7 @@ public class DiscoverEntity implements Serializable {
   /**
    * 酒庄编号
    */
-  private String merchantid;
+  private String merchantId;
 
   /**
    * 图片，用于列表展示
@@ -27,9 +27,24 @@ public class DiscoverEntity implements Serializable {
   private String pic;
 
   /**
-   * 详情图片，长图
+   * 标题
    */
-  private String detailpic;
+  private String title;
+
+  /**
+   * 标签，如活动、资讯、专题
+   */
+  private String tag;
+
+  /**
+   * 详情描述
+   */
+  private String description;
+
+  /**
+   * 创建时间
+   */
+  private String createTime;
 
   /**
    * 类型，1:发现，2:动态
@@ -44,12 +59,12 @@ public class DiscoverEntity implements Serializable {
     this.id = id;
   }
 
-  public String getMerchantid() {
-    return merchantid;
+  public String getMerchantId() {
+    return merchantId;
   }
 
-  public void setMerchantid(String merchantid) {
-    this.merchantid = merchantid;
+  public void setMerchantId(String merchantId) {
+    this.merchantId = merchantId;
   }
 
   public String getPic() {
@@ -60,12 +75,36 @@ public class DiscoverEntity implements Serializable {
     this.pic = pic;
   }
 
-  public String getDetailpic() {
-    return detailpic;
+  public String getTitle() {
+    return title;
   }
 
-  public void setDetailpic(String detailpic) {
-    this.detailpic = detailpic;
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getTag() {
+    return tag;
+  }
+
+  public void setTag(String tag) {
+    this.tag = tag;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getCreateTime() {
+    return createTime;
+  }
+
+  public void setCreateTime(String createTime) {
+    this.createTime = createTime;
   }
 
   public Long getType() {

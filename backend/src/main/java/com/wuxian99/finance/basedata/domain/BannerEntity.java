@@ -19,7 +19,7 @@ public class BannerEntity implements Serializable {
   /**
    * 酒庄编号
    */
-  private String merchantid;
+  private String merchantId;
 
   /**
    * 广告图片
@@ -29,12 +29,12 @@ public class BannerEntity implements Serializable {
   /**
    * 排序，前端按升序展示
    */
-  private Long sortvalue;
+  private Long sortValue;
 
   /**
-   * 链接到该商品详情页
+   * 关联的商品ID，点击后跳转到该商品详情页
    */
-  private Long mdseid;
+  private Long mdseId;
 
   public Long getId() {
     return id;
@@ -44,12 +44,12 @@ public class BannerEntity implements Serializable {
     this.id = id;
   }
 
-  public String getMerchantid() {
-    return merchantid;
+  public String getMerchantId() {
+    return merchantId;
   }
 
-  public void setMerchantid(String merchantid) {
-    this.merchantid = merchantid;
+  public void setMerchantId(String merchantId) {
+    this.merchantId = merchantId;
   }
 
   public String getPic() {
@@ -60,20 +60,20 @@ public class BannerEntity implements Serializable {
     this.pic = pic;
   }
 
-  public Long getSortvalue() {
-    return sortvalue;
+  public Long getSortValue() {
+    return sortValue;
   }
 
-  public void setSortvalue(Long sortvalue) {
-    this.sortvalue = sortvalue;
+  public void setSortValue(Long sortValue) {
+    this.sortValue = sortValue;
   }
 
-  public Long getMdseid() {
-    return mdseid;
+  public Long getMdseiId() {
+    return mdseId;
   }
 
-  public void setMdseid(Long mdseid) {
-    this.mdseid = mdseid;
+  public void setMdseId(Long mdseId) {
+    this.mdseId = mdseId;
   }
 
   @Override

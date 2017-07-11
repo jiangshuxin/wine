@@ -19,12 +19,12 @@ public class OrderDetailEntity implements Serializable {
   /**
    * 订单号
    */
-  private Long orderid;
+  private Long orderId;
 
   /**
    * 商品编号
    */
-  private Long mdseid;
+  private Long mdseId;
 
   /**
    * 购买数量
@@ -44,20 +44,20 @@ public class OrderDetailEntity implements Serializable {
     this.id = id;
   }
 
-  public Long getOrderid() {
-    return orderid;
+  public Long getOrderId() {
+    return orderId;
   }
 
-  public void setOrderid(Long orderid) {
-    this.orderid = orderid;
+  public void setOrderId(Long orderId) {
+    this.orderId = orderId;
   }
 
-  public Long getMdseid() {
-    return mdseid;
+  public Long getMdseId() {
+    return mdseId;
   }
 
-  public void setMdseid(Long mdseid) {
-    this.mdseid = mdseid;
+  public void setMdseId(Long mdseId) {
+    this.mdseId = mdseId;
   }
 
   public Long getCount() {

@@ -19,12 +19,12 @@ public class UserEntity implements Serializable {
   /**
    * 分销上级用户ID
    */
-  private Long parentid;
+  private Long parentId;
 
   /**
    * 登录用户名，即手机号
    */
-  private String username;
+  private String userName;
 
   /**
    * 登录密码
@@ -49,12 +49,12 @@ public class UserEntity implements Serializable {
   /**
    * 昵称
    */
-  private String nickname;
+  private String nickName;
 
   /**
    * 姓名
    */
-  private String realname;
+  private String realName;
 
   /**
    * 性别
@@ -74,20 +74,20 @@ public class UserEntity implements Serializable {
     this.id = id;
   }
 
-  public Long getParentid() {
-    return parentid;
+  public Long getParentId() {
+    return parentId;
   }
 
-  public void setParentid(Long parentid) {
-    this.parentid = parentid;
+  public void setParentId(Long parentId) {
+    this.parentId = parentId;
   }
 
-  public String getUsername() {
-    return username;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
   public String getPassword() {
@@ -120,6 +120,38 @@ public class UserEntity implements Serializable {
 
   public void setBalance(Long balance) {
     this.balance = balance;
+  }
+
+  public String getNickName() {
+    return nickName;
+  }
+
+  public void setNickName(String nickName) {
+    this.nickName = nickName;
+  }
+
+  public String getRealName() {
+    return realName;
+  }
+
+  public void setRealName(String realName) {
+    this.realName = realName;
+  }
+
+  public String getGender() {
+    return gender;
+  }
+
+  public void setGender(String gender) {
+    this.gender = gender;
+  }
+
+  public String getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(String birthday) {
+    this.birthday = birthday;
   }
 
   @Override

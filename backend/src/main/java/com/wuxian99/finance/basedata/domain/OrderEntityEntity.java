@@ -24,17 +24,17 @@ public class OrderEntityEntity implements Serializable {
   /**
    * 买家用户ID
    */
-  private Long userid;
+  private Long userId;
 
   /**
    * 收货地址ID
    */
-  private Long addressid;
+  private Long addressId;
 
   /**
    * 酒庄编号
    */
-  private String merchantid;
+  private String merchantId;
 
   /**
    * 订单金额，单位分
@@ -42,24 +42,29 @@ public class OrderEntityEntity implements Serializable {
   private Long amount;
 
   /**
-   * 支付金额，单位分，暂时不考虑优惠券和运费，所以订单金额等于支付金额
+   * 商品数量
    */
-  private Long payamount;
+  private Long mdseCount;
 
   /**
-   * 1:待支付，2:待发货，3:已完成，4:已过期
+   * 支付金额，单位分，暂时不考虑优惠券和运费，所以订单金额等于支付金额
+   */
+  private Long payAmount;
+
+  /**
+   * 1:待付款，2:待收货，3:已完成，4:已过期
    */
   private Long status;
 
   /**
    * 支付时间
    */
-  private String paytime;
+  private String payTime;
 
   /**
    * 支付流水号
    */
-  private String payseqs;
+  private String payTeqs;
 
   /**
    * 买家备注
@@ -82,44 +87,52 @@ public class OrderEntityEntity implements Serializable {
     this.time = time;
   }
 
-  public Long getUserid() {
-    return userid;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setUserid(Long userid) {
-    this.userid = userid;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
-  public Long getAddressid() {
-    return addressid;
+  public Long getAddressId() {
+    return addressId;
   }
 
-  public void setAddressid(Long addressid) {
-    this.addressid = addressid;
+  public void setAddressId(Long addressId) {
+    this.addressId = addressId;
   }
 
-  public String getMerchantid() {
-    return merchantid;
+  public String getMerchantId() {
+    return merchantId;
   }
 
-  public void setMerchantid(String merchantid) {
-    this.merchantid = merchantid;
+  public void setMerchantId(String merchantId) {
+    this.merchantId = merchantId;
   }
 
   public Long getAmount() {
     return amount;
   }
 
+  public Long getMdseCount() {
+    return mdseCount;
+  }
+
+  public void setMdseCount(Long mdseCount) {
+    this.mdseCount = mdseCount;
+  }
+
   public void setAmount(Long amount) {
     this.amount = amount;
   }
 
-  public Long getPayamount() {
-    return payamount;
+  public Long getPayAmount() {
+    return payAmount;
   }
 
-  public void setPayamount(Long payamount) {
-    this.payamount = payamount;
+  public void setPayAmount(Long payAmount) {
+    this.payAmount = payAmount;
   }
 
   public Long getStatus() {
@@ -130,20 +143,20 @@ public class OrderEntityEntity implements Serializable {
     this.status = status;
   }
 
-  public String getPaytime() {
-    return paytime;
+  public String getPayTime() {
+    return payTime;
   }
 
-  public void setPaytime(String paytime) {
-    this.paytime = paytime;
+  public void setPayTime(String payTime) {
+    this.payTime = payTime;
   }
 
-  public String getPayseqs() {
-    return payseqs;
+  public String getPayTeqs() {
+    return payTeqs;
   }
 
-  public void setPayseqs(String payseqs) {
-    this.payseqs = payseqs;
+  public void setPayTeqs(String payTeqs) {
+    this.payTeqs = payTeqs;
   }
 
   public String getComment() {
