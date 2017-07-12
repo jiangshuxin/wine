@@ -7,5 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
 
 public interface DiscoverRepository extends PagingAndSortingRepository<DiscoverEntity, Integer> {
-    List<DiscoverEntity> findByMerchantId(String merchantId, Pageable page);
+    List<DiscoverEntity> findByMerchantIdAndType(String merchantId, Long type, Pageable page);
 }

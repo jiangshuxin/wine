@@ -15,9 +15,9 @@ public class DiscoverService {
     @Autowired
     DiscoverRepository discoverRepository;
 
-    public List<DiscoverEntity> findByMerchantId(String merchantId, int pageNumber, int pageSize) {
+    public List<DiscoverEntity> findByMerchantId(String merchantId, Long type, int pageNumber, int pageSize) {
         Sort sort = new Sort(Sort.Direction.DESC,"createTime");
         PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, sort);
-        return discoverRepository.findByMerchantId(merchantId, pageRequest);
+        return discoverRepository.findByMerchantIdAndType(merchantId, type, pageRequest);
     }
 }

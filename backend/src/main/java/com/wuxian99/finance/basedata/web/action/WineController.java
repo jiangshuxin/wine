@@ -4,6 +4,7 @@ import com.wuxian99.finance.basedata.domain.BannerEntity;
 import com.wuxian99.finance.basedata.domain.DiscoverEntity;
 import com.wuxian99.finance.basedata.service.wine.BannerService;
 import com.wuxian99.finance.basedata.service.wine.DiscoverService;
+import com.wuxian99.finance.basedata.web.view.DiscoverView;
 import com.wuxian99.finance.common.Result;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,15 +42,30 @@ public class WineController {
         return Result.buildSuccess(banners);
     }
 
-    @RequestMapping("/getDiscovers/{merchantId}/{pageNumber}")
-    public Result<List<DiscoverEntity>> getBanners(@PathVariable String merchantId, @PathVariable String pageNumber){
-        List<DiscoverEntity> discovers =  discoverService.findByMerchantId(merchantId, buildPageNumber(pageNumber), pageSize);
+    @RequestMapping("/getDiscovers/{merchantId}/{type}/{pageNumber}")
+    public Result<List<DiscoverView>> getBanners(@PathVariable String merchantId, @PathVariable String type, @PathVariable String pageNumber){
+        List<DiscoverEntity> discovers =  discoverService.findByMerchantId(merchantId, buildDiscoverType(type), buildPageNumber(pageNumber), pageSize);
+        List<DiscoverView> discoverViews = new ArrayList<DiscoverView>();
         if(CollectionUtils.isNotEmpty(discovers)){
             for(DiscoverEntity discover : discovers){
-                discover.setPic(picPath + discover.getPic());
+                DiscoverView discoverView = new DiscoverView();
+                discoverView.setDiscoverId(discover.getId());
+                discoverView.setPic(picPath + discover.getPic());
+                discoverView.setTitle(discover.getTitle());
+                discoverView.setTag(discover.getTag());
+                discoverView.setDescription(discover.getDescription());
+                discoverViews.add(discoverView);
             }
         }
-        return Result.buildSuccess(discovers);
+        return Result.buildSuccess(discoverViews);
+    }
+
+    private Long buildDiscoverType(String type){
+        try{
+            return Long.parseLong(type);
+        }catch (Exception e){
+            return 1L;
+        }
     }
 
     private int buildPageNumber(String pageNumber){
