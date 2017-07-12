@@ -71,7 +71,7 @@ public class BannerEntity implements Serializable {
     this.sortValue = sortValue;
   }
 
-  public Long getMdseiId() {
+  public Long getMdseId() {
     return mdseId;
   }
 

@@ -2,7 +2,6 @@ package com.wuxian99.finance.basedata.web.view;
 
 import com.google.gson.Gson;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 /**
