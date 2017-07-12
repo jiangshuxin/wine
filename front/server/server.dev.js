@@ -4,15 +4,12 @@ const webpackDevConfig = require('../build/webpack.dev.conf');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpack = require('webpack');
-// const proxyServer = require('./proxyServer');
-// const mockServer = require('./mockServer');
 // const bodyParser = require('body-parser');
 // const multer = require('multer');
 
 const app = new Express();
 const compiler = webpack(webpackDevConfig);
-const port = process.env.port || 80;
-console.log(port);
+const port = process.env.port || 8080;
 // const router = require('../mock');
 
 app.use(webpackDevMiddleware(compiler, {
@@ -24,9 +21,11 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 
 app.use(webpackHotMiddleware(compiler));
-// app.use(proxyServer);
+// proxy
+app.use(require('./proxyServer'));
+
 // mock
-// app.use(require('../mock'));
+app.use(require('../mock'));
 
 console.log('Starting server, Please wait a moment...');
 console.log('Remember to change hosts file...');

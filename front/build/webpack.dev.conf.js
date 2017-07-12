@@ -5,13 +5,11 @@ const path = require('path');
 
 config.devtool = 'eval-source-map';
 
-/*
- *const hotClient = 'webpack-hot-middleware/client?noInfo=true&reload=true';
- *Object.keys(config.entry).forEach(name => {
- *    const extras = [hotClient];
- *    config.entry[name] = extras.concat(config.entry[name])
- *});
- */
+const hotClient = 'webpack-hot-middleware/client?noInfo=true&reload=true';
+Object.keys(config.entry).forEach(name => {
+    const extras = [hotClient];
+    config.entry[name] = extras.concat(config.entry[name])
+});
 
 config.plugins = (config.plugins || []).concat([
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage

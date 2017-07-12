@@ -1,4 +1,4 @@
-{
+module.exports = {
     "parser": "babel-eslint",
     "env": {
         "browser": true,
@@ -7,9 +7,17 @@
         "es6": true,
         "amd": true
     },
-    parserOptions: {
-        sourceType: "module"
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 8,
+        "ecmaFeatures": {
+            "impliedStrict": true,
+            "jsx": true
+        }
     },
+    "plugins": [
+        "html"
+    ],
     "rules": {
         "one-var-declaration-per-line": 2,
         "no-cond-assign": 2,
