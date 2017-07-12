@@ -64,13 +64,13 @@ public class WineController {
     @RequestMapping("/getDiscoverDetails/{discoverId}/")
     public Result<List<DiscoverDetailEntity>> getDiscoverDetails(@PathVariable String discoverId){
 
-        Long discvId = null;
+        Long id = null;
         try{
-            discvId = Long.parseLong(discoverId);
+            id = Long.parseLong(discoverId);
         }catch (Exception e){
             return Result.buildFail("discoverId不正确");
         }
-        List<DiscoverDetailEntity> discoverDetails =  discoverService.findDetailByDiscoverId(discvId);
+        List<DiscoverDetailEntity> discoverDetails =  discoverService.findDetailByDiscoverId(id);
         if(CollectionUtils.isNotEmpty(discoverDetails)){
             for(DiscoverDetailEntity discoverDetail : discoverDetails){
                 discoverDetail.setPic(picPath + discoverDetail.getPic());
