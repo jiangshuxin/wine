@@ -1,6 +1,7 @@
 package com.wuxian99.finance.basedata.web.action;
 
 import com.wuxian99.finance.basedata.domain.BannerEntity;
+import com.wuxian99.finance.basedata.domain.DiscoverDetailEntity;
 import com.wuxian99.finance.basedata.domain.DiscoverEntity;
 import com.wuxian99.finance.basedata.service.wine.BannerService;
 import com.wuxian99.finance.basedata.service.wine.DiscoverService;
@@ -44,7 +45,7 @@ public class WineController {
 
     @RequestMapping("/getDiscovers/{merchantId}/{type}/{pageNumber}")
     public Result<List<DiscoverView>> getBanners(@PathVariable String merchantId, @PathVariable String type, @PathVariable String pageNumber){
-        List<DiscoverEntity> discovers =  discoverService.findByMerchantId(merchantId, buildDiscoverType(type), buildPageNumber(pageNumber), pageSize);
+        List<DiscoverEntity> discovers =  discoverService.findByMerchantIdAndType(merchantId, buildDiscoverType(type), buildPageNumber(pageNumber), pageSize);
         List<DiscoverView> discoverViews = new ArrayList<DiscoverView>();
         if(CollectionUtils.isNotEmpty(discovers)){
             for(DiscoverEntity discover : discovers){
@@ -58,6 +59,24 @@ public class WineController {
             }
         }
         return Result.buildSuccess(discoverViews);
+    }
+
+    @RequestMapping("/getDiscoverDetails/{discoverId}/")
+    public Result<List<DiscoverDetailEntity>> getDiscoverDetails(@PathVariable String discoverId){
+
+        Long discvId = null;
+        try{
+            discvId = Long.parseLong(discoverId);
+        }catch (Exception e){
+            return Result.buildFail("discoverId不正确");
+        }
+        List<DiscoverDetailEntity> discoverDetails =  discoverService.findDetailByDiscoverId(discvId);
+        if(CollectionUtils.isNotEmpty(discoverDetails)){
+            for(DiscoverDetailEntity discoverDetail : discoverDetails){
+                discoverDetail.setPic(picPath + discoverDetail.getPic());
+            }
+        }
+        return Result.buildSuccess(discoverDetails);
     }
 
     private Long buildDiscoverType(String type){
