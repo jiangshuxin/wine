@@ -50,3 +50,5 @@ handpay:
   report:
     outputPath: /opt/fdp/report/
     webPath: http://fdp.99wuxian.com/
+wine:
+  picPath: http://127.0.0.1:8080/wine/images/

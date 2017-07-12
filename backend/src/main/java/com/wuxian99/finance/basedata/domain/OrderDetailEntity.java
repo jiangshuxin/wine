@@ -19,11 +19,13 @@ public class OrderDetailEntity implements Serializable {
   /**
    * 订单号
    */
+  @Column(name = "orderid")
   private Long orderId;
 
   /**
    * 商品编号
    */
+  @Column(name = "mdseid")
   private Long mdseId;
 
   /**

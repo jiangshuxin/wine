@@ -19,11 +19,13 @@ public class UserEntity implements Serializable {
   /**
    * 分销上级用户ID
    */
+  @Column(name = "parentid")
   private Long parentId;
 
   /**
    * 登录用户名，即手机号
    */
+  @Column(name = "username")
   private String userName;
 
   /**
@@ -49,11 +51,13 @@ public class UserEntity implements Serializable {
   /**
    * 昵称
    */
+  @Column(name = "nickname")
   private String nickName;
 
   /**
    * 姓名
    */
+  @Column(name = "realname")
   private String realName;
 
   /**

@@ -19,11 +19,13 @@ public class DistributionConfigEntity implements Serializable {
   /**
    * 酒庄编号
    */
+  @Column(name = "merchantid")
   private String merchantId;
 
   /**
    * 商品编号，可不填，代表该酒庄的默认配置
    */
+  @Column(name = "mdseid")
   private Long mdseId;
 
   /**

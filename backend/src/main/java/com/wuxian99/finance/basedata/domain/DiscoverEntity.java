@@ -19,6 +19,7 @@ public class DiscoverEntity implements Serializable {
   /**
    * 酒庄编号
    */
+  @Column(name = "merchantid")
   private String merchantId;
 
   /**
@@ -44,6 +45,7 @@ public class DiscoverEntity implements Serializable {
   /**
    * 创建时间
    */
+  @Column(name = "createtime")
   private String createTime;
 
   /**

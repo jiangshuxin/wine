@@ -24,16 +24,19 @@ public class OrderEntityEntity implements Serializable {
   /**
    * 买家用户ID
    */
+  @Column(name = "userid")
   private Long userId;
 
   /**
    * 收货地址ID
    */
+  @Column(name = "addressid")
   private Long addressId;
 
   /**
    * 酒庄编号
    */
+  @Column(name = "merchantid")
   private String merchantId;
 
   /**
@@ -44,11 +47,13 @@ public class OrderEntityEntity implements Serializable {
   /**
    * 商品数量
    */
+  @Column(name = "mdsecount")
   private Long mdseCount;
 
   /**
    * 支付金额，单位分，暂时不考虑优惠券和运费，所以订单金额等于支付金额
    */
+  @Column(name = "payamount")
   private Long payAmount;
 
   /**
@@ -59,17 +64,37 @@ public class OrderEntityEntity implements Serializable {
   /**
    * 支付时间
    */
+  @Column(name = "paytime")
   private String payTime;
 
   /**
    * 支付流水号
    */
-  private String payTeqs;
+  @Column(name = "payseqs")
+  private String paySeqs;
 
   /**
    * 买家备注
    */
   private String comment;
+
+  /**
+   * 快递公司名称
+   */
+  @Column(name = "logisticscompany")
+  private String logisticsCompany;
+
+  /**
+   * 快递单号
+   */
+  @Column(name = "logisticsseqs")
+  private String logisticsSeqs;
+
+  /**
+   * 发票信息
+   */
+  @Column(name = "invoiceinfo")
+  private String invoiceInfo;
 
   public Long getId() {
     return id;
@@ -151,12 +176,12 @@ public class OrderEntityEntity implements Serializable {
     this.payTime = payTime;
   }
 
-  public String getPayTeqs() {
-    return payTeqs;
+  public String getPaySeqs() {
+    return paySeqs;
   }
 
-  public void setPayTeqs(String payTeqs) {
-    this.payTeqs = payTeqs;
+  public void setPaySeqs(String paySeqs) {
+    this.paySeqs = paySeqs;
   }
 
   public String getComment() {
@@ -165,6 +190,30 @@ public class OrderEntityEntity implements Serializable {
 
   public void setComment(String comment) {
     this.comment = comment;
+  }
+
+  public String getLogisticsCompany() {
+    return logisticsCompany;
+  }
+
+  public void setLogisticsCompany(String logisticsCompany) {
+    this.logisticsCompany = logisticsCompany;
+  }
+
+  public String getLogisticsSeqs() {
+    return logisticsSeqs;
+  }
+
+  public void setLogisticsSeqs(String logisticsSeqs) {
+    this.logisticsSeqs = logisticsSeqs;
+  }
+
+  public String getInvoiceInfo() {
+    return invoiceInfo;
+  }
+
+  public void setInvoiceInfo(String invoiceInfo) {
+    this.invoiceInfo = invoiceInfo;
   }
 
   @Override

@@ -19,6 +19,7 @@ public class BannerEntity implements Serializable {
   /**
    * 酒庄编号
    */
+  @Column(name = "merchantid")
   private String merchantId;
 
   /**
@@ -29,11 +30,13 @@ public class BannerEntity implements Serializable {
   /**
    * 排序，前端按升序展示
    */
+  @Column(name = "sortvalue")
   private Long sortValue;
 
   /**
    * 关联的商品ID，点击后跳转到该商品详情页
    */
+  @Column(name = "mdseid")
   private Long mdseId;
 
   public Long getId() {

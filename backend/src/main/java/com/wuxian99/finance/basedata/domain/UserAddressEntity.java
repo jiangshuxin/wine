@@ -19,6 +19,7 @@ public class UserAddressEntity implements Serializable {
   /**
    * 关联的用户ID
    */
+  @Column(name = "userid")
   private Long userId;
 
   /**
@@ -44,6 +45,7 @@ public class UserAddressEntity implements Serializable {
   /**
    * 是否为默认地址，1:是，0:否
    */
+  @Column(name = "isdefualt")
   private Long isDefualt;
 
   public Long getId() {

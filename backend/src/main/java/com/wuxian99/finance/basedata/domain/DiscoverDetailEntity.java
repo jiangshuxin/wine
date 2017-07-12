@@ -19,6 +19,7 @@ public class DiscoverDetailEntity implements Serializable {
   /**
    * 发现ID
    */
+  @Column(name = "discoverid")
   private String discoverId;
 
   /**
@@ -29,11 +30,13 @@ public class DiscoverDetailEntity implements Serializable {
   /**
    * 关联的商品ID，点击后跳转到该商品详情页
    */
+  @Column(name = "mdseid")
   private Long mdseId;
 
   /**
    * 排序，前端按升序展示
    */
+  @Column(name = "sortvalue")
   private Long sortValue;
 
   public Long getId() {

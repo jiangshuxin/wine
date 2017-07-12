@@ -19,6 +19,7 @@ public class MdseEntity implements Serializable {
   /**
    * 酒庄编号
    */
+  @Column(name = "merchantid")
   private String merchantId;
 
   /**
@@ -29,6 +30,7 @@ public class MdseEntity implements Serializable {
   /**
    * 英文名称
    */
+  @Column(name = "nameen")
   private String nameEn;
 
   /**
@@ -49,11 +51,13 @@ public class MdseEntity implements Serializable {
   /**
    * 酒品类型
    */
+  @Column(name = "winetype")
   private String wineType;
 
   /**
    * 葡萄品种
    */
+  @Column(name = "grapetype")
   private String grapeType;
 
   /**
@@ -74,31 +78,37 @@ public class MdseEntity implements Serializable {
   /**
    * 平均树龄
    */
+  @Column(name = "treeage")
   private String treeAge;
 
   /**
    * 酿酒师
    */
+  @Column(name = "winemaker")
   private String wineMaker;
 
   /**
    * 酒庄名称
    */
+  @Column(name = "merchantname")
   private String merchantName;
 
   /**
    * 产区
    */
+  @Column(name = "productarea")
   private String productArea;
 
   /**
    * 小图路径，用于列表和购物车展示
    */
+  @Column(name = "smallpic")
   private String smallPic;
 
   /**
    * 大图路径，用于商品详情页展示
    */
+  @Column(name = "bigpic")
   private String bigPic;
 
   /**
@@ -109,6 +119,7 @@ public class MdseEntity implements Serializable {
   /**
    * 品鉴与酒庄故事，长图
    */
+  @Column(name = "storypic")
   private String storyPic;
 
   public Long getId() {

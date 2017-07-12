@@ -19,6 +19,7 @@ public class MerchantEntity implements Serializable {
   /**
    * 酒庄编号，也是后台登录名（总店管理员admin，酒庄管理员M0001）
    */
+  @Column(name = "merchantid")
   private String merchantId;
 
   /**
@@ -44,6 +45,7 @@ public class MerchantEntity implements Serializable {
   /**
    * 创建时间
    */
+  @Column(name = "createyear")
   private String createYear;
 
   /**
@@ -54,21 +56,25 @@ public class MerchantEntity implements Serializable {
   /**
    * 土壤类型
    */
+  @Column(name = "agrotype")
   private String agroType;
 
   /**
    * 葡萄品种
    */
+  @Column(name = "grapetype")
   private String grapeType;
 
   /**
    * 平均树龄
    */
+  @Column(name = "treeage")
   private String treeAge;
 
   /**
    * 酿酒师
    */
+  @Column(name = "winemaker")
   private String wineMaker;
 
   /**
