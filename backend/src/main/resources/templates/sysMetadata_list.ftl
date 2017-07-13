@@ -8,12 +8,6 @@
         <th>表名</th>
         <th>展示名称</th>
         <th>排序号</th>
-        <th>是否记录日志</th>
-        <th>批处理数量</th>
-        <th>批处理SQL</th>
-        <th>校验选项</th>
-        <th>编码</th>
-        <th>是否需要上传</th>
     </tr>
     </thead>
 
@@ -23,12 +17,6 @@
         <th>表名</th>
         <th>展示名称</th>
         <th>排序号</th>
-        <th>是否记录日志</th>
-        <th>批处理数量</th>
-        <th>批处理SQL</th>
-        <th>校验选项</th>
-        <th>编码</th>
-        <th>是否需要上传</th>
     </tr>
     </tfoot>
 </table>
@@ -48,25 +36,6 @@
                 }, {
                     label: "排序号:",
                     name: "sortNo"
-                }, {
-                    label: "是否日志记录:",
-                    name: "needLog"
-                }, {
-                    label: "批处理数量:",
-                    name: "batchSize"
-                }, {
-                    label: "批处理SQL:",
-                    name: "batchSql",
-                    type: "textarea"
-                }, {
-                    label: "校验选项:",
-                    name: "checkOption"
-                }, {
-                    label: "编码:",
-                    name: "encoding"
-                }, {
-                    label: "是否需要上传:",
-                    name: "needUpload"
                 }
                 ]
                 ,{

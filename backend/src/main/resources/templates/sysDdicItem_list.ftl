@@ -20,7 +20,7 @@
 
 
         $(document).ready(function() {
-            editor = new $.fn.dataTable.Editor( DataTable.editorConfig('ddic',[ {
+            editor = new $.fn.dataTable.Editor( DataTable.editorConfig('${moduleName}',[ {
                 label: "条目编码:",
                 name: "key"
             }, {
@@ -47,7 +47,7 @@
             ]) );
 
 
-            table = $('#dataTable').DataTable( DataTable.dataTableConfig('ddic',[
+            table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[
                 { data: "id"},
                 { data: "key" },
                 { data: "value" },

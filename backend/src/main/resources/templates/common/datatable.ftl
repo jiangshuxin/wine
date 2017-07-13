@@ -81,7 +81,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${rc.contextPath}/menuRedirect/workbenchIndex?redirect=/index">财务数据平台</a>
+            <a class="navbar-brand" href="${rc.contextPath}/menuRedirect/workbenchIndex?redirect=/index">财富酒庄后台管理系统</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <#list menuList as menu>

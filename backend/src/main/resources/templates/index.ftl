@@ -35,27 +35,6 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
-                    <h4 class="panel-title">
-                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            快捷通道
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-                    <div class="panel-body">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item">
-                                基础数据-商品
-                            </a>
-                            <a href="#" class="list-group-item">
-                                基础数据-项目
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="col-lg-6 col-md-6">
@@ -168,47 +147,6 @@
             }
         });
 
-        $.ajax({
-            url: "${rc.contextPath}/workbench/failUpload",
-            type: "GET",
-            contentType: 'application/json',
-            processData: false,
-            cache: false,
-            success: function (result) {
-                if(result.success){
-                    $('#failUpload span').text(result.data);
-                }
-            },
-            error: function () {
-                console.log('error')
-            }
-        });
-
-
-        $('#waitMatch').click(function(){
-            $('#waitMatchModal').modal();
-        });
-        $.ajax({
-            url: "${rc.contextPath}/workbench/waitMatch",
-            type: "GET",
-            contentType: 'application/json',
-            processData: false,
-            cache: false,
-            success: function (result) {
-                if(result.success){
-                    $('#waitMatch span').text(result.data.count);
-                    var modules = result.data.modules;
-                    var countMap = result.data.countMap;
-                    var pathMap = result.data.pathMap;
-                    for(var k in modules){
-                        $('#waitMatchGroup').append(['<a href="${rc.contextPath}',pathMap[k],'?',encodeURIComponent('unifiedId=&nullable=true'),'" class="list-group-item"><span class="badge">',countMap[k],'</span>',modules[k],'</a>'].join(''));
-                    }
-                }
-            },
-            error: function () {
-                console.log('error')
-            }
-        });
     });
 
     function uploadFile() {

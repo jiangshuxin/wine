@@ -24,7 +24,7 @@
 
 
         $(document).ready(function() {
-            editor = new $.fn.dataTable.Editor( DataTable.editorConfig('ddicCategory',[ {
+            editor = new $.fn.dataTable.Editor( DataTable.editorConfig('${moduleName}',[ {
                 label: "简称:",
                 name: "name"
             }, {
@@ -37,7 +37,7 @@
             ]) );
 
 
-            table = $('#dataTable').DataTable( DataTable.dataTableConfig('ddicCategory',[
+            table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[
                 { data: "id"},
                 { data: "name" },
                 { data: "cnName" },
