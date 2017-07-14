@@ -1,7 +1,7 @@
 package com.wuxian99.finance.basedata.service.wine;
 
 import com.wuxian99.finance.basedata.domain.BannerEntity;
-import com.wuxian99.finance.basedata.repository.system.wine.BannerRepository;
+import com.wuxian99.finance.basedata.repository.wine.BannerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

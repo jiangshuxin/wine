@@ -20,7 +20,7 @@ public class DiscoverDetailEntity implements Serializable {
    * 发现ID
    */
   @Column(name = "discoverid")
-  private String discoverId;
+  private Long discoverId;
 
   /**
    * 详情图片
@@ -47,11 +47,11 @@ public class DiscoverDetailEntity implements Serializable {
     this.id = id;
   }
 
-  public String getDiscoverId() {
+  public Long getDiscoverId() {
     return discoverId;
   }
 
-  public void setDiscoverId(String discoverId) {
+  public void setDiscoverId(Long discoverId) {
     this.discoverId = discoverId;
   }
 

@@ -2,8 +2,8 @@ package com.wuxian99.finance.basedata.service.wine;
 
 import com.wuxian99.finance.basedata.domain.DiscoverDetailEntity;
 import com.wuxian99.finance.basedata.domain.DiscoverEntity;
-import com.wuxian99.finance.basedata.repository.system.wine.DiscoverDetailRepository;
-import com.wuxian99.finance.basedata.repository.system.wine.DiscoverRepository;
+import com.wuxian99.finance.basedata.repository.wine.DiscoverDetailRepository;
+import com.wuxian99.finance.basedata.repository.wine.DiscoverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

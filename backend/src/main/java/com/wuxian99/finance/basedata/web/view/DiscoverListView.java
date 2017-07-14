@@ -5,9 +5,9 @@ import com.google.gson.Gson;
 import java.io.Serializable;
 
 /**
- * 发现、动态
+ * 发现、动态列表展示Bean
  */
-public class DiscoverView implements Serializable {
+public class DiscoverListView implements Serializable {
 
   private Long discoverId;
   private String pic;
