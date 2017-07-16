@@ -22,10 +22,10 @@
         $(document).ready(function() {
             editor = new $.fn.dataTable.Editor( DataTable.editorConfig('${moduleName}',[ {
                 label: "条目编码:",
-                name: "key"
+                name: "itemKey"
             }, {
                 label: "条目值:",
-                name: "value"
+                name: "itemValue"
             }, {
                 label: "排序号:",
                 name: "sortNo"
@@ -49,8 +49,8 @@
 
             table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[
                 { data: "id"},
-                { data: "key" },
-                { data: "value" },
+                { data: "itemKey" },
+                { data: "itemValue" },
                 { data: "sortNo" },
                 { data: "categoryId",searchValue: '${categoryId!""}' },
                 { data: "attribute1"},

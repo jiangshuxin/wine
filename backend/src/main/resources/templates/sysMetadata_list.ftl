@@ -11,14 +11,6 @@
     </tr>
     </thead>
 
-    <tfoot>
-    <tr>
-        <th>模块名称</th>
-        <th>表名</th>
-        <th>展示名称</th>
-        <th>排序号</th>
-    </tr>
-    </tfoot>
 </table>
 <script type="text/javascript" language="javascript" class="init">
 
@@ -46,13 +38,7 @@
             { data: "moduleName"},
             { data: "tableName" },
             { data: "displayName" },
-            { data: "sortNo"},
-            { data: "needLog" },
-            { data: "batchSize"},
-            { data: "batchSql"},
-            { data: "checkOption"},
-            { data: "encoding"},
-            { data: "needUpload"}
+            { data: "sortNo"}
         ],[
             { extend: "create", editor: editor },
             { extend: "edit",   editor: editor },
@@ -71,9 +57,7 @@
         ],{initComplete: function ()
         {
 
-        },columnDefs: [
-            { "visible": false, "targets": 6 }
-        ]}) );
+        }}) );
 
         DataTable.enableColumnSearch(table);
     } );

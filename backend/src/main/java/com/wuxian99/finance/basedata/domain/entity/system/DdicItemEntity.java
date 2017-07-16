@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.domain.entity.system;
 
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 
 
@@ -11,10 +13,10 @@ public class DdicItemEntity {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
-	@Column
-	private String key;
-	@Column
-	private String value;
+	@Column(name = "item_key")
+	private String itemKey;
+	@Column(name = "item_value")
+	private String itemValue;
 	@Column
 	private String description;
 	@Column(name = "sort_no")
@@ -32,19 +34,6 @@ public class DdicItemEntity {
 	@Column(name = "attribute5")
 	private String attribute5;
 
-	/*@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "category_id", referencedColumnName = "id")
-	private DdicCategoryEntity ddicCategory;
-	
-	public DdicCategoryEntity getDdicCategory() {
-		return ddicCategory;
-	}
-
-	public void setDdicCategory(DdicCategoryEntity ddicCategory) {
-		this.ddicCategory = ddicCategory;
-	}*/
-
 	public Integer getId() {
 		return id;
 	}
@@ -53,12 +42,20 @@ public class DdicItemEntity {
 		this.id = id;
 	}
 
-	public String getValue() {
-		return value;
+	public String getItemKey() {
+		return itemKey;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setItemKey(String itemKey) {
+		this.itemKey = itemKey;
+	}
+
+	public String getItemValue() {
+		return itemValue;
+	}
+
+	public void setItemValue(String itemValue) {
+		this.itemValue = itemValue;
 	}
 
 	public String getDescription() {
@@ -77,14 +74,6 @@ public class DdicItemEntity {
 		this.sortNo = sortNo;
 	}
 	
-
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
 
 	public Integer getCategoryId() {
 		return categoryId;
@@ -136,18 +125,6 @@ public class DdicItemEntity {
 
 	@Override
 	public String toString() {
-		return "DdicItemEntity{" +
-				"id=" + id +
-				", key='" + key + '\'' +
-				", value='" + value + '\'' +
-				", description='" + description + '\'' +
-				", sortNo='" + sortNo + '\'' +
-				", categoryId=" + categoryId +
-				", attribute1='" + attribute1 + '\'' +
-				", attribute2='" + attribute2 + '\'' +
-				", attribute3='" + attribute3 + '\'' +
-				", attribute4='" + attribute4 + '\'' +
-				", attribute5='" + attribute5 + '\'' +
-				'}';
+		return new Gson().toJson(this);
 	}
 }

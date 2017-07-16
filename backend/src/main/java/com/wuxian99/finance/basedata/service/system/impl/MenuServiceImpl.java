@@ -72,15 +72,15 @@ public class MenuServiceImpl implements MenuService {
 
     private Menu extractToMenu(DdicItemEntity entity, String contextPath, SigninUser signinUser){
         Menu menu = new Menu();
-        menu.setKey(entity.getKey());
-        menu.setName(entity.getValue());
+        menu.setKey(entity.getItemKey());
+        menu.setName(entity.getItemValue());
         menu.setDesc(entity.getDescription());
         menu.setSortNo(entity.getSortNo());
         //默认uri   推荐以entity.getKey()作为moduleName配置到元数据表中
-        menu.setUri(StringUtils.join(contextPath,"/menuRedirect/",entity.getKey(),"?redirect=","/",entity.getKey(),"/list"));
+        menu.setUri(StringUtils.join(contextPath,"/menuRedirect/",entity.getItemKey(),"?redirect=","/",entity.getItemKey(),"/list"));
         String attribute2 = entity.getAttribute2();
         if(StringUtils.isNotEmpty(attribute2)){//直接在attribute2中配置servletPath
-            menu.setUri(StringUtils.join(contextPath,"/menuRedirect/",entity.getKey(),"?redirect=",attribute2));
+            menu.setUri(StringUtils.join(contextPath,"/menuRedirect/",entity.getItemKey(),"?redirect=",attribute2));
         }
 
         String attribute1 = entity.getAttribute1();

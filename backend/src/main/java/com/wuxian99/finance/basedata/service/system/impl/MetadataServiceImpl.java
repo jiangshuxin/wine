@@ -109,7 +109,7 @@ public class MetadataServiceImpl implements MetadataService, InitializingBean {
 					? metadataInfo.getTableName() + Constants.UNDERLINE_SEPERATOR + pd.getName() : ddic.name();
 			List<DdicItemEntity> ddicItems = ddicItemRepository.findByCategory(category);
 			for (DdicItemEntity item : ddicItems) {
-				Select select = new Select(item.getKey(), item.getValue());
+				Select select = new Select(item.getItemKey(), item.getItemValue());
 				metadataInfo.getDdicInfo().put(category, select);
 			}
 		}
