@@ -1,2 +1,12 @@
 # Created by .ignore support plugin (hsz.mobi)
 /.idea/
+.DS_Store
+Thumbs.db
+
+
+# frontend ignore
+/front/node_modules
+/front/npm-debug.log*
+/front/release
+# vim 缓存文件
+**.swp

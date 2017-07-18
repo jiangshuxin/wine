@@ -1,0 +1,12 @@
+{
+    "restartable": "rs",
+    "ignore": [".git", "/src"],
+    "verbose": true,
+    "execMap": {
+	"js": "node --harmony"
+    },
+    "env": {
+	"NODE_ENV": "development"
+    },
+    "ext": "js json"
+}
