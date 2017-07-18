@@ -1,5 +1,6 @@
 import 'babel-polyfill';
-import 'muse-components/styles/base.less';
+import 'mint-ui/lib/style.css';
+import './common/iconfont.css';
 import Vue from 'vue';
 import app from './app';
 import router from './router';
