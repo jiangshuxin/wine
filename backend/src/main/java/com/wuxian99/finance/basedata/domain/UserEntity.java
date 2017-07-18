@@ -49,12 +49,6 @@ public class UserEntity implements Serializable {
   private Long balance;
 
   /**
-   * 昵称
-   */
-  @Column(name = "nickname")
-  private String nickName;
-
-  /**
    * 姓名
    */
   @Column(name = "realname")
@@ -124,14 +118,6 @@ public class UserEntity implements Serializable {
 
   public void setBalance(Long balance) {
     this.balance = balance;
-  }
-
-  public String getNickName() {
-    return nickName;
-  }
-
-  public void setNickName(String nickName) {
-    this.nickName = nickName;
   }
 
   public String getRealName() {
