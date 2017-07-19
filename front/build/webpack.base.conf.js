@@ -2,8 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const museUiThemePath = '~muse-ui/src/styles/themes/variables/default.less';
-
 module.exports = {
     entry: {
         // 主文件入口
@@ -22,12 +20,9 @@ module.exports = {
         // 允许模块不带扩展名
         enforceModuleExtension: false,
         // 能够使用户在引入模块时不带扩展
-        extensions: ['.js', '.vue'],
+        extensions: ['.js', '.vue', '.styl', '.css'],
         // 模块索引, 从左到右依次查找
-        modules: [path.join(__dirname, '../src'), 'node_modules'],
-        alias: {
-            'muse-components': 'muse-ui/src'
-        }
+        modules: [path.join(__dirname, '../src'), 'node_modules']
     },
     module: {
         rules: [{
@@ -46,44 +41,48 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.css$/,
-            use: ['style-loader', 'css-loader', 'postcss-loader']
+            use: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: [{
+                    loader: 'css-loader',
+                    options: {importLoaders: 1}
+                }, {
+                    loader: 'postcss-loader'
+                }]
+            })
         }, {
             test: /\.styl$/,
-            use: ['style-loader', 'css-loader', 'postcss-loader', 'stylus-loader']
+            use: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: [{
+                    loader: 'css-loader',
+                    options: {importLoaders: 1}
+                }, {
+                    loader: 'postcss-loader'
+                }, {
+                    loader: 'stylus-loader'
+                }]
+            })
         }, {
-            test: /\.less$/,
-            use: ['style-loader', 'css-loader', {
-                loader: 'less-loader'
-            }]
-        }, {
-            test: /\.(png|jpe?g|gif|svg)$/i,
+            test: /\.(png|jpe?g|gif)$/i,
             loader: 'url-loader',
             options: {
                 limit: 1024,
                 name: '[name].[hash].[ext]'
             }
         }, {
-            test: /\.vue$/,
-            loader: 'vue-loader',
+            test: /\.(woff|svg|eot|ttf)\??.*$/,
+            loader: 'url-loader',
             options: {
-                loaders: {
-                    styl: 'style-loader!css-loader!postcss-loader!stylus-loader',
-                    less: ['style-loader', 'css-loader', {
-                        loader: 'less-loader',
-                        options: {
-                            globalVars: {museUiTheme: `'${museUiThemePath}'`}
-                        }
-                    }]
-                },
-                postcss: [require('postcss-cssnext')({browsers: ['last 2 versions', 'IE >= 9']})],
-                postLoader: {
-                    html: 'babel-loader'
-                },
-                extractCSS: true
+                limit: 10240,
+                name: '[name].[hash].[ext]'
             }
+        }, {
+            test: /\.vue$/,
+            loader: 'vue-loader'
         }]
     },
     plugins: [
-        new ExtractTextPlugin('[name].[contenthash].css')
+        new ExtractTextPlugin('[name].[conetnthash].css')
     ]
 }

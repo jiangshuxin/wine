@@ -7,7 +7,9 @@ export default {
 </script>
 
 <template>
-    <div class="home">home</div>
+    <div class="home">
+        home
+    </div>
 </template>
 
 <style lang="stylus" scoped>
