@@ -2,6 +2,6 @@ export default {
     path: '/',
     name: 'home',
     component(resolve) {
-        require.ensure([], () => resolve(require('../modules/home')));
+        require.ensure([], require => resolve(require('../modules/home')));
     }
 };

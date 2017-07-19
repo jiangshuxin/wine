@@ -29,6 +29,9 @@ config.plugins = (config.plugins || []).concat([
             collapseWhitespace: true,
             removeAttributeQuotes: true
         }
+    }),
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('production')
     })
 ])
 

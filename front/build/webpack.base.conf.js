@@ -1,10 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const postcssNext = require('postcss-cssnext');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-const extractCSS = new ExtractTextPlugin('[name].[contenthash].css');
-const extractStyl = new ExtractTextPlugin('[name].[contenthash].styl');
 
 module.exports = {
     entry: {
@@ -24,7 +20,7 @@ module.exports = {
         // 允许模块不带扩展名
         enforceModuleExtension: false,
         // 能够使用户在引入模块时不带扩展
-        extensions: ['.js', '.vue'],
+        extensions: ['.js', '.vue', '.styl', '.css'],
         // 模块索引, 从左到右依次查找
         modules: [path.join(__dirname, '../src'), 'node_modules']
     },
@@ -45,34 +41,24 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.css$/,
-            use: extractCSS.extract({
+            use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
                 use: [{
                     loader: 'css-loader',
                     options: {importLoaders: 1}
                 }, {
-                    loader: 'postcss-loader',
-                    options: {
-                        plugins: (loader) => {
-                            postcssNext({browsers: ['last 2 versions', 'IE >= 9']})
-                        }
-                    }
+                    loader: 'postcss-loader'
                 }]
             })
         }, {
             test: /\.styl$/,
-            use: extractStyl.extract({
+            use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
                 use: [{
                     loader: 'css-loader',
                     options: {importLoaders: 1}
                 }, {
-                    loader: 'postcss-loader',
-                    options: {
-                        plugins: (loader) => {
-                            postcssNext({browsers: ['last 2 versions', 'IE >= 9']})
-                        }
-                    }
+                    loader: 'postcss-loader'
                 }, {
                     loader: 'stylus-loader'
                 }]
@@ -97,7 +83,6 @@ module.exports = {
         }]
     },
     plugins: [
-        extractCSS,
-        extractStyl
+        new ExtractTextPlugin('[name].[conetnthash].css')
     ]
 }
