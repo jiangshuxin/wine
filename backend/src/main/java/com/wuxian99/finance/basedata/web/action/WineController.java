@@ -1,19 +1,23 @@
 package com.wuxian99.finance.basedata.web.action;
 
+import com.alibaba.fastjson.JSON;
 import com.wuxian99.finance.basedata.domain.*;
 import com.wuxian99.finance.basedata.service.wine.*;
 import com.wuxian99.finance.basedata.support.util.StringUtils;
+import com.wuxian99.finance.basedata.web.dto.QueryMdseListDto;
 import com.wuxian99.finance.basedata.web.view.*;
 import com.wuxian99.finance.common.Result;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import sun.rmi.server.LoaderHandler;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -111,17 +115,12 @@ public class WineController {
 
     /**
      * 获取商品列表
-     * @param merchantId
-     * @param catagory
-     * @param year
-     * @param price
-     * @param pageNumber
+     * @param queryMdseListDto
      * @return
      */
-    @RequestMapping(value="getMdses", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<List<MdseListView>> getMdses(@RequestParam String merchantId, @RequestParam String catagory,
-                                               @RequestParam String year, @RequestParam String price, @RequestParam Integer pageNumber){
-        List<MdseEntity> mdses =  mdseService.findMdses(merchantId, catagory, year, price, pageNumber, pageSize);
+    @RequestMapping(value="getMdses", method={RequestMethod.POST})
+    public Result<List<MdseListView>> getMdses(@RequestBody QueryMdseListDto queryMdseListDto){
+        List<MdseEntity> mdses =  mdseService.findMdses(queryMdseListDto);
         List<MdseListView> mdseListViews = new ArrayList<MdseListView>();
         if(CollectionUtils.isNotEmpty(mdses)){
             for(MdseEntity mdse : mdses){
@@ -425,5 +424,11 @@ public class WineController {
         view.setOrderId(order.getId());
         view.setAmount(order.getAmount());
         return  Result.buildSuccess(view);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleIOException(HttpServletRequest request,Exception ex) throws URISyntaxException {
+        Result result = Result.buildFail(ex.getMessage());
+        return ResponseEntity.created(new URI((request.getRequestURI()))).header(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString()).body(JSON.toJSONString(result));
     }
 }
