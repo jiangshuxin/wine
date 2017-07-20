@@ -35,7 +35,7 @@ public class UserService {
     }
 
     public List<UserAddressEntity> findUserAddresses(Long userId) {
-        return userAddressRepository.findByUserId(userId);
+        return userAddressRepository.findById(userId);
     }
 
 }
