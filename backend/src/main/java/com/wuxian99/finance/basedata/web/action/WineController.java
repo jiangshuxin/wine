@@ -283,8 +283,8 @@ public class WineController {
      * @param paras
      * @return
      */
-    @RequestMapping(value="modifyUserInfo", method={RequestMethod.POST})
-    public Result<UserView> modifyUserInfo(@RequestParam UserView paras){
+    @RequestMapping(value="modifyUserInfo", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<UserView> modifyUserInfo(UserView paras){
         UserEntity user = userService.findByUserId(paras.getUserId());
         if(user == null){
             return Result.buildFail("用户ID不正确");
@@ -334,8 +334,9 @@ public class WineController {
      * @param paras
      * @return
      */
-    @RequestMapping(value="modifyUserAddress", method={RequestMethod.POST})
-    public Result<Long> modifyUserInfo(@RequestParam UserAddressView paras){
+    @RequestMapping(value="modifyUserAddress", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<Long> modifyUserInfo(UserAddressView paras){
+        System.out.println(paras);
         List<UserAddressEntity> addresses = userService.findUserAddressesByUserId(paras.getUserId());
         UserAddressEntity address = new UserAddressEntity();
         //如果为用户的第一个地址，自动设置为默认地址
