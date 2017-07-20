@@ -17,6 +17,7 @@
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/toSignin"/>
 			<mvc:exclude-mapping path="/signin"/>
+			<mvc:exclude-mapping path="/error"/>
 			<mvc:exclude-mapping path="/bootstrap/**"/>
 			<mvc:exclude-mapping path="/api/front/**"/>
 			<mvc:exclude-mapping path="/**/*.js"/>
