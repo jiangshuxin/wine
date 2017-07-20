@@ -1,15 +1,9 @@
 package com.wuxian99.finance.basedata.web.action;
 
 import com.wuxian99.finance.basedata.domain.*;
-import com.wuxian99.finance.basedata.service.wine.BannerService;
-import com.wuxian99.finance.basedata.service.wine.DiscoverService;
-import com.wuxian99.finance.basedata.service.wine.MdseService;
-import com.wuxian99.finance.basedata.service.wine.UserService;
+import com.wuxian99.finance.basedata.service.wine.*;
 import com.wuxian99.finance.basedata.support.util.StringUtils;
-import com.wuxian99.finance.basedata.web.view.DiscoverListView;
-import com.wuxian99.finance.basedata.web.view.MdseListView;
-import com.wuxian99.finance.basedata.web.view.UserAddressView;
-import com.wuxian99.finance.basedata.web.view.UserView;
+import com.wuxian99.finance.basedata.web.view.*;
 import com.wuxian99.finance.common.Result;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sun.rmi.server.LoaderHandler;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -52,6 +48,9 @@ public class WineController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    OrderService orderService;
 
     /**
      * 获取首页Banner
@@ -369,4 +368,62 @@ public class WineController {
         return Result.buildSuccess(address.getId());
     }
 
+
+    /**
+     * 新增或修改用户收货地址信息
+     * @param paras
+     * @return
+     */
+    @RequestMapping(value="createOrder", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<OrderView> createOrder(OrderRequest paras){
+        if(paras.getUserId() == null || paras.getAddressId() == null || paras.getAddressId() == null || paras.getMdseInfo() == null){
+            return Result.buildFail("必填参数不能为空");
+        }
+        OrderEntity order = new OrderEntity();
+        List<OrderDetailEntity> details = new ArrayList<OrderDetailEntity>();
+        order.setUserId(paras.getUserId());
+        order.setAddressId(paras.getAddressId());
+        order.setMerchantId(paras.getMerchantId());
+        order.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        order.setStatus(1L);
+        order.setComment(paras.getComment());
+        order.setInvoiceInfo(paras.getInvoiceInfo());
+        String[] mdses = paras.getMdseInfo().split(",");
+        Long amount = 0L;
+        Long allCount = 0L;
+        for(String mdseStr : mdses){
+            if(StringUtils.isBlank(mdseStr)){
+                continue;
+            }
+            String mdseIdStr = mdseStr.split(":")[0];
+            String countSrt = mdseStr.split(":")[1];
+            MdseEntity mdse = mdseService.findMdseById(Long.parseLong(mdseIdStr));
+            if(mdse == null){
+                return Result.buildFail("商品不存在:" +mdseIdStr);
+            }
+            if(mdse.getStatus() == 0L){
+                return Result.buildFail("商品已下架:" + mdseIdStr);
+            }
+            if(mdse.getStatus() == 2L){
+                return Result.buildFail("商品已售罄:" + mdseIdStr);
+            }
+            OrderDetailEntity detail = new OrderDetailEntity();
+            detail.setMdseId(mdse.getId());
+            detail.setPrice(mdse.getPrice());
+            detail.setCount(Long.parseLong(countSrt));
+            details.add(detail);
+
+            amount = amount + (detail.getCount()*detail.getPrice());
+            allCount = allCount + detail.getCount();
+        }
+        order.setAmount(amount);
+        order.setPayAmount(amount);
+        order.setMdseCount(allCount);
+        order = orderService.createOrder(order, details);
+
+        OrderView view = new OrderView();
+        view.setOrderId(order.getId());
+        view.setAmount(order.getAmount());
+        return  Result.buildSuccess(view);
+    }
 }
