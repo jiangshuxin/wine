@@ -2,6 +2,7 @@ package com.wuxian99.finance.basedata.service.wine;
 
 import com.wuxian99.finance.basedata.domain.MdseEntity;
 import com.wuxian99.finance.basedata.repository.wine.MdseRepository;
+import com.wuxian99.finance.basedata.web.dto.QueryMdseListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -20,29 +21,27 @@ public class MdseService {
 
     /**
      * 按条件分页查询商品列表
-     * @param merchantId
-     * @param catagory
-     * @param year
-     * @param price
-     * @param pageNumber
-     * @param pageSize
+     * @param queryMdseListDto
      * @return
      */
-    public List<MdseEntity> findMdses(String merchantId, String catagory, String year, String price, int pageNumber, int pageSize) {
+    public List<MdseEntity> findMdses(QueryMdseListDto queryMdseListDto) {
         Sort sort = new Sort(Sort.Direction.DESC,"id");
-        PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, sort);
+        PageRequest pageRequest = queryMdseListDto.convert(sort);
         return mdseRepository.findAll(new Specification<MdseEntity>() {
             public Predicate toPredicate(Root<MdseEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Path<String> merchantIdPath = root.get("merchantId");
-                Predicate predicate = cb.equal(merchantIdPath, merchantId);
+                Predicate predicate = cb.equal(merchantIdPath, queryMdseListDto.getMerchantId());
+                String catagory = queryMdseListDto.getCatagory();
                 if(StringUtils.isNotBlank(catagory) && !"0".equals(catagory)){
                     Path<String> catagoryPath = root.get("catagory");
                     predicate = cb.and(predicate, cb.equal(catagoryPath, catagory));
                 }
+                String year = queryMdseListDto.getYear();
                 if(StringUtils.isNotBlank(year) && !"0".equals(year)){
                     Path<String> yearPath = root.get("year");
                     predicate = cb.and(predicate, cb.equal(yearPath, year));
                 }
+                String price = queryMdseListDto.getPrice();
                 if(StringUtils.isNotBlank(price) && !"0".equals(price)){
                     Path<Integer> pricePath = root.get("price");
                     predicate = cb.and(predicate, cb.between(pricePath, Integer.parseInt(price)-100, Integer.parseInt(price)));

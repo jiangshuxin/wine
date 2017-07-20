@@ -1,6 +1,6 @@
 server:
   context-path: /wine
-  port: 8080
+  port: 7080
 
 spring:
   datasource:
