@@ -1,5 +1,7 @@
 export default {
+    merchantId: '',
     selectedTab: 'home',
+    // tab统一配置管理
     tabList: [{
         id: 'home',
         text: '首页',
@@ -17,12 +19,10 @@ export default {
         text: '我的',
         iconClass: 'icon-wode'
     }],
+    // head信息统一配置管理
     headMap: {
         home: {
             text: '首页'
-        },
-        mall: {
-            text: '商城'
         },
         shopCart: {
             text: '购物车'

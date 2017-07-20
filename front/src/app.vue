@@ -1,10 +1,14 @@
 <script>
-import { Header, Tabbar, TabItem } from 'mint-ui';
+import {
+    Header,
+    Tabbar,
+    TabItem
+} from 'mint-ui';
 import { mapGetters, mapMutations } from 'vuex';
 import { checkAgent } from 'common/util';
 export default {
     created() {
-        this.isPC = checkAgent();
+        this.init();
     },
     data() {
         return {
@@ -20,7 +24,7 @@ export default {
         }),
         headInfo() {
             const { name } = this.$route;
-            return name ? this.headMap[name] : '';
+            return name ? this.headMap[name] || null : '';
         },
         tab: {
             get() {
@@ -33,12 +37,7 @@ export default {
     },
     watch: {
         $route() {
-            const isValidName = this.tabList.some(item => item.id === this.$route.name);
-            if (isValidName && !this.isPC) {
-                this.tabShow = true;
-                return;
-            }
-            this.tabShow = false;
+            this.init();
         },
         selectedTab() {
             this.$router.push({name: this.selectedTab});
@@ -46,8 +45,21 @@ export default {
     },
     methods: {
         ...mapMutations({
-            changeTab: 'CHANGE_ENV_SELECTED_TAB'
-        })
+            changeTab: 'CHANGE_ENV_SELECTED_TAB',
+            setMerchantId: 'SET_ENV_MERCHANT_ID'
+        }),
+        checkAgent,
+        init() {
+            this.setMerchantId(this.$route.query.id);
+            const isValidName = this.tabList.some(item => item.id === this.$route.name);
+            const isPC = this.checkAgent();
+            if (isValidName && !isPC) {
+                this.tabShow = true;
+                this.changeTab(this.$route.name);
+                return;
+            }
+            this.tabShow = false;
+        }
     },
     components: {
         mintTabbar: Tabbar,
@@ -58,8 +70,9 @@ export default {
 </script>
 
 <template>
-    <div class="main">
+    <div class="main" :style="{'padding-top': headInfo ? '40px' : 0}">
         <mint-header
+            v-if="headInfo"
             fixed
             class="header"
             :title="headInfo.text"
@@ -80,10 +93,13 @@ export default {
                 {{item.text}}
             </mint-tab-item>
         </mint-tabbar>
+
     </div>
 </template>
 
 <style lang="stylus" scoped>
+.main
+    padding-bottom 56px
 .header
     border-bottom 1px solid #9a9a9a
     background #fff
@@ -91,7 +107,6 @@ export default {
     color #181818
 .content
     width 100%
-    margin-top 40px
 .tabbar
     position fixed
     right 0
