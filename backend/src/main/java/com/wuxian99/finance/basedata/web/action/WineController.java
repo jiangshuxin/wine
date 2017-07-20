@@ -158,7 +158,7 @@ public class WineController {
     /**
      * 发送验证码
      * @param userName
-     * @param type
+     * @param type 1:登录，2:修改密码
      * @return
      */
     @RequestMapping(value="sendVerifyCode", method={RequestMethod.POST,RequestMethod.GET})
@@ -169,7 +169,10 @@ public class WineController {
         if(type != 1 && type != 2){
             return Result.buildFail("验证码类型不正确");
         }
-        String verifyCode = buildVerifyCode(4);
+        String verifyCode = "";
+        for(int i=0; i<4; i++){
+            verifyCode = verifyCode + new Random().nextInt(10);
+        }
         verifyCodeCache.put(userName + "_" + type, verifyCode);
         //TODO 发送短信验证码
         return Result.buildSuccess(verifyCode);
@@ -179,7 +182,7 @@ public class WineController {
      * 用户登录
      * @param userName
      * @param password
-     * @param type
+     * @param type 1:密码登录，2:验证码登录
      * @param parentId
      * @return
      */
@@ -250,7 +253,7 @@ public class WineController {
         }
         user.setPassword(password);
         userService.saveOrUpdateUser(user);
-        return Result.buildSuccess(null);
+        return Result.buildSuccess("");
     }
 
     /**
@@ -363,19 +366,6 @@ public class WineController {
             }
         }
         return Result.buildSuccess(address.getId());
-    }
-
-    /**
-     * 生成验证码
-     * @param length
-     * @return
-     */
-    private String buildVerifyCode(int length){
-        StringBuffer code = new StringBuffer();
-        for(int i=0; i<length; i++){
-            code.append(new Random().nextInt(10));
-        }
-        return code.toString();
     }
 
 }
