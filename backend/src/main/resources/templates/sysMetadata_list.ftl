@@ -5,7 +5,7 @@
     <thead>
     <tr>
         <th>模块名称</th>
-        <th>表名</th>
+        <th>Entity全名</th>
         <th>展示名称</th>
         <th>排序号</th>
     </tr>
@@ -20,7 +20,7 @@
                     label: "模块名称:",
                     name: "moduleName"
                 }, {
-                    label: "表名:",
+                    label: "Entity全名:",
                     name: "tableName"
                 }, {
                     label: "展示名称:",
