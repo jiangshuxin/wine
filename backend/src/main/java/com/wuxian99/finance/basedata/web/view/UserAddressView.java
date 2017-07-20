@@ -10,26 +10,35 @@ import java.io.Serializable;
  */
 public class UserAddressView implements Serializable {
 
-  private String addressId;
-  private String isDefualt;
+  private Long userId;
+  private Long addressId;
+  private Long isDefualt;
   private String reciver;
   private String phone;
   private String province;
   private String address;
 
-  public String getAddressId() {
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
+
+  public Long getAddressId() {
     return addressId;
   }
 
-  public void setAddressId(String addressId) {
+  public void setAddressId(Long addressId) {
     this.addressId = addressId;
   }
 
-  public String getIsDefualt() {
+  public Long getIsDefualt() {
     return isDefualt;
   }
 
-  public void setIsDefualt(String isDefualt) {
+  public void setIsDefualt(Long isDefualt) {
     this.isDefualt = isDefualt;
   }
 

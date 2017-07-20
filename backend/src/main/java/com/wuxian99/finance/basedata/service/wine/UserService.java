@@ -26,16 +26,20 @@ public class UserService {
         return userRepository.findOne(userId);
     }
 
-    public UserEntity addUser(UserEntity user){
+    public UserEntity saveOrUpdateUser(UserEntity user){
         return userRepository.save(user);
     }
 
-    public UserEntity updateUser(UserEntity user){
-        return userRepository.save(user);
-    }
-
-    public List<UserAddressEntity> findUserAddresses(Long userId) {
+    public List<UserAddressEntity> findUserAddressesByUserId(Long userId) {
         return userAddressRepository.findByUserId(userId);
+    }
+
+    public UserAddressEntity findUserAddressById(Long addressId) {
+        return userAddressRepository.findOne(addressId);
+    }
+
+    public UserAddressEntity saveOrUpdateUserAddress(UserAddressEntity address){
+        return userAddressRepository.save(address);
     }
 
 }

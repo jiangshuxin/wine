@@ -75,7 +75,7 @@ public class WxPayService {
 				String payUrl = (String) map.get("code_url");
 				String prepay_id = (String) map.get("prepay_id");  
 				if(StringUtils.isNotEmpty(prepay_id)){
-					//更新支付流水号
+					//TODO 更新支付流水号
 					order.setPaySeqs(prepay_id);
 				}
 				if(StringUtils.isNotBlank(payUrl)){

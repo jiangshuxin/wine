@@ -9,20 +9,36 @@ import java.io.Serializable;
  */
 public class UserView implements Serializable {
 
-  private String userId;
+  private Long userId;
   private String userName;
-  private String type;
-  private String balance;
+  private Long type;
+  private Long balance;
   private String realName;
   private String gender;
   private String birthday;
 
-  public String getUserId() {
+  public Long getUserId() {
     return userId;
   }
 
-  public void setUserId(String userId) {
+  public void setUserId(Long userId) {
     this.userId = userId;
+  }
+
+  public Long getType() {
+    return type;
+  }
+
+  public void setType(Long type) {
+    this.type = type;
+  }
+
+  public Long getBalance() {
+    return balance;
+  }
+
+  public void setBalance(Long balance) {
+    this.balance = balance;
   }
 
   public String getUserName() {
@@ -31,22 +47,6 @@ public class UserView implements Serializable {
 
   public void setUserName(String userName) {
     this.userName = userName;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  public String getBalance() {
-    return balance;
-  }
-
-  public void setBalance(String balance) {
-    this.balance = balance;
   }
 
   public String getRealName() {
