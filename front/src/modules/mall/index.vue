@@ -1,11 +1,13 @@
 <script>
 import headFilter from './filter';
+import list from './list';
 export default {
     created() {
         console.log('mall');
     },
     components: {
-        headFilter
+        headFilter,
+        list
     }
 };
 </script>
@@ -13,6 +15,7 @@ export default {
 <template>
     <div class="mall-wrapper">
         <head-filter></head-filter>
+        <list></list>
     </div>
 </template>
 
