@@ -475,6 +475,12 @@ public class WineController {
         }
     }
 
+    /**
+     * 发起支付
+     * @param orderId
+     * @param payType
+     * @return
+     */
     @RequestMapping(value="pay/{orderId}/{payType}", method={RequestMethod.POST,RequestMethod.GET})
     public Result<PayResultView> pay(@PathVariable Long orderId, @PathVariable Long payType){
         OrderEntity order = orderService.findOrderById(orderId);

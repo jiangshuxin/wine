@@ -42,6 +42,7 @@ public class WxPayService {
 	/**
 	 * 支付
 	 * @param order
+	 * @param payType 1:微信支付，2:扫码支付
 	 * @return
 	 */
 	public OrderEntity pay(OrderEntity order, Long payType) {
@@ -75,14 +76,11 @@ public class WxPayService {
 				String payUrl = (String) map.get("code_url");
 				String prepay_id = (String) map.get("prepay_id");  
 				if(StringUtils.isNotEmpty(prepay_id)){
-
 					order.setPaySeqs(prepay_id);
-
 					if(payType == 2 && StringUtils.isNotBlank(payUrl)){
 						String payPicName = QRCodeUtil.createQRCodeImg(order.getId(), payUrl, "weixin");
 						order.setPayPic(payPicName);
 					}
-
 					return order;
 				}
 			}
