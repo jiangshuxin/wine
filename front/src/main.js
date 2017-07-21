@@ -8,7 +8,9 @@ import store from 'vuex/store';
 import VueTouch from 'vue-touch';
 
 
-Vue.use(VueTouch, {name: 'v-touch'});
+Vue.use(VueTouch, {
+    name: 'v-touch'
+});
 
 new Vue({
     el: '#app',

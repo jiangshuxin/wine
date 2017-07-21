@@ -7,7 +7,7 @@ const filterMap = {
         text: '红葡萄酒'
     }, {
         value: '2',
-        text: '白葡萄酒'
+        text: '白葡萄酒白葡萄酒'
     }],
     year: [{
         value: '',
@@ -24,10 +24,10 @@ const filterMap = {
         text: '全部'
     }, {
         value: '1',
-        text: '100 - 200元'
+        text: '100元'
     }, {
         value: '2',
-        text: '200 - 300元'
+        text: '200元'
     }]
 };
 
@@ -47,5 +47,41 @@ const filterSelectedInfo = [{
 
 export default {
     filterMap,
-    filterSelectedInfo
+    filterSelectedInfo,
+    commodityList: [{
+        id: '123',
+        url: 'http://img5.imgtn.bdimg.com/it/u=1568156851,1614184660&fm=26&gp=0.jpg',
+        name: '维德尊贵干红',
+        year: 2004,
+        description: 'Valdelosfrailes Prestigio 750ml',
+        price: '580'
+    }, {
+        id: '123',
+        url: 'http://img5.imgtn.bdimg.com/it/u=1568156851,1614184660&fm=26&gp=0.jpg',
+        name: '维德尊贵干红',
+        year: 2004,
+        description: 'Valdelosfrailes Prestigio 750ml',
+        price: '580'
+    }, {
+        id: '123',
+        url: 'http://img5.imgtn.bdimg.com/it/u=1568156851,1614184660&fm=26&gp=0.jpg',
+        name: '维德尊贵干红',
+        year: 2004,
+        description: 'Valdelosfrailes Prestigio 750ml',
+        price: '580'
+    }, {
+        id: '123',
+        url: 'http://img5.imgtn.bdimg.com/it/u=1568156851,1614184660&fm=26&gp=0.jpg',
+        name: '维德尊贵干红',
+        year: 2014,
+        description: 'Valdelosfrailes Prestigio 750ml',
+        price: '580'
+    }, {
+        id: '123',
+        url: 'http://img5.imgtn.bdimg.com/it/u=1568156851,1614184660&fm=26&gp=0.jpg',
+        name: '维德尊贵干红',
+        year: 2014,
+        description: 'Valdelosfrailes Prestigio 750ml',
+        price: '580'
+    }]
 };
