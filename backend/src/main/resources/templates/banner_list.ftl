@@ -26,7 +26,31 @@
 
 
         $(document).ready(function() {
-
+            editor = DataTable.Editor.newInstance('${moduleName}',[ {
+                label: "编号:",
+                name: "id",
+            }, {
+                label: "商户编号:",
+                name: "merchantId"
+            },{
+                label: "图片路径:",
+                name: "pic",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src=""/>';
+                },
+                clearText: "Clear",
+                noImageText: 'No image'
+            }, {
+                label: "排序号:",
+                name: "sortValue"
+            }, {
+                label: "商品编号:",
+                name: "mdseId"
+            }
+            ],{
+                ajax:"${rc.contextPath}/api/front/upload/mdse"
+            });
 
             table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[
                 { data: "id"},
@@ -35,6 +59,9 @@
                 { data: "sortValue"},
                 { data: "mdseId"}
             ],[
+                { extend: "create", editor: editor },
+                { extend: "edit",   editor: editor },
+                { extend: "remove", editor: editor },
                 {
                     extend: 'collection',
                     text: '导出',
