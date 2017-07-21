@@ -59,8 +59,4 @@ public class MdseListView implements Serializable {
     this.price = price;
   }
 
-  @Override
-  public String toString() {
-    return new Gson().toJson(this);
-  }
 }

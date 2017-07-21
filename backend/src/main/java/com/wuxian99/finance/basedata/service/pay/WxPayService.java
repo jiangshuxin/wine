@@ -44,7 +44,7 @@ public class WxPayService {
 	 * @param order
 	 * @return
 	 */
-	public OrderEntity pay(OrderEntity order) {
+	public OrderEntity pay(OrderEntity order, Long payType) {
 		
 		try{
 			String currTime = PayCommonUtil.getCurrTime();
@@ -75,12 +75,14 @@ public class WxPayService {
 				String payUrl = (String) map.get("code_url");
 				String prepay_id = (String) map.get("prepay_id");  
 				if(StringUtils.isNotEmpty(prepay_id)){
-					//TODO 更新支付流水号
+
 					order.setPaySeqs(prepay_id);
-				}
-				if(StringUtils.isNotBlank(payUrl)){
-					String payPicName = QRCodeUtil.createQRCodeImg(order.getId(), payUrl, "weixin");
-					//TODO 支付发起时间、更新支付二维码图片
+
+					if(payType == 2 && StringUtils.isNotBlank(payUrl)){
+						String payPicName = QRCodeUtil.createQRCodeImg(order.getId(), payUrl, "weixin");
+						order.setPayPic(payPicName);
+					}
+
 					return order;
 				}
 			}

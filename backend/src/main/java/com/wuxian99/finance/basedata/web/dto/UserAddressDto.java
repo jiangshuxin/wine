@@ -1,4 +1,4 @@
-package com.wuxian99.finance.basedata.web.view;
+package com.wuxian99.finance.basedata.web.dto;
 
 import com.google.gson.Gson;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 用户收货地址展示Bean
  */
-public class UserAddressView implements Serializable {
+public class UserAddressDto implements Serializable {
 
   private Long userId;
   private Long addressId;
@@ -74,8 +74,4 @@ public class UserAddressView implements Serializable {
     this.address = address;
   }
 
-  @Override
-  public String toString() {
-    return new Gson().toJson(this);
-  }
 }

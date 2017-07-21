@@ -2,9 +2,10 @@ package com.wuxian99.finance.basedata.web.action;
 
 import com.alibaba.fastjson.JSON;
 import com.wuxian99.finance.basedata.domain.*;
+import com.wuxian99.finance.basedata.service.pay.WxPayService;
 import com.wuxian99.finance.basedata.service.wine.*;
 import com.wuxian99.finance.basedata.support.util.StringUtils;
-import com.wuxian99.finance.basedata.web.dto.QueryMdseListDto;
+import com.wuxian99.finance.basedata.web.dto.*;
 import com.wuxian99.finance.basedata.web.view.*;
 import com.wuxian99.finance.common.Result;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -37,9 +38,10 @@ public class WineController {
     @Value("${wine.picPath}")
     private String picPath;
 
-    private int pageSize = 5;
-
     private Map<String, String> verifyCodeCache = new HashMap<String, String>();
+
+    @Autowired
+    WxPayService wxPayService;
 
     @Autowired
     BannerService bannerService;
@@ -61,8 +63,8 @@ public class WineController {
      * @param merchantId
      * @return
      */
-    @RequestMapping(value="getBanners", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<List<BannerEntity>> getBanners(@RequestParam String merchantId){
+    @RequestMapping(value="getBanners/{merchantId}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<List<BannerEntity>> getBanners(@PathVariable String merchantId){
         List<BannerEntity> banners =  bannerService.findByMerchantId(merchantId);
         if(CollectionUtils.isNotEmpty(banners)){
             for(BannerEntity banner : banners){
@@ -73,15 +75,13 @@ public class WineController {
     }
 
     /**
-     * 获取首页发现、动态
-     * @param merchantId
-     * @param type
-     * @param pageNumber
+     * 获取首页发现、动态列表
+     * @param paras
      * @return
      */
-    @RequestMapping(value="getDiscovers", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<List<DiscoverListView>> getDiscovers(@RequestParam String merchantId, @RequestParam Long type, @RequestParam Integer pageNumber){
-        List<DiscoverEntity> discovers =  discoverService.findByMerchantIdAndType(merchantId, type, pageNumber, pageSize);
+    @RequestMapping(value="getDiscovers", method={RequestMethod.POST})
+    public Result<List<DiscoverListView>> getDiscovers(@RequestBody QueryDiscoverListDto paras){
+        List<DiscoverEntity> discovers =  discoverService.findDiscovers(paras);
         List<DiscoverListView> discoverListViews = new ArrayList<DiscoverListView>();
         if(CollectionUtils.isNotEmpty(discovers)){
             for(DiscoverEntity discover : discovers){
@@ -102,8 +102,8 @@ public class WineController {
      * @param discoverId
      * @return
      */
-    @RequestMapping(value="getDiscoverDetails", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<List<DiscoverDetailEntity>> getDiscoverDetails(@RequestParam Long discoverId){
+    @RequestMapping(value="getDiscoverDetails/{discoverId}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<List<DiscoverDetailEntity>> getDiscoverDetails(@PathVariable Long discoverId){
         List<DiscoverDetailEntity> discoverDetails =  discoverService.findDetailByDiscoverId(discoverId);
         if(CollectionUtils.isNotEmpty(discoverDetails)){
             for(DiscoverDetailEntity discoverDetail : discoverDetails){
@@ -115,12 +115,12 @@ public class WineController {
 
     /**
      * 获取商品列表
-     * @param queryMdseListDto
+     * @param paras
      * @return
      */
     @RequestMapping(value="getMdses", method={RequestMethod.POST})
-    public Result<List<MdseListView>> getMdses(@RequestBody QueryMdseListDto queryMdseListDto){
-        List<MdseEntity> mdses =  mdseService.findMdses(queryMdseListDto);
+    public Result<List<MdseListView>> getMdses(@RequestBody QueryMdseListDto paras){
+        List<MdseEntity> mdses =  mdseService.findMdses(paras);
         List<MdseListView> mdseListViews = new ArrayList<MdseListView>();
         if(CollectionUtils.isNotEmpty(mdses)){
             for(MdseEntity mdse : mdses){
@@ -141,8 +141,8 @@ public class WineController {
      * @param mdseId
      * @return
      */
-    @RequestMapping(value="getMdseDetail", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<MdseEntity> getMdseDetail(@RequestParam Long mdseId){
+    @RequestMapping(value="getMdseDetail/{mdseId}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<MdseEntity> getMdseDetail(@PathVariable Long mdseId){
         MdseEntity mdse =  mdseService.findMdseById(mdseId);
         if(mdse != null){
             mdse.setSmallPic(picPath + mdse.getSmallPic());
@@ -159,8 +159,8 @@ public class WineController {
      * @param type 1:登录，2:修改密码
      * @return
      */
-    @RequestMapping(value="sendVerifyCode", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<String> sendVerifyCode(@RequestParam String userName, @RequestParam Long type){
+    @RequestMapping(value="sendVerifyCode/{userName}/{type}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<String> sendVerifyCode(@PathVariable String userName, @PathVariable Long type){
         if(StringUtils.isBlank(userName) || !StringUtils.isNumeric(userName) || userName.length() != 11){
             return Result.buildFail("手机号不正确");
         }
@@ -178,17 +178,16 @@ public class WineController {
 
     /**
      * 用户登录
-     * @param userName
-     * @param password
-     * @param type 1:密码登录，2:验证码登录
-     * @param parentId
+     * @param paras
      * @return
      */
-    @RequestMapping(value="login", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<UserView> sendVerifyCode(@RequestParam String userName, @RequestParam String password, @RequestParam Long type, @RequestParam Long parentId){
+    @RequestMapping(value="login", method={RequestMethod.POST})
+    public Result<UserInfoDto> sendVerifyCode(@RequestBody LoginDto paras){
+        String userName = paras.getUserName();
         if(StringUtils.isBlank(userName) || !StringUtils.isNumeric(userName) || userName.length() != 11){
             return Result.buildFail("用户名不正确");
         }
+        Long type = paras.getType();
         if(type != 1 && type != 2){
             return Result.buildFail("登录类型不正确");
         }
@@ -196,7 +195,7 @@ public class WineController {
 
         //验证码登录
         if("2".equals(type)){
-            if(!StringUtils.equals(verifyCodeCache.get(userName + "_1"), password)){
+            if(!StringUtils.equals(verifyCodeCache.get(userName + "_1"), paras.getPassword())){
                 return Result.buildFail("短信验证码不正确");
             }
             if(user == null){
@@ -207,49 +206,47 @@ public class WineController {
                 user.setBalance(0L);
                 user.setGender("男");
                 user.setBirthday("1990-01-01");
-                if(parentId != null && parentId.longValue() != 0) {
-                    user.setParentId(parentId);
+                if(paras.getParentId() != null && paras.getParentId() != 0) {
+                    user.setParentId(paras.getParentId());
                 }
                 user = userService.saveOrUpdateUser(user);
             }
         }else{
             if(user == null){
                 return Result.buildFail("用户名不存在");
-            }else if(!StringUtils.equals(user.getPassword(), password)){
+            }else if(!StringUtils.equals(user.getPassword(), paras.getPassword())){
                 return Result.buildFail("密码不正确");
             }
         }
-        UserView userView = new UserView();
-        userView.setUserId(user.getId());
-        userView.setUserName(user.getUserName());
-        userView.setType(user.getType());
-        userView.setBalance(user.getBalance());
-        userView.setRealName(user.getRealName());
-        userView.setGender(user.getGender());
-        userView.setBirthday(user.getBirthday());
-        return Result.buildSuccess(userView);
+        UserInfoDto userInfoDto = new UserInfoDto();
+        userInfoDto.setUserId(user.getId());
+        userInfoDto.setUserName(user.getUserName());
+        userInfoDto.setType(user.getType());
+        userInfoDto.setBalance(user.getBalance());
+        userInfoDto.setRealName(user.getRealName());
+        userInfoDto.setGender(user.getGender());
+        userInfoDto.setBirthday(user.getBirthday());
+        return Result.buildSuccess(userInfoDto);
     }
 
     /**
      * 修改登录密码
-     * @param userId
-     * @param password
-     * @param verifyCode
+     * @param paras
      * @return
      */
-    @RequestMapping(value="modifyPassword", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<String> sendVerifyCode(@RequestParam Long userId, @RequestParam String password, @RequestParam String verifyCode){
-        if(StringUtils.isBlank(password)){
+    @RequestMapping(value="modifyPwd", method={RequestMethod.POST})
+    public Result<String> sendVerifyCode(@RequestBody ModifyPwdDto paras){
+        if(StringUtils.isBlank(paras.getPassword())){
             return Result.buildFail("新密码不能为空");
         }
-        UserEntity user = userService.findByUserId(userId);
+        UserEntity user = userService.findByUserId(paras.getUserId());
         if(user == null){
             return Result.buildFail("用户ID不正确");
         }
-        if(!StringUtils.equals(verifyCodeCache.get(user.getUserName() + "_2"), verifyCode)){
+        if(!StringUtils.equals(verifyCodeCache.get(user.getUserName() + "_2"), paras.getVerifyCode())){
             return Result.buildFail("短信验证码不正确");
         }
-        user.setPassword(password);
+        user.setPassword(paras.getPassword());
         userService.saveOrUpdateUser(user);
         return Result.buildSuccess("");
     }
@@ -259,21 +256,21 @@ public class WineController {
      * @param userId
      * @return
      */
-    @RequestMapping(value="getUserInfo", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<UserView> getUserInfo(@RequestParam Long userId) {
+    @RequestMapping(value="getUserInfo/{userId}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<UserInfoDto> getUserInfo(@PathVariable Long userId) {
         UserEntity user = userService.findByUserId(userId);
         if (user == null) {
             return Result.buildFail("用户ID不正确");
         }
-        UserView userView = new UserView();
-        userView.setUserId(user.getId());
-        userView.setUserName(user.getUserName());
-        userView.setType(user.getType());
-        userView.setBalance(user.getBalance());
-        userView.setRealName(user.getRealName());
-        userView.setGender(user.getGender());
-        userView.setBirthday(user.getBirthday());
-        return Result.buildSuccess(userView);
+        UserInfoDto userInfoDto = new UserInfoDto();
+        userInfoDto.setUserId(user.getId());
+        userInfoDto.setUserName(user.getUserName());
+        userInfoDto.setType(user.getType());
+        userInfoDto.setBalance(user.getBalance());
+        userInfoDto.setRealName(user.getRealName());
+        userInfoDto.setGender(user.getGender());
+        userInfoDto.setBirthday(user.getBirthday());
+        return Result.buildSuccess(userInfoDto);
     }
 
     /**
@@ -281,8 +278,8 @@ public class WineController {
      * @param paras
      * @return
      */
-    @RequestMapping(value="modifyUserInfo", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<UserView> modifyUserInfo(UserView paras){
+    @RequestMapping(value="modifyUserInfo", method={RequestMethod.POST})
+    public Result<UserInfoDto> modifyUserInfo(@RequestBody UserInfoDto paras){
         UserEntity user = userService.findByUserId(paras.getUserId());
         if(user == null){
             return Result.buildFail("用户ID不正确");
@@ -290,17 +287,17 @@ public class WineController {
         user.setRealName(paras.getRealName());
         user.setGender(paras.getGender());
         user.setBirthday(paras.getBirthday());
-        userService.saveOrUpdateUser(user);
+        user = userService.saveOrUpdateUser(user);
 
-        UserView userView = new UserView();
-        userView.setUserId(user.getId());
-        userView.setUserName(user.getUserName());
-        userView.setType(user.getType());
-        userView.setBalance(user.getBalance());
-        userView.setRealName(user.getRealName());
-        userView.setGender(user.getGender());
-        userView.setBirthday(user.getBirthday());
-        return Result.buildSuccess(userView);
+        UserInfoDto userInfoDto = new UserInfoDto();
+        userInfoDto.setUserId(user.getId());
+        userInfoDto.setUserName(user.getUserName());
+        userInfoDto.setType(user.getType());
+        userInfoDto.setBalance(user.getBalance());
+        userInfoDto.setRealName(user.getRealName());
+        userInfoDto.setGender(user.getGender());
+        userInfoDto.setBirthday(user.getBirthday());
+        return Result.buildSuccess(userInfoDto);
     }
 
     /**
@@ -308,13 +305,13 @@ public class WineController {
      * @param userId
      * @return
      */
-    @RequestMapping(value="getUserAddresses", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<List<UserAddressView>> getUserAddresses(@RequestParam Long userId){
+    @RequestMapping(value="getUserAddresses/{userId}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<List<UserAddressDto>> getUserAddresses(@PathVariable Long userId){
         List<UserAddressEntity> addresses = userService.findUserAddressesByUserId(userId);
-        List<UserAddressView> views = new ArrayList<UserAddressView>();
+        List<UserAddressDto> views = new ArrayList<UserAddressDto>();
         if(CollectionUtils.isNotEmpty(addresses)){
             for (UserAddressEntity address:addresses){
-                UserAddressView view = new UserAddressView();
+                UserAddressDto view = new UserAddressDto();
                 view.setAddressId(address.getId());
                 view.setIsDefualt(address.getIsDefualt());
                 view.setReciver(address.getReciver());
@@ -332,8 +329,8 @@ public class WineController {
      * @param paras
      * @return
      */
-    @RequestMapping(value="modifyUserAddress", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<Long> modifyUserInfo(UserAddressView paras){
+    @RequestMapping(value="modifyUserAddress", method={RequestMethod.POST})
+    public Result<Long> modifyUserAddress(@RequestBody UserAddressDto paras){
         System.out.println(paras);
         List<UserAddressEntity> addresses = userService.findUserAddressesByUserId(paras.getUserId());
         UserAddressEntity address = new UserAddressEntity();
@@ -369,19 +366,18 @@ public class WineController {
 
 
     /**
-     * 新增或修改用户收货地址信息
+     * 下单
      * @param paras
      * @return
      */
-    @RequestMapping(value="createOrder", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<OrderView> createOrder(OrderRequest paras){
+    @RequestMapping(value="createOrder", method={RequestMethod.POST})
+    public Result<OrderView> createOrder(@RequestBody CreateOrderDto paras){
         if(paras.getUserId() == null || paras.getAddressId() == null || paras.getAddressId() == null || paras.getMdseInfo() == null){
             return Result.buildFail("必填参数不能为空");
         }
         OrderEntity order = new OrderEntity();
         List<OrderDetailEntity> details = new ArrayList<OrderDetailEntity>();
         order.setUserId(paras.getUserId());
-        order.setAddressId(paras.getAddressId());
         order.setMerchantId(paras.getMerchantId());
         order.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         order.setStatus(1L);
@@ -418,12 +414,86 @@ public class WineController {
         order.setAmount(amount);
         order.setPayAmount(amount);
         order.setMdseCount(allCount);
+
+        //收货地址
+        UserAddressEntity userAddress = userService.findUserAddressById(paras.getAddressId());
+        if(userAddress == null){
+            return Result.buildFail("收货地址不存在");
+        }
+        order.setAddress(userAddress.getAddress());
+        order.setPhone(userAddress.getPhone());
+        order.setProvince(userAddress.getProvince());
+        order.setReciver(userAddress.getReciver());
+
         order = orderService.createOrder(order, details);
 
         OrderView view = new OrderView();
         view.setOrderId(order.getId());
         view.setAmount(order.getAmount());
-        return  Result.buildSuccess(view);
+        return Result.buildSuccess(view);
+    }
+
+    /**
+     * 获取订单列表
+     * @param userId
+     * @param status
+     * @return
+     */
+    @RequestMapping(value="getOrders/{userId}/{status}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<List<OrderListView>> getOrders(@PathVariable Long userId, @PathVariable Long status){
+        List<OrderListView> orders = orderService.findOrders(userId, status);
+        return Result.buildSuccess(orders);
+    }
+
+    /**
+     * 获取订单详情
+     * @param orderId
+     * @return
+     */
+    @RequestMapping(value="getOrderDetail/{orderId}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<OrderView> getOrderDetail(@PathVariable Long orderId){
+        OrderView order = orderService.findOrderViewById(orderId);
+        if(order != null){
+            return Result.buildSuccess(order);
+        }else{
+            return Result.buildFail("商品不存在");
+        }
+    }
+
+    /**
+     * 取消订单
+     * @param orderId
+     * @return
+     */
+    @RequestMapping(value="cancelOrder/{orderId}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<String> cancelOrder(@PathVariable Long orderId){
+        String errMsg = orderService.cancelOrder(orderId);
+        if(errMsg != null){
+            return Result.buildFail(errMsg);
+        }else{
+            return Result.buildSuccess(null);
+        }
+    }
+
+    @RequestMapping(value="pay/{orderId}/{payType}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<PayResultView> pay(@PathVariable Long orderId, @PathVariable Long payType){
+        OrderEntity order = orderService.findOrderById(orderId);
+        if(order == null){
+            return Result.buildFail("订单不存在");
+        }
+        if(order.getStatus() != 1){
+            return Result.buildFail("该订单状态不允许支付");
+        }
+        order = wxPayService.pay(order, payType);
+        if(order == null){
+            return Result.buildFail("发起支付异常");
+        }
+        PayResultView payResultView = new PayResultView();
+        payResultView.setPrepayId(order.getPaySeqs());
+        if(payType == 2){
+            payResultView.setPayPic(order.getPayPic());
+        }
+        return Result.buildSuccess(payResultView);
     }
 
     @ExceptionHandler(Exception.class)
@@ -431,4 +501,5 @@ public class WineController {
         Result result = Result.buildFail(ex.getMessage());
         return ResponseEntity.created(new URI((request.getRequestURI()))).header(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString()).body(JSON.toJSONString(result));
     }
+
 }

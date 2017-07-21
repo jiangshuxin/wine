@@ -1,11 +1,10 @@
 package com.wuxian99.finance.basedata.web.view;
 
-import com.google.gson.Gson;
-
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * 下单请求对象
+ * 订单详情
  */
 public class OrderView implements Serializable {
 
@@ -14,10 +13,14 @@ public class OrderView implements Serializable {
   private Long status;
   private Long amount;
   private Long mdseCount;
-  private String mdseInfos;
-  private String addressInfo;
+  private List<OrderMdseView> mdseInfos;
+  private String address;
+  private String phone;
+  private String reciver;
+  private String province;
   private String comment;
-  private String logisticsInfo;
+  private String logisticsCompany;
+  private String logisticsSeqs;
   private String invoiceInfo;
 
   public Long getOrderId() {
@@ -60,20 +63,44 @@ public class OrderView implements Serializable {
     this.mdseCount = mdseCount;
   }
 
-  public String getMdseInfos() {
+  public  List<OrderMdseView> getMdseInfos() {
     return mdseInfos;
   }
 
-  public void setMdseInfos(String mdseInfos) {
+  public void setMdseInfos( List<OrderMdseView> mdseInfos) {
     this.mdseInfos = mdseInfos;
   }
 
-  public String getAddressInfo() {
-    return addressInfo;
+  public String getAddress() {
+    return address;
   }
 
-  public void setAddressInfo(String addressInfo) {
-    this.addressInfo = addressInfo;
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public String getReciver() {
+    return reciver;
+  }
+
+  public void setReciver(String reciver) {
+    this.reciver = reciver;
+  }
+
+  public String getProvince() {
+    return province;
+  }
+
+  public void setProvince(String province) {
+    this.province = province;
   }
 
   public String getComment() {
@@ -84,12 +111,20 @@ public class OrderView implements Serializable {
     this.comment = comment;
   }
 
-  public String getLogisticsInfo() {
-    return logisticsInfo;
+  public String getLogisticsCompany() {
+    return logisticsCompany;
   }
 
-  public void setLogisticsInfo(String logisticsInfo) {
-    this.logisticsInfo = logisticsInfo;
+  public void setLogisticsCompany(String logisticsCompany) {
+    this.logisticsCompany = logisticsCompany;
+  }
+
+  public String getLogisticsSeqs() {
+    return logisticsSeqs;
+  }
+
+  public void setLogisticsSeqs(String logisticsSeqs) {
+    this.logisticsSeqs = logisticsSeqs;
   }
 
   public String getInvoiceInfo() {
@@ -100,8 +135,4 @@ public class OrderView implements Serializable {
     this.invoiceInfo = invoiceInfo;
   }
 
-  @Override
-  public String toString() {
-    return new Gson().toJson(this);
-  }
 }

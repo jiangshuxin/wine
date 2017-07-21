@@ -1,13 +1,13 @@
-package com.wuxian99.finance.basedata.web.view;
+package com.wuxian99.finance.basedata.web.dto;
 
 import com.google.gson.Gson;
 
 import java.io.Serializable;
 
 /**
- * 下单请求对象
+ * 下单请求参数
  */
-public class OrderRequest implements Serializable {
+public class CreateOrderDto implements Serializable {
 
   private Long userId;
   private Long addressId;
@@ -64,8 +64,4 @@ public class OrderRequest implements Serializable {
     this.invoiceInfo = invoiceInfo;
   }
 
-  @Override
-  public String toString() {
-    return new Gson().toJson(this);
-  }
 }

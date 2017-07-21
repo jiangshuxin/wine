@@ -1,4 +1,4 @@
-package com.wuxian99.finance.basedata.web.view;
+package com.wuxian99.finance.basedata.web.dto;
 
 import com.google.gson.Gson;
 
@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * 用户信息展示Bean
  */
-public class UserView implements Serializable {
+public class UserInfoDto implements Serializable {
 
   private Long userId;
   private String userName;
@@ -73,8 +73,4 @@ public class UserView implements Serializable {
     this.birthday = birthday;
   }
 
-  @Override
-  public String toString() {
-    return new Gson().toJson(this);
-  }
 }

@@ -32,17 +32,17 @@ public class MdseService {
                 Path<String> merchantIdPath = root.get("merchantId");
                 Predicate predicate = cb.equal(merchantIdPath, queryMdseListDto.getMerchantId());
                 String catagory = queryMdseListDto.getCatagory();
-                if(StringUtils.isNotBlank(catagory) && !"0".equals(catagory)){
+                if(StringUtils.isNotBlank(catagory)){
                     Path<String> catagoryPath = root.get("catagory");
                     predicate = cb.and(predicate, cb.equal(catagoryPath, catagory));
                 }
                 String year = queryMdseListDto.getYear();
-                if(StringUtils.isNotBlank(year) && !"0".equals(year)){
+                if(StringUtils.isNotBlank(year)){
                     Path<String> yearPath = root.get("year");
                     predicate = cb.and(predicate, cb.equal(yearPath, year));
                 }
                 String price = queryMdseListDto.getPrice();
-                if(StringUtils.isNotBlank(price) && !"0".equals(price)){
+                if(StringUtils.isNotBlank(price)){
                     Path<Integer> pricePath = root.get("price");
                     predicate = cb.and(predicate, cb.between(pricePath, Integer.parseInt(price)-100, Integer.parseInt(price)));
                 }

@@ -29,6 +29,18 @@ public class OrderDetailEntity implements Serializable {
   private Long mdseId;
 
   /**
+   * 商品名称（冗余字段，方便查询）
+   */
+  @Column(name = "mdsename")
+  private String mdseName;
+
+  /**
+   * 商品图片（冗余字段，方便查询）
+   */
+  @Column(name = "mdsesmallpic")
+  private String mdseSmallPic;
+
+  /**
    * 购买数量
    */
   private Long count;
@@ -78,8 +90,20 @@ public class OrderDetailEntity implements Serializable {
     this.price = price;
   }
 
-  @Override
-  public String toString() {
-    return new Gson().toJson(this);
+  public String getMdseName() {
+    return mdseName;
   }
+
+  public void setMdseName(String mdseName) {
+    this.mdseName = mdseName;
+  }
+
+  public String getMdseSmallPic() {
+    return mdseSmallPic;
+  }
+
+  public void setMdseSmallPic(String mdseSmallPic) {
+    this.mdseSmallPic = mdseSmallPic;
+  }
+
 }

@@ -28,12 +28,6 @@ public class OrderEntity implements Serializable {
   private Long userId;
 
   /**
-   * 收货地址ID
-   */
-  @Column(name = "addressid")
-  private Long addressId;
-
-  /**
    * 酒庄编号
    */
   @Column(name = "merchantid")
@@ -57,7 +51,7 @@ public class OrderEntity implements Serializable {
   private Long payAmount;
 
   /**
-   * 1:待付款，2:待收货，3:已完成，4:已过期
+   * 0:已取消，1:未支付，2:已支付，3:已完成(已记录运单信息)
    */
   private Long status;
 
@@ -72,6 +66,12 @@ public class OrderEntity implements Serializable {
    */
   @Column(name = "payseqs")
   private String paySeqs;
+
+  /**
+   * 支付二维码图片
+   */
+  @Column(name = "paypic")
+  private String payPic;
 
   /**
    * 买家备注
@@ -96,6 +96,26 @@ public class OrderEntity implements Serializable {
   @Column(name = "invoiceinfo")
   private String invoiceInfo;
 
+  /**
+   * 收货人
+   */
+  private String reciver;
+
+  /**
+   * 收货人电话
+   */
+  private String phone;
+
+  /**
+   * 省市区
+   */
+  private String province;
+
+  /**
+   * 详细地址
+   */
+  private String address;
+
   public Long getId() {
     return id;
   }
@@ -118,14 +138,6 @@ public class OrderEntity implements Serializable {
 
   public void setUserId(Long userId) {
     this.userId = userId;
-  }
-
-  public Long getAddressId() {
-    return addressId;
-  }
-
-  public void setAddressId(Long addressId) {
-    this.addressId = addressId;
   }
 
   public String getMerchantId() {
@@ -214,6 +226,46 @@ public class OrderEntity implements Serializable {
 
   public void setInvoiceInfo(String invoiceInfo) {
     this.invoiceInfo = invoiceInfo;
+  }
+
+  public String getReciver() {
+    return reciver;
+  }
+
+  public void setReciver(String reciver) {
+    this.reciver = reciver;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public String getProvince() {
+    return province;
+  }
+
+  public void setProvince(String province) {
+    this.province = province;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getPayPic() {
+    return payPic;
+  }
+
+  public void setPayPic(String payPic) {
+    this.payPic = payPic;
   }
 
   @Override
