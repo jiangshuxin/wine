@@ -25,6 +25,10 @@ export default {
             this.nowId = '';
         },
         showDropDown(info) {
+            if (this.nowId === info.id) {
+                this.init();
+                return;
+            }
             this.nowId = info.id;
             this.nowOptions = this.filterMap[info.id];
             this.nowSelected = this.filterMap[info.id].filter(opt => opt.value === info.value)[0].value;
@@ -54,11 +58,13 @@ export default {
                     v-for="item in selectedInfo"
                     @tap="showDropDown(item)"
                 >
-                    {{
-                        item.value ?
-                        filterMap[item.id].filter(option => option.value === item.value)[0].text :
-                        item.text
-                    }}
+                    <p class="filter-btn-text">
+                        {{
+                            item.value ?
+                            filterMap[item.id].filter(option => option.value === item.value)[0].text :
+                            item.text
+                        }}
+                    </p>
                     <i
                         class="iconfont icon-arrowbottom"
                         :class="{'is-selected': nowId === item.id}"
@@ -70,26 +76,39 @@ export default {
 </template>
 
 <style lang="stylus" scoped>
-ul
+@import '../../../common/mixin.styl';
+ul,
+p
     margin 0
     padding 0
     list-style none
 .filter-btn-group
     display flex
     flex-flow row nowrap
+    padding 0 30px
+    height 40px
     border-bottom 1px solid #9a9a9a
     background #fff
+    box-sizing border-box
     li
-        flex-grow 1
+        flex 1
         line-height 40px
         text-align center
-        font-size 16px
+        while-space nowrap
+        font-size 14px
+.filter-btn-text
+    display inline-block
+    max-width 60px
+    vertical-align top
+    ellipsis()
 .icon-arrowbottom
+    display inline-block
+    vertical-align top
     &:before
         transition all 0.3s ease
     color #c0c0c0
 .is-selected
-    color red
+    color #cf1f34
     &:before
         transform rotate(180deg)
 </style>

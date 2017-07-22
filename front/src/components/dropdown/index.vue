@@ -86,7 +86,6 @@ export default {
                 @tap="changeSelected(option.value)"
             >
                 {{option.text}}
-                {{option.value}}
             </v-touch>
         </ul>
         <div
@@ -117,8 +116,10 @@ li
     display inline-block
 .dropdown-list
     position absolute
-    background #fff
     border-bottom 1px solid #eee
+    overflow hidden
+    text-align left
+    background #fff
     li
         margin-left 20px
         line-height 40px
@@ -126,6 +127,6 @@ li
         font-size 12px
     li:last-child
         border-bottom 0
-.dorpdown-selected
-    color red
+.dropdown-selected
+    color #cf1f34
 </style>
