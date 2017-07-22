@@ -25,7 +25,7 @@ public class MdseService {
      * @return
      */
     public List<MdseEntity> findMdses(QueryMdseListDto queryMdseListDto) {
-        Sort sort = new Sort(Sort.Direction.DESC,"id");
+        Sort sort = new Sort(Sort.Direction.ASC,"price");
         PageRequest pageRequest = queryMdseListDto.convert(sort);
         return mdseRepository.findAll(new Specification<MdseEntity>() {
             public Predicate toPredicate(Root<MdseEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {

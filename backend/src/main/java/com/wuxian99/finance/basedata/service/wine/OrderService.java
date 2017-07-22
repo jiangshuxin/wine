@@ -6,12 +6,15 @@ import com.wuxian99.finance.basedata.domain.UserAddressEntity;
 import com.wuxian99.finance.basedata.repository.wine.OrderDetailRepository;
 import com.wuxian99.finance.basedata.repository.wine.OrderRepository;
 import com.wuxian99.finance.basedata.repository.wine.UserAddressRepository;
+import com.wuxian99.finance.basedata.web.dto.QueryOrderListDto;
 import com.wuxian99.finance.basedata.web.view.OrderMdseView;
 import com.wuxian99.finance.basedata.web.view.OrderListView;
 import com.wuxian99.finance.basedata.web.view.OrderView;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -109,12 +112,14 @@ public class OrderService {
         }
     }
 
-    public List<OrderListView> findOrders(Long userId, Long status){
+    public List<OrderListView> findOrders(QueryOrderListDto paras){
         List<OrderEntity> orders = null;
-        if(status == 1L){
-            orders = orderRepository.findByUserIdAndStatus(userId, 0L, 1L);
-        }else if(status == 2L){
-            orders = orderRepository.findByUserIdAndStatus(userId, 2L, 3L);
+        Sort sort = new Sort(Sort.Direction.DESC,"time");
+        PageRequest pageRequest = paras.convert(sort);
+        if(paras.getStatus() == 1L){
+            orders = orderRepository.findByUserIdAndStatus(paras.getUserId(), 0L, 1L, pageRequest);
+        }else if(paras.getStatus() == 2L){
+            orders = orderRepository.findByUserIdAndStatus(paras.getUserId(), 2L, 3L, pageRequest);
         }else{
             return null;
         }

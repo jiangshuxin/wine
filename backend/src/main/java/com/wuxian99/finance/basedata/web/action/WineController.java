@@ -16,6 +16,8 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,7 +72,7 @@ public class WineController {
      * @param merchantId
      * @return
      */
-    @RequestMapping(value="getBanners/{merchantId}", method={RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value="getBanners/{merchantId}", method={RequestMethod.GET})
     public Result<List<BannerListView>> getBanners(@PathVariable String merchantId){
         List<BannerEntity> banners =  bannerService.findByMerchantId(merchantId);
         List<BannerListView> bannerViews = new ArrayList<>();
@@ -113,7 +115,7 @@ public class WineController {
      * @param discoverId
      * @return
      */
-    @RequestMapping(value="getDiscoverDetails/{discoverId}", method={RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value="getDiscoverDetails/{discoverId}", method={RequestMethod.GET})
     public Result<List<DiscoverDetailEntity>> getDiscoverDetails(@PathVariable Long discoverId){
         List<DiscoverDetailEntity> discoverDetails =  discoverService.findDetailByDiscoverId(discoverId);
         if(CollectionUtils.isNotEmpty(discoverDetails)){
@@ -141,6 +143,7 @@ public class WineController {
                 mdseListView.setNameEn(mdse.getNameEn());
                 mdseListView.setSmallPic(picPath + mdse.getSmallPic());
                 mdseListView.setPrice(mdse.getPrice());
+                mdseListView.setYear(mdse.getYear());
                 mdseListViews.add(mdseListView);
             }
         }
@@ -158,6 +161,7 @@ public class WineController {
         if(mdse != null){
             mdse.setSmallPic(picPath + mdse.getSmallPic());
             mdse.setBigPic(picPath + mdse.getBigPic());
+            mdse.setStoryPic(picPath + mdse.getStoryPic());
             return Result.buildSuccess(mdse);
         }else{
             return Result.buildFail("商品不存在");
@@ -313,12 +317,14 @@ public class WineController {
 
     /**
      * 获取收货地址列表
-     * @param userId
+     * @param paras
      * @return
      */
-    @RequestMapping(value="getUserAddresses/{userId}", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<List<UserAddressDto>> getUserAddresses(@PathVariable Long userId){
-        List<UserAddressEntity> addresses = userService.findUserAddressesByUserId(userId);
+    @RequestMapping(value="getUserAddresses", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<List<UserAddressDto>> getUserAddresses(@RequestBody QueryUserAddressListDto paras){
+        Sort sort = new Sort(Sort.Direction.DESC,"id");
+        PageRequest pageRequest = paras.convert(sort);
+        List<UserAddressEntity> addresses = userService.findUserAddressesByUserId(paras.getUserId(), pageRequest);
         List<UserAddressDto> views = new ArrayList<UserAddressDto>();
         if(CollectionUtils.isNotEmpty(addresses)){
             for (UserAddressEntity address:addresses){
@@ -342,8 +348,7 @@ public class WineController {
      */
     @RequestMapping(value="modifyUserAddress", method={RequestMethod.POST})
     public Result<Long> modifyUserAddress(@RequestBody UserAddressDto paras){
-        System.out.println(paras);
-        List<UserAddressEntity> addresses = userService.findUserAddressesByUserId(paras.getUserId());
+        List<UserAddressEntity> addresses = userService.findUserAddressesByUserId(paras.getUserId(), null);
         UserAddressEntity address = new UserAddressEntity();
         //如果为用户的第一个地址，自动设置为默认地址
         if(CollectionUtils.isEmpty(addresses)){
@@ -446,13 +451,12 @@ public class WineController {
 
     /**
      * 获取订单列表
-     * @param userId
-     * @param status
+     * @param paras
      * @return
      */
-    @RequestMapping(value="getOrders/{userId}/{status}", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<List<OrderListView>> getOrders(@PathVariable Long userId, @PathVariable Long status){
-        List<OrderListView> orders = orderService.findOrders(userId, status);
+    @RequestMapping(value="getOrders", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<List<OrderListView>> getOrders(@RequestBody QueryOrderListDto paras){
+        List<OrderListView> orders = orderService.findOrders(paras);
         return Result.buildSuccess(orders);
     }
 

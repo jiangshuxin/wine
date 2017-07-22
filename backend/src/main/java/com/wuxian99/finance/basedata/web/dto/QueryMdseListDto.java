@@ -1,8 +1,5 @@
 package com.wuxian99.finance.basedata.web.dto;
 
-/**
- * Created by sxjiang on 2017/7/20.
- */
 public class QueryMdseListDto extends Pagination{
     private String merchantId;
     private String catagory;
