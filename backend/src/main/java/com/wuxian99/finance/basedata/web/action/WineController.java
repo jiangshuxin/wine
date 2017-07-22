@@ -64,14 +64,18 @@ public class WineController {
      * @return
      */
     @RequestMapping(value="getBanners/{merchantId}", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<List<BannerEntity>> getBanners(@PathVariable String merchantId){
+    public Result<List<BannerListView>> getBanners(@PathVariable String merchantId){
         List<BannerEntity> banners =  bannerService.findByMerchantId(merchantId);
+        List<BannerListView> bannerViews = new ArrayList<>();
         if(CollectionUtils.isNotEmpty(banners)){
             for(BannerEntity banner : banners){
-                banner.setPic(picPath + banner.getPic());
+                BannerListView view = new BannerListView();
+                view.setPic(picPath + banner.getPic());
+                view.setMdseId(banner.getMdseId());
+                bannerViews.add(view);
             }
         }
-        return Result.buildSuccess(banners);
+        return Result.buildSuccess(bannerViews);
     }
 
     /**

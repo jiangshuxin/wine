@@ -44,7 +44,7 @@ public class MdseService {
                 String price = queryMdseListDto.getPrice();
                 if(StringUtils.isNotBlank(price)){
                     Path<Integer> pricePath = root.get("price");
-                    predicate = cb.and(predicate, cb.between(pricePath, Integer.parseInt(price)-100, Integer.parseInt(price)));
+                    predicate = cb.and(predicate, cb.between(pricePath, (Integer.parseInt(price)-100)*100, Integer.parseInt(price)*100));
                 }
                 query.where(predicate);
                 return query.getRestriction();

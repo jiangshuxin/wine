@@ -55,8 +55,4 @@ public class DiscoverListView implements Serializable {
     this.description = description;
   }
 
-  @Override
-  public String toString() {
-    return new Gson().toJson(this);
-  }
 }
