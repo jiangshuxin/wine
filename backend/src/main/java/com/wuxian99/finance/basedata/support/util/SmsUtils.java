@@ -38,10 +38,11 @@ public class SmsUtils {
     static final String accessKeyId = "LTAIoBFUqe6zLvGE";
     static final String accessKeySecret = "tq3PDP9xP7EdrfS5ZwnrMEDQB3Bj43";
 
-    //短信类型与模板映射
+    //短信类型与模板映射  防止对应用层暴露太多阿里云短信的细节
     static Map<SmsSendType,String> smsSendTypeMap = new HashMap<>();
 
     static {
+        //key=发送类型  value=短信模板
         smsSendTypeMap.put(SmsSendType.Login,"SMS_78895054");
     }
 
