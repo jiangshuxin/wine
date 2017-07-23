@@ -38,6 +38,6 @@ spring:
     settings:
       auto_import: common/datatable.ftl as dt,common/spring.ftl as spring
 wine:
-  picPath: http://123.57.234.184:7080/wine/images/  #图片访问路径
+  picPath: http://123.57.234.184/wineStatic/images/  #图片访问路径
   storePath: /data/wine/static/
   #storePath: /Users/sxjiang/Documents/wine/
