@@ -209,7 +209,7 @@ public class WineController {
         UserEntity user = userService.findByUserName(userName);
 
         //验证码登录
-        if("2".equals(type)){
+        if(type == 2L){
             if(!StringUtils.equals(verifyCodeCache.get(userName + "_1"), paras.getPassword())){
                 return Result.buildFail("短信验证码不正确");
             }
@@ -422,6 +422,8 @@ public class WineController {
             detail.setMdseId(mdse.getId());
             detail.setPrice(mdse.getPrice());
             detail.setCount(Long.parseLong(countSrt));
+            detail.setMdseName(mdse.getName());
+            detail.setMdseSmallPic(mdse.getSmallPic());
             details.add(detail);
 
             amount = amount + (detail.getCount()*detail.getPrice());
@@ -536,10 +538,11 @@ public class WineController {
         if(order == null){
             return Result.buildFail("发起支付异常");
         }
+        orderService.updateOrder(order);
         PayResultView payResultView = new PayResultView();
         payResultView.setPrepayId(order.getPaySeqs());
         if(payType == 2){
-            payResultView.setPayPic(order.getPayPic());
+            payResultView.setPayPic(picPath + order.getPayPic());
         }
         return Result.buildSuccess(payResultView);
     }

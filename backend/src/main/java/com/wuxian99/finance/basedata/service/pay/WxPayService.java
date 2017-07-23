@@ -29,9 +29,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class WxPayService {
 
-	private final static String APP_ID = "";
-	private final static String MCH_ID = "";
-	private final static String SECRET_KEY = "";
+	private final static String APP_ID = "wx79c1c7fa2255f655";
+	private final static String MCH_ID = "1484630812";
+	private final static String SECRET_KEY = "qwertyuiop87878983asdjfasdfasdtt";
 	private final static String PAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	private final static String QUERY_URL = "https://api.mch.weixin.qq.com/pay/orderquery";
 	private final static String REFUND_URL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
@@ -56,8 +56,8 @@ public class WxPayService {
 			packageParams.put("appid", APP_ID);
 			packageParams.put("mch_id", MCH_ID);
 			packageParams.put("nonce_str", nonce_str);  
-			packageParams.put("body", "与来自助点餐");  
-			packageParams.put("out_trade_no", order.getId());
+			packageParams.put("body", "财富酒庄");
+			packageParams.put("out_trade_no", order.getId()+"");
 			//单位分
 			packageParams.put("total_fee", order.getPayAmount() + "");  
 			packageParams.put("spbill_create_ip", SERVER_IP);  
@@ -79,7 +79,7 @@ public class WxPayService {
 					order.setPaySeqs(prepay_id);
 					if(payType == 2 && StringUtils.isNotBlank(payUrl)){
 						String payPicName = QRCodeUtil.createQRCodeImg(order.getId(), payUrl, "weixin");
-						order.setPayPic(payPicName);
+						order.setPayPic("pay/" + payPicName);
 					}
 					return order;
 				}

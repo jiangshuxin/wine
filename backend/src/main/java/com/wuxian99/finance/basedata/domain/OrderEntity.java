@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 订单
  */
 @Entity
-@Table(name="order")
+@Table(name="wine_order")
 public class OrderEntity implements Serializable {
 
   @Id

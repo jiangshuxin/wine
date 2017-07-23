@@ -46,6 +46,10 @@ public class OrderService {
         return order;
     }
 
+    public OrderEntity updateOrder(OrderEntity order) {
+        return orderRepository.save(order);
+    }
+
     public String cancelOrder(Long orderId){
         OrderEntity order = orderRepository.findOne(orderId);
         if(order == null){

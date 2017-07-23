@@ -11,7 +11,7 @@ public class Result<T> implements Serializable{
     private Boolean isSuccess;
     private String errorMsg;
     private T data;
-    private Long totalCount = -1L;
+    private Long totalCount;
 
     public Boolean getSuccess() {
         return isSuccess;
