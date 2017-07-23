@@ -11,6 +11,7 @@ public class Result<T> implements Serializable{
     private Boolean isSuccess;
     private String errorMsg;
     private T data;
+    private Long totalCount = -1L;
 
     public Boolean getSuccess() {
         return isSuccess;
@@ -36,6 +37,14 @@ public class Result<T> implements Serializable{
         this.data = data;
     }
 
+    public Long getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(Long totalCount) {
+        this.totalCount = totalCount;
+    }
+
     public static Result<?> buildSuccess(){
         Result<?> result = new Result<>();
         result.setSuccess(true);
@@ -46,6 +55,14 @@ public class Result<T> implements Serializable{
         Result<T> result = new Result<>();
         result.setSuccess(true);
         result.setData(data);
+        return result;
+    }
+
+    public static <T> Result<T> buildSuccess(T data, Long totalCount){
+        Result<T> result = new Result<>();
+        result.setSuccess(true);
+        result.setData(data);
+        result.setTotalCount(totalCount);
         return result;
     }
 

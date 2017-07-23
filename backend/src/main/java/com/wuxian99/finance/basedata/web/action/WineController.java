@@ -11,11 +11,11 @@ import com.wuxian99.finance.common.Result;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
@@ -50,22 +50,22 @@ public class WineController {
     private Map<String, String> verifyCodeCache = new HashMap<String, String>();
 
     @Autowired
-    WxPayService wxPayService;
+    private WxPayService wxPayService;
 
     @Autowired
-    BannerService bannerService;
+    private BannerService bannerService;
 
     @Autowired
-    DiscoverService discoverService;
+    private DiscoverService discoverService;
 
     @Autowired
-    MdseService mdseService;
+    private MdseService mdseService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     /**
      * 获取首页Banner
@@ -94,10 +94,10 @@ public class WineController {
      */
     @RequestMapping(value="getDiscovers", method={RequestMethod.POST})
     public Result<List<DiscoverListView>> getDiscovers(@RequestBody QueryDiscoverListDto paras){
-        List<DiscoverEntity> discovers =  discoverService.findDiscovers(paras);
+        Page<DiscoverEntity> page =  discoverService.findDiscovers(paras);
         List<DiscoverListView> discoverListViews = new ArrayList<DiscoverListView>();
-        if(CollectionUtils.isNotEmpty(discovers)){
-            for(DiscoverEntity discover : discovers){
+        if(CollectionUtils.isNotEmpty(page.getContent())){
+            for(DiscoverEntity discover : page.getContent()){
                 DiscoverListView discoverListView = new DiscoverListView();
                 discoverListView.setDiscoverId(discover.getId());
                 discoverListView.setPic(picPath + discover.getPic());
@@ -107,7 +107,7 @@ public class WineController {
                 discoverListViews.add(discoverListView);
             }
         }
-        return Result.buildSuccess(discoverListViews);
+        return Result.buildSuccess(discoverListViews, page.getTotalElements());
     }
 
     /**
@@ -133,10 +133,10 @@ public class WineController {
      */
     @RequestMapping(value="getMdses", method={RequestMethod.POST})
     public Result<List<MdseListView>> getMdses(@RequestBody QueryMdseListDto paras){
-        List<MdseEntity> mdses =  mdseService.findMdses(paras);
+        Page<MdseEntity> page = mdseService.findMdses(paras);
         List<MdseListView> mdseListViews = new ArrayList<MdseListView>();
-        if(CollectionUtils.isNotEmpty(mdses)){
-            for(MdseEntity mdse : mdses){
+        if(CollectionUtils.isNotEmpty(page.getContent())){
+            for(MdseEntity mdse : page.getContent()){
                 MdseListView mdseListView = new MdseListView();
                 mdseListView.setMdseId(mdse.getId());
                 mdseListView.setName(mdse.getName());
@@ -147,7 +147,7 @@ public class WineController {
                 mdseListViews.add(mdseListView);
             }
         }
-        return Result.buildSuccess(mdseListViews);
+        return Result.buildSuccess(mdseListViews, page.getTotalElements());
     }
 
     /**
@@ -324,10 +324,10 @@ public class WineController {
     public Result<List<UserAddressDto>> getUserAddresses(@RequestBody QueryUserAddressListDto paras){
         Sort sort = new Sort(Sort.Direction.DESC,"id");
         PageRequest pageRequest = paras.convert(sort);
-        List<UserAddressEntity> addresses = userService.findUserAddressesByUserId(paras.getUserId(), pageRequest);
+        Page<UserAddressEntity> page = userService.findUserAddressesByUserId(paras.getUserId(), pageRequest);
         List<UserAddressDto> views = new ArrayList<UserAddressDto>();
-        if(CollectionUtils.isNotEmpty(addresses)){
-            for (UserAddressEntity address:addresses){
+        if(CollectionUtils.isNotEmpty(page.getContent())){
+            for (UserAddressEntity address:page.getContent()){
                 UserAddressDto view = new UserAddressDto();
                 view.setAddressId(address.getId());
                 view.setIsDefualt(address.getIsDefualt());
@@ -338,7 +338,7 @@ public class WineController {
                 views.add(view);
             }
         }
-        return Result.buildSuccess(views);
+        return Result.buildSuccess(views, page.getTotalElements());
     }
 
     /**
@@ -348,10 +348,10 @@ public class WineController {
      */
     @RequestMapping(value="modifyUserAddress", method={RequestMethod.POST})
     public Result<Long> modifyUserAddress(@RequestBody UserAddressDto paras){
-        List<UserAddressEntity> addresses = userService.findUserAddressesByUserId(paras.getUserId(), null);
+        Page<UserAddressEntity> allAddr = userService.findUserAddressesByUserId(paras.getUserId(), null);
         UserAddressEntity address = new UserAddressEntity();
         //如果为用户的第一个地址，自动设置为默认地址
-        if(CollectionUtils.isEmpty(addresses)){
+        if(CollectionUtils.isEmpty(allAddr.getContent())){
             address.setIsDefualt(1L);
         }else{
             address.setIsDefualt(paras.getIsDefualt());
@@ -368,8 +368,8 @@ public class WineController {
 
         //如果本次新增/修改的地址为默认地址，把本来是默认地址的改为非默认
         if(address.getIsDefualt().longValue() == 1L){
-            if(CollectionUtils.isNotEmpty(addresses)) {
-                for (UserAddressEntity addr : addresses) {
+            if(CollectionUtils.isNotEmpty(allAddr.getContent())) {
+                for (UserAddressEntity addr : allAddr.getContent()) {
                     if (addr.getId().longValue() != address.getId().longValue() && addr.getIsDefualt().longValue() == 1L) {
                         addr.setIsDefualt(0L);
                         userService.saveOrUpdateUserAddress(addr);
@@ -456,8 +456,35 @@ public class WineController {
      */
     @RequestMapping(value="getOrders", method={RequestMethod.POST,RequestMethod.GET})
     public Result<List<OrderListView>> getOrders(@RequestBody QueryOrderListDto paras){
-        List<OrderListView> orders = orderService.findOrders(paras);
-        return Result.buildSuccess(orders);
+        List<OrderListView> views = new ArrayList<>();
+        Page<OrderEntity> page = orderService.findOrders(paras);
+        if(CollectionUtils.isNotEmpty(page.getContent())){
+            for(OrderEntity order : page.getContent()){
+                OrderListView view = new OrderListView();
+                view.setAmount(order.getAmount());
+                view.setMdseCount(order.getMdseCount());
+                view.setOrderId(order.getId());
+                view.setOrderTime(order.getTime());
+                view.setStatus(order.getStatus());
+
+                //订单商品信息
+                List<OrderDetailEntity> details = orderService.findOrderDetail(order.getId());
+                if(CollectionUtils.isNotEmpty(details)){
+                    List<OrderMdseView> orderMdseViews = new ArrayList<>();
+                    for(OrderDetailEntity detail : details){
+                        OrderMdseView orderMdseView = new OrderMdseView();
+                        orderMdseView.setName(detail.getMdseName());
+                        orderMdseView.setCount(detail.getCount());
+                        orderMdseView.setPic(picPath + detail.getMdseSmallPic());
+                        orderMdseView.setPrice(detail.getPrice());
+                        orderMdseViews.add(orderMdseView);
+                    }
+                    view.setMdseInfos(orderMdseViews);
+                }
+                views.add(view);
+            }
+        }
+        return Result.buildSuccess(views, page.getTotalElements());
     }
 
     /**

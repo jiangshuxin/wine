@@ -5,6 +5,7 @@ import com.wuxian99.finance.basedata.repository.wine.MdseRepository;
 import com.wuxian99.finance.basedata.web.dto.QueryMdseListDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,7 +25,7 @@ public class MdseService {
      * @param queryMdseListDto
      * @return
      */
-    public List<MdseEntity> findMdses(QueryMdseListDto queryMdseListDto) {
+    public Page<MdseEntity> findMdses(QueryMdseListDto queryMdseListDto) {
         Sort sort = new Sort(Sort.Direction.ASC,"price");
         PageRequest pageRequest = queryMdseListDto.convert(sort);
         return mdseRepository.findAll(new Specification<MdseEntity>() {
@@ -49,7 +50,7 @@ public class MdseService {
                 query.where(predicate);
                 return query.getRestriction();
             }
-        }, pageRequest).getContent();
+        }, pageRequest);
     }
 
     public MdseEntity findMdseById(Long id){

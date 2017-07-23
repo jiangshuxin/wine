@@ -13,6 +13,7 @@ import com.wuxian99.finance.basedata.web.view.OrderView;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -112,47 +113,20 @@ public class OrderService {
         }
     }
 
-    public List<OrderListView> findOrders(QueryOrderListDto paras){
-        List<OrderEntity> orders = null;
+    public Page<OrderEntity> findOrders(QueryOrderListDto paras){
         Sort sort = new Sort(Sort.Direction.DESC,"time");
         PageRequest pageRequest = paras.convert(sort);
         if(paras.getStatus() == 1L){
-            orders = orderRepository.findByUserIdAndStatus(paras.getUserId(), 0L, 1L, pageRequest);
+            return orderRepository.findByUserIdAndStatus(paras.getUserId(), 0L, 1L, pageRequest);
         }else if(paras.getStatus() == 2L){
-            orders = orderRepository.findByUserIdAndStatus(paras.getUserId(), 2L, 3L, pageRequest);
+            return orderRepository.findByUserIdAndStatus(paras.getUserId(), 2L, 3L, pageRequest);
         }else{
             return null;
-        }
-
-        if(CollectionUtils.isEmpty(orders)){
-            return null;
-        }else{
-            List<OrderListView> views = new ArrayList<>();
-            for(OrderEntity order : orders){
-                OrderListView view = new OrderListView();
-                view.setAmount(order.getAmount());
-                view.setMdseCount(order.getMdseCount());
-                view.setOrderId(order.getId());
-                view.setOrderTime(order.getTime());
-                view.setStatus(order.getStatus());
-
-                //商品信息
-                List<OrderDetailEntity>  details = orderDetailRepository.findByOrderId(order.getId());
-                if(CollectionUtils.isNotEmpty(details)){
-                    List<OrderMdseView> orderMdseViews = new ArrayList<>();
-                    for(OrderDetailEntity detail : details){
-                        OrderMdseView orderMdseView = new OrderMdseView();
-                        orderMdseView.setName(detail.getMdseName());
-                        orderMdseView.setCount(detail.getCount());
-                        orderMdseView.setPic(picPath + detail.getMdseSmallPic());
-                        orderMdseView.setPrice(detail.getPrice());
-                        orderMdseViews.add(orderMdseView);
-                    }
-                    view.setMdseInfos(orderMdseViews);
-                }
-                views.add(view);
-            }
-            return views;
         }
     }
+
+    public List<OrderDetailEntity> findOrderDetail(long orderId){
+        return orderDetailRepository.findByOrderId(orderId);
+    }
+
 }
