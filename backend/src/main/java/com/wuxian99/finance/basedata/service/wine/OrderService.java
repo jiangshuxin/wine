@@ -1,5 +1,6 @@
 package com.wuxian99.finance.basedata.service.wine;
 
+import com.wuxian99.finance.basedata.domain.MdseEntity;
 import com.wuxian99.finance.basedata.domain.OrderDetailEntity;
 import com.wuxian99.finance.basedata.domain.OrderEntity;
 import com.wuxian99.finance.basedata.domain.UserAddressEntity;
@@ -11,13 +12,16 @@ import com.wuxian99.finance.basedata.web.view.OrderMdseView;
 import com.wuxian99.finance.basedata.web.view.OrderListView;
 import com.wuxian99.finance.basedata.web.view.OrderView;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +36,6 @@ public class OrderService {
 
     @Autowired
     OrderDetailRepository orderDetailRepository;
-
-    @Autowired
-    UserAddressRepository userAddressRepository;
 
     public OrderEntity createOrder(OrderEntity order, List<OrderDetailEntity> details) {
         order = orderRepository.save(order);
@@ -116,13 +117,21 @@ public class OrderService {
     public Page<OrderEntity> findOrders(QueryOrderListDto paras){
         Sort sort = new Sort(Sort.Direction.DESC,"time");
         PageRequest pageRequest = paras.convert(sort);
-        if(paras.getStatus() == 1L){
-            return orderRepository.findByUserIdAndStatus(paras.getUserId(), 0L, 1L, pageRequest);
-        }else if(paras.getStatus() == 2L){
-            return orderRepository.findByUserIdAndStatus(paras.getUserId(), 2L, 3L, pageRequest);
-        }else{
-            return null;
-        }
+        return orderRepository.findAll(new Specification<OrderEntity>() {
+            public Predicate toPredicate(Root<OrderEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Path<String> merchantIdPath = root.get("userId");
+                Predicate predicate = cb.equal(merchantIdPath, paras.getUserId());
+                Path<Long> status = root.get("status");
+                if(paras.getStatus() == 1L){
+                    predicate = cb.and(predicate, cb.le(status, 1L));
+                }else if(paras.getStatus() == 2L){
+                    predicate = cb.and(predicate, cb.ge(status, 2L));
+                }
+                query.where(predicate);
+                return query.getRestriction();
+            }
+        }, pageRequest);
+
     }
 
     public List<OrderDetailEntity> findOrderDetail(long orderId){
