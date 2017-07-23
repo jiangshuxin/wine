@@ -159,12 +159,27 @@ public class WineController {
     public Result<MdseEntity> getMdseDetail(@PathVariable Long mdseId){
         MdseEntity mdse =  mdseService.findMdseById(mdseId);
         if(mdse != null){
-            mdse.setSmallPic(picPath + mdse.getSmallPic());
-            mdse.setBigPic1(picPath + mdse.getBigPic1());
-            mdse.setBigPic2(picPath + mdse.getBigPic2());
-            mdse.setBigPic3(picPath + mdse.getBigPic3());
-            mdse.setBigPic4(picPath + mdse.getBigPic4());
-            mdse.setStoryPic(picPath + mdse.getStoryPic());
+            MdseView view = new MdseView();
+            view.setMdseId(mdse.getId());
+            view.setName(mdse.getName());
+            view.setNameEn(mdse.getNameEn());
+            view.setPrice(mdse.getPrice());
+            view.setWineType(mdse.getWineType());
+            view.setGrapeType(mdse.getGrapeType());
+            view.setYear(mdse.getYear());
+            view.setDegree(mdse.getDegree());
+            view.setMl(mdse.getMl());
+            view.setTreeAge(mdse.getTreeAge());
+            view.setWineMaker(mdse.getWineMaker());
+            view.setMerchantName(mdse.getMerchantName());
+            view.setProductArea(mdse.getProductArea());
+            view.setReason(mdse.getReason());
+            view.setSmallPic(picPath + mdse.getSmallPic());
+            view.setBigPic1(picPath + mdse.getBigPic1());
+            view.setBigPic2(picPath + mdse.getBigPic2());
+            view.setBigPic3(picPath + mdse.getBigPic3());
+            view.setBigPic4(picPath + mdse.getBigPic4());
+            view.setStoryPic(picPath + mdse.getStoryPic());
             return Result.buildSuccess(mdse);
         }else{
             return Result.buildFail("商品不存在");
