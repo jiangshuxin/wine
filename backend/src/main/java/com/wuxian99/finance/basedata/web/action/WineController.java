@@ -156,7 +156,7 @@ public class WineController {
      * @return
      */
     @RequestMapping(value="getMdseDetail/{mdseId}", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<MdseEntity> getMdseDetail(@PathVariable Long mdseId){
+    public Result<MdseView> getMdseDetail(@PathVariable Long mdseId){
         MdseEntity mdse =  mdseService.findMdseById(mdseId);
         if(mdse != null){
             MdseView view = new MdseView();
@@ -180,7 +180,7 @@ public class WineController {
             view.setBigPic3(picPath + mdse.getBigPic3());
             view.setBigPic4(picPath + mdse.getBigPic4());
             view.setStoryPic(picPath + mdse.getStoryPic());
-            return Result.buildSuccess(mdse);
+            return Result.buildSuccess(view);
         }else{
             return Result.buildFail("商品不存在");
         }
