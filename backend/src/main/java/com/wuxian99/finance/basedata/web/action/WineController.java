@@ -160,7 +160,10 @@ public class WineController {
         MdseEntity mdse =  mdseService.findMdseById(mdseId);
         if(mdse != null){
             mdse.setSmallPic(picPath + mdse.getSmallPic());
-            mdse.setBigPic(picPath + mdse.getBigPic());
+            mdse.setBigPic1(picPath + mdse.getBigPic1());
+            mdse.setBigPic2(picPath + mdse.getBigPic2());
+            mdse.setBigPic3(picPath + mdse.getBigPic3());
+            mdse.setBigPic4(picPath + mdse.getBigPic4());
             mdse.setStoryPic(picPath + mdse.getStoryPic());
             return Result.buildSuccess(mdse);
         }else{
