@@ -187,13 +187,34 @@ public class WineController {
     }
 
     /**
+     * 验证用户名
+     * @param userName
+     * @return
+     */
+    @RequestMapping(value="verifyUserName/{userName}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<Map<String, Boolean>> verifyUserName(@PathVariable String userName){
+        if(StringUtils.isBlank(userName) || !StringUtils.isNumeric(userName) || userName.length() != 11){
+            return Result.buildFail("手机号不正确");
+        }
+
+        UserEntity user = userService.findByUserName(userName);
+        Boolean isExist = false;
+        if(user != null){
+            isExist = true;
+        }
+        Map<String, Boolean> data = new HashMap<>();
+        data.put("isExist", isExist);
+        return Result.buildSuccess(data);
+    }
+
+    /**
      * 发送验证码
      * @param userName
      * @param type 1:登录，2:修改密码
      * @return
      */
     @RequestMapping(value="sendVerifyCode/{userName}/{type}", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<String> sendVerifyCode(@PathVariable String userName, @PathVariable Long type){
+    public Result<Map<String, String>> sendVerifyCode(@PathVariable String userName, @PathVariable Long type){
         if(StringUtils.isBlank(userName) || !StringUtils.isNumeric(userName) || userName.length() != 11){
             return Result.buildFail("手机号不正确");
         }
@@ -205,8 +226,11 @@ public class WineController {
             verifyCode = verifyCode + new Random().nextInt(10);
         }
         verifyCodeCache.put(userName + "_" + type, verifyCode);
+
         //TODO 发送短信验证码
-        return Result.buildSuccess(verifyCode);
+        Map<String, String> data = new HashMap<>();
+        data.put("verifyCode", verifyCode);
+        return Result.buildSuccess(data);
     }
 
     /**
@@ -215,7 +239,7 @@ public class WineController {
      * @return
      */
     @RequestMapping(value="login", method={RequestMethod.POST})
-    public Result<UserInfoDto> sendVerifyCode(@RequestBody LoginDto paras){
+    public Result<UserInfoDto> login(@RequestBody LoginDto paras){
         String userName = paras.getUserName();
         if(StringUtils.isBlank(userName) || !StringUtils.isNumeric(userName) || userName.length() != 11){
             return Result.buildFail("用户名不正确");
@@ -268,7 +292,7 @@ public class WineController {
      * @return
      */
     @RequestMapping(value="modifyPwd", method={RequestMethod.POST})
-    public Result<String> sendVerifyCode(@RequestBody ModifyPwdDto paras){
+    public Result<Map<String, Long>> modifyPwd(@RequestBody ModifyPwdDto paras){
         if(StringUtils.isBlank(paras.getPassword())){
             return Result.buildFail("新密码不能为空");
         }
@@ -281,7 +305,10 @@ public class WineController {
         }
         user.setPassword(paras.getPassword());
         userService.saveOrUpdateUser(user);
-        return Result.buildSuccess("");
+
+        Map<String, Long> data = new HashMap<>();
+        data.put("userId", user.getId());
+        return Result.buildSuccess(data);
     }
 
     /**
@@ -528,12 +555,14 @@ public class WineController {
      * @return
      */
     @RequestMapping(value="cancelOrder/{orderId}", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<String> cancelOrder(@PathVariable Long orderId){
+    public Result<Map<String, Long>> cancelOrder(@PathVariable Long orderId){
         String errMsg = orderService.cancelOrder(orderId);
         if(errMsg != null){
             return Result.buildFail(errMsg);
         }else{
-            return Result.buildSuccess(null);
+            Map<String, Long> data = new HashMap<>();
+            data.put("orderId", orderId);
+            return Result.buildSuccess(data);
         }
     }
 
