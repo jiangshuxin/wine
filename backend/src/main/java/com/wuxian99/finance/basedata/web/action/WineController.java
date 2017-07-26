@@ -4,13 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.wuxian99.finance.basedata.domain.*;
 import com.wuxian99.finance.basedata.service.pay.WxPayService;
 import com.wuxian99.finance.basedata.service.wine.*;
-import com.wuxian99.finance.basedata.support.util.StringUtils;
 import com.wuxian99.finance.basedata.web.dto.*;
 import com.wuxian99.finance.basedata.web.view.*;
 import com.wuxian99.finance.common.Result;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.http.entity.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -592,22 +592,6 @@ public class WineController {
             payResultView.setPayPic(picPath + order.getPayPic());
         }
         return Result.buildSuccess(payResultView);
-    }
-
-    @Value("${wine.storePath}")
-    private String storePath;
-
-    @RequestMapping("/upload/{module}")
-    public Result<?> singleFileUpload(@RequestParam("upload") MultipartFile file, @PathVariable String module) throws IOException {
-        String yyyyMMdd = DateFormatUtils.format(new Date(),"/yyyy/MM/dd/");
-        String dirStr = org.apache.commons.lang3.StringUtils.join(new Object[]{storePath,module,yyyyMMdd});
-        FileUtils.forceMkdir(new File(dirStr));
-
-        // Save the file locally
-        Path path = Paths.get(dirStr + file.getOriginalFilename());
-        byte[] bytes = file.getBytes();
-        Files.write(path, bytes);
-        return Result.buildSuccess(path.toString());
     }
 
     @ExceptionHandler(Exception.class)

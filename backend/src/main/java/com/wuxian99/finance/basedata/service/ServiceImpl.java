@@ -17,7 +17,10 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ServiceImpl implements IService {
@@ -65,6 +68,11 @@ public class ServiceImpl implements IService {
 			result.setRecordsTotal((int) pageResult.getTotalElements());
 			result.setRecordsFiltered((int) pageResult.getTotalElements());
 			result.setData(pageResult.getContent());
+			Map<String,Map<String,List>> files = new HashMap<>();
+			Map<String,List> map = new HashMap<>();
+			map.put("files",new ArrayList());
+			files.put("files",map);
+			result.setFiles(files);
 			return result;
 		} else {
 			CUDResult<Object> result = new CUDResult<Object>();

@@ -23,7 +23,7 @@
         </tfoot>
     </table>
     <script type="text/javascript" language="javascript" class="init">
-
+        var editor;
 
         $(document).ready(function() {
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
@@ -37,7 +37,7 @@
                 name: "pic",
                 type: "upload",
                 display: function ( file_id ) {
-                    return '<img src=""/>';
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
                 },
                 clearText: "Clear",
                 noImageText: 'No image'
@@ -49,30 +49,28 @@
                 name: "mdseId"
             }
             ],{
-                ajax:"${rc.contextPath}/api/front/upload/mdse"
+                ajax:"${rc.contextPath}/api/upload/banner"
             });
 
             table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[
                 { data: "id"},
                 { data: "merchantId" },
-                { data: "pic" },
+                {
+                    data: "pic",
+                    render: function ( file_id ) {
+                        return file_id ?
+                        '<img src="'+editor.file( 'files', file_id ).web_path+'"/>' :
+                                null;
+                    },
+                    defaultContent: "No image",
+                    title: "Image"
+                },
                 { data: "sortValue"},
                 { data: "mdseId"}
             ],[
                 { extend: "create", editor: editor },
                 { extend: "edit",   editor: editor },
-                { extend: "remove", editor: editor },
-                {
-                    extend: 'collection',
-                    text: '导出',
-                    buttons: [
-                        'copy',
-                        'excel',
-                        'csv',
-                        'pdf',
-                        'print'
-                    ]
-                }
+                { extend: "remove", editor: editor }
             ],{initComplete: function ()
             {
 
