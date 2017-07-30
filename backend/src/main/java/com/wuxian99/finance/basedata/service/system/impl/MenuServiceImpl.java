@@ -83,7 +83,7 @@ public class MenuServiceImpl implements MenuService {
             menu.setUri(StringUtils.join(contextPath,"/menuRedirect/",entity.getItemKey(),"?redirect=",attribute2));
         }
 
-        String attribute1 = entity.getAttribute1();
+        String attribute1 = entity.getAttribute1();//用于控制权限
         if(StringUtils.isNotEmpty(attribute1) && signinUser != null && PropertyUtils.isReadable(signinUser,attribute1)){
             Object result = null;
             try {

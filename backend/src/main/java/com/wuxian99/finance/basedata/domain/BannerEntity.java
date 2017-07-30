@@ -34,7 +34,7 @@ public class BannerEntity implements Serializable {
    */
   @Column(name = "pic_ref")
   @UploadRef(ref = "picPath")
-  private String picRef;
+  private Integer picRef;
 
   /**
    * 排序，前端按升序展示
@@ -72,11 +72,11 @@ public class BannerEntity implements Serializable {
     this.picPath = picPath;
   }
 
-  public String getPicRef() {
+  public Integer getPicRef() {
     return picRef;
   }
 
-  public void setPicRef(String picRef) {
+  public void setPicRef(Integer picRef) {
     this.picRef = picRef;
   }
 

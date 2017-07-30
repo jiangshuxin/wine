@@ -36,7 +36,7 @@ public class UploadFileService {
     public UploadFileInfo save(MultipartFile file,String module) throws IOException {
         String fileName = file.getOriginalFilename();
         String yyyyMMdd = DateFormatUtils.format(new Date(),"/yyyy/MM/dd/");
-        String dir = StringUtils.join(module,yyyyMMdd);
+        String dir = StringUtils.join(storePath,module,yyyyMMdd);
         String relativePath = StringUtils.join(module,yyyyMMdd,fileName);
         String systemPath = StringUtils.join(storePath,relativePath);
         String webPath = StringUtils.join(picPath,relativePath);
@@ -61,7 +61,7 @@ public class UploadFileService {
         uploadResult.setId(String.valueOf(uploadFileEntity.getId()));
         uploadResult.setFileName(fileName);
         uploadResult.setFileSize(String.valueOf(uploadFileEntity.getFileSize()));
-        //mock
+        //FIXME mock
         uploadResult.setWeb_path("http://123.57.234.184/wineStatic/2.png");
         return uploadResult;
     }

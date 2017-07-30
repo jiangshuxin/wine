@@ -100,7 +100,7 @@ public class WineController {
             for(DiscoverEntity discover : page.getContent()){
                 DiscoverListView discoverListView = new DiscoverListView();
                 discoverListView.setDiscoverId(discover.getId());
-                discoverListView.setPic(picPath + discover.getPic());
+                discoverListView.setPic(picPath + discover.getPicPath());
                 discoverListView.setTitle(discover.getTitle());
                 discoverListView.setTag(discover.getTag());
                 discoverListView.setDescription(discover.getDescription());

@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
         //FIXME
         SigninUser user = new SigninUser();
         user.setName("蒋树新");
-        user.setDepartment("ics");
+        user.setDepartment("财富酒庄集团总部");
         user.setAccount("sxjiang");
         return Result.buildSuccess(user);
     }
