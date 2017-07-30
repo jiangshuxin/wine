@@ -4,12 +4,17 @@ import com.wuxian99.finance.basedata.domain.model.ExecuteInfo;
 import com.wuxian99.finance.basedata.domain.model.MetadataInfo;
 import com.wuxian99.finance.basedata.domain.model.Select;
 import com.wuxian99.finance.basedata.domain.model.SigninUser;
+import com.wuxian99.finance.basedata.service.system.MetadataService;
+import com.wuxian99.finance.basedata.service.system.impl.UploadFileService;
 import com.wuxian99.finance.basedata.support.annotation.Ddic;
+import com.wuxian99.finance.basedata.support.annotation.UploadRef;
 import com.wuxian99.finance.basedata.support.convert.ExecuteConvert;
 import com.wuxian99.finance.basedata.support.util.ClassUtil;
 import com.wuxian99.finance.common.*;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -17,6 +22,8 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +35,10 @@ public class ServiceImpl implements IService {
 	ApplicationContext context;
 	@Autowired
 	ExecuteConvert convert;
-
+    @Autowired
+    UploadFileService uploadFileService;
+    @Autowired
+    MetadataService metadataService;
 	/*
 	 * 1.组合方法执行要素 2.执行方法返回结果 3.将结果转化为view层Result
 	 */
@@ -65,13 +75,41 @@ public class ServiceImpl implements IService {
 		if (command.isQuery()) {
 			Page<?> pageResult = (Page<?>) obj;
 			PageableResult result = new PageableResult();
-			result.setRecordsTotal((int) pageResult.getTotalElements());
+            List<?> content = pageResult.getContent();
+            result.setRecordsTotal((int) pageResult.getTotalElements());
 			result.setRecordsFiltered((int) pageResult.getTotalElements());
-			result.setData(pageResult.getContent());
-			Map<String,Map<String,List>> files = new HashMap<>();
-			Map<String,List> map = new HashMap<>();
-			map.put("files",new ArrayList());
-			files.put("files",map);
+			result.setData(content);
+
+            List<Integer> ids = new ArrayList<>();
+            Map<String,UploadRef> uploadRefMap = null;
+            for(int i=0;i<content.size();i++){
+                Object element = content.get(i);
+                if(i == 0){
+                    uploadRefMap = metadataService.getEntityUploadRefMap().get(element.getClass().getSimpleName());
+                }
+
+                if(uploadRefMap != null && !uploadRefMap.isEmpty()){
+                    for(String key : uploadRefMap.keySet()){
+                        try {
+                            Object property = PropertyUtils.getProperty(element, key);
+                            if(property != null){
+                                ids.add(Integer.parseInt(property.toString()));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            }
+            //load upload_file
+			Map files = new HashMap<>();
+			List list = new ArrayList();
+            Map<String,UploadFileInfo> uploadFileInfos = uploadFileService.findByIds(ids);
+            //List<UploadFileInfo> uploadFileInfos = uploadFileService.findByIds(ids.toArray(new Integer[0]));
+
+            list.add(uploadFileInfos);
+			files.put("files",uploadFileInfos);
 			result.setFiles(files);
 			return result;
 		} else {

@@ -79,7 +79,7 @@ public class WineController {
         if(CollectionUtils.isNotEmpty(banners)){
             for(BannerEntity banner : banners){
                 BannerListView view = new BannerListView();
-                view.setPic(picPath + banner.getPic());
+                view.setPic(picPath + banner.getPicPath());
                 view.setMdseId(banner.getMdseId());
                 bannerViews.add(view);
             }

@@ -15,7 +15,7 @@ public class PageableResult extends Result {
     private Integer recordsTotal;
 
     private List<String> options;
-    private Map<String,Map<String,List>> files;
+    private Map<String,List> files;
 
     public Integer getRecordsFiltered() {
         return recordsFiltered;
@@ -41,11 +41,11 @@ public class PageableResult extends Result {
         this.options = options;
     }
 
-    public Map<String, Map<String, List>> getFiles() {
+    public Map<String, List> getFiles() {
         return files;
     }
 
-    public void setFiles(Map<String, Map<String, List>> files) {
+    public void setFiles(Map<String, List> files) {
         this.files = files;
     }
 }

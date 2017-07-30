@@ -9,6 +9,7 @@ public class UploadFileInfo {
     private String id;
     private String system_path;
     private String web_path;
+    private String relative_path;
 
     public String getFileName() {
         return fileName;
@@ -48,5 +49,13 @@ public class UploadFileInfo {
 
     public void setWeb_path(String web_path) {
         this.web_path = web_path;
+    }
+
+    public String getRelative_path() {
+        return relative_path;
+    }
+
+    public void setRelative_path(String relative_path) {
+        this.relative_path = relative_path;
     }
 }

@@ -1,6 +1,7 @@
 package com.wuxian99.finance.basedata.service.system;
 
 import com.wuxian99.finance.basedata.domain.model.MetadataInfo;
+import com.wuxian99.finance.basedata.support.annotation.UploadRef;
 
 import java.util.List;
 import java.util.Map;
@@ -10,11 +11,9 @@ public interface MetadataService {
 	
 	MetadataInfo findByModule(String module);
 	
-	Map<String, Object> findNeedUpload();
-	
 	MetadataInfo save(MetadataInfo metadataInfo);
 	
-	List<MetadataInfo> findModuleByGroup(String group);
-	
 	Map<String, Object> findDdic(String module);
+
+	Map<String, Map<String, UploadRef>> getEntityUploadRefMap();
 }

@@ -34,7 +34,7 @@
                 name: "merchantId"
             },{
                 label: "图片路径:",
-                name: "pic",
+                name: "picRef",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
@@ -55,16 +55,7 @@
             table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[
                 { data: "id"},
                 { data: "merchantId" },
-                {
-                    data: "pic",
-                    render: function ( file_id ) {
-                        return file_id ?
-                        '<img src="'+editor.file( 'files', file_id ).web_path+'"/>' :
-                                null;
-                    },
-                    defaultContent: "No image",
-                    title: "Image"
-                },
+                { data: "picRef" },
                 { data: "sortValue"},
                 { data: "mdseId"}
             ],[

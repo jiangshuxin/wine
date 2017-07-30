@@ -3,22 +3,14 @@ package com.wuxian99.finance.basedata.web.action;
 import com.wuxian99.finance.basedata.domain.model.SigninUser;
 import com.wuxian99.finance.basedata.service.IService;
 import com.wuxian99.finance.basedata.service.system.MetadataService;
+import com.wuxian99.finance.basedata.service.system.impl.UploadFileService;
 import com.wuxian99.finance.common.*;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Date;
 
 @RestController
 public class Action {
@@ -56,32 +48,14 @@ public class Action {
 		return metadataService.findDdic(module);
 	}
 
-	@Value("${wine.storePath}")
-	private String storePath;
-
-	@Value("${wine.picPath}")
-	private String picPath;
+	@Autowired
+	private UploadFileService uploadFileService;
 
 	@RequestMapping("/api/upload/{module}")
 	public Result singleFileUpload(@RequestParam(name="upload",required = false) MultipartFile file, ModelMap modelMap, CUDCommand command, @PathVariable String module, @SessionAttribute("signinUser") SigninUser signinUser) throws IOException {
 		if(file != null){
-			String yyyyMMdd = DateFormatUtils.format(new Date(),"/yyyy/MM/dd/");
-			String dirStr = StringUtils.join(storePath,module,yyyyMMdd);
-			String fileName = file.getOriginalFilename();
-			FileUtils.forceMkdir(new File(dirStr));
-
-			// Save the file locally
-			Path path = Paths.get(dirStr + fileName);
-			byte[] bytes = file.getBytes();
-			Files.write(path, bytes);
-			UploadFileInfo uploadFileInfo = new UploadFileInfo();
-			uploadFileInfo.setId("1");
-			uploadFileInfo.setFileName(fileName);
-			uploadFileInfo.setFileSize(String.valueOf(file.getSize()));
-			uploadFileInfo.setSystem_path(path.toString());
-			//uploadFileInfo.setWeb_path(StringUtils.join(picPath,module,yyyyMMdd,fileName));
-			uploadFileInfo.setWeb_path("http://123.57.234.184/wineStatic/2.png");
-			return UploadResult.buildSuccess(uploadFileInfo);
+			UploadFileInfo result = uploadFileService.save(file,module);
+			return UploadResult.buildSuccess(result);
 		}
 		if(command != null){
 			command.setModule(module);
