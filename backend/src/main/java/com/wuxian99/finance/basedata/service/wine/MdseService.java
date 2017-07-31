@@ -30,23 +30,41 @@ public class MdseService {
         PageRequest pageRequest = queryMdseListDto.convert(sort);
         return mdseRepository.findAll(new Specification<MdseEntity>() {
             public Predicate toPredicate(Root<MdseEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+
                 Path<String> merchantIdPath = root.get("merchantId");
                 Predicate predicate = cb.equal(merchantIdPath, queryMdseListDto.getMerchantId());
+
                 String catagory = queryMdseListDto.getCatagory();
                 if(StringUtils.isNotBlank(catagory)){
                     Path<String> catagoryPath = root.get("catagory");
                     predicate = cb.and(predicate, cb.equal(catagoryPath, catagory));
                 }
+
                 String year = queryMdseListDto.getYear();
                 if(StringUtils.isNotBlank(year)){
                     Path<String> yearPath = root.get("year");
                     predicate = cb.and(predicate, cb.equal(yearPath, year));
                 }
+
                 String price = queryMdseListDto.getPrice();
                 if(StringUtils.isNotBlank(price)){
                     Path<Integer> pricePath = root.get("price");
                     predicate = cb.and(predicate, cb.between(pricePath, (Integer.parseInt(price)-100)*100, Integer.parseInt(price)*100));
                 }
+
+                String mdseIds = queryMdseListDto.getMdseIds();
+                if(StringUtils.isNotBlank(mdseIds)){
+                    Path<Integer> pricePath = root.get("id");
+                    CriteriaBuilder.In<Integer> mdseIdsPre = cb.in(pricePath);
+                    String[] mdseIdArray = mdseIds.split(",");
+                    for(String mdseId : mdseIdArray){
+                        if(StringUtils.isNotBlank(mdseId)){
+                            mdseIdsPre.value(Integer.parseInt(mdseId.trim()));
+                        }
+                    }
+                    predicate = cb.and(predicate, mdseIdsPre);
+                }
+
                 query.where(predicate);
                 return query.getRestriction();
             }

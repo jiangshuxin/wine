@@ -5,6 +5,7 @@ public class QueryMdseListDto extends Pagination{
     private String catagory;
     private String year;
     private String price;
+    private String mdseIds;
 
     public String getMerchantId() {
         return merchantId;
@@ -36,5 +37,13 @@ public class QueryMdseListDto extends Pagination{
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getMdseIds() {
+        return mdseIds;
+    }
+
+    public void setMdseIds(String mdseIds) {
+        this.mdseIds = mdseIds;
     }
 }
