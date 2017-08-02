@@ -87,7 +87,7 @@ public class OrderService {
             //收货地址
             view.setAddress(order.getAddress());
             view.setPhone(order.getPhone());
-            view.setReciver(order.getReciver());
+            view.setReceiver(order.getReceiver());
             view.setProvince(order.getProvince());
 
             //物流信息

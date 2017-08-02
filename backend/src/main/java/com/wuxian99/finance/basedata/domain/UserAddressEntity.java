@@ -25,7 +25,7 @@ public class UserAddressEntity implements Serializable {
   /**
    * 收货人
    */
-  private String reciver;
+  private String receiver;
 
   /**
    * 收货人电话
@@ -45,8 +45,8 @@ public class UserAddressEntity implements Serializable {
   /**
    * 是否为默认地址，1:是，0:否
    */
-  @Column(name = "isdefualt")
-  private Long isDefualt;
+  @Column(name = "isdefault")
+  private Long isDefault;
 
   public Long getId() {
     return id;
@@ -64,12 +64,12 @@ public class UserAddressEntity implements Serializable {
     this.userId = userId;
   }
 
-  public String getReciver() {
-    return reciver;
+  public String getReceiver() {
+    return receiver;
   }
 
-  public void setReciver(String reciver) {
-    this.reciver = reciver;
+  public void setReceiver(String receiver) {
+    this.receiver = receiver;
   }
 
   public String getPhone() {
@@ -96,12 +96,12 @@ public class UserAddressEntity implements Serializable {
     this.address = address;
   }
 
-  public Long getIsDefualt() {
-    return isDefualt;
+  public Long getIsDefault() {
+    return isDefault;
   }
 
-  public void setIsDefualt(Long isDefualt) {
-    this.isDefualt = isDefualt;
+  public void setIsDefault(Long isDefault) {
+    this.isDefault = isDefault;
   }
 
   @Override

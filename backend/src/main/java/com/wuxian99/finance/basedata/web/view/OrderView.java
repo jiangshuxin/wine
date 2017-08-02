@@ -18,7 +18,7 @@ public class OrderView implements Serializable {
   private List<OrderMdseView> mdseInfos;
   private String address;
   private String phone;
-  private String reciver;
+  private String receiver;
   private String province;
   private String comment;
   private String logisticsCompany;
@@ -89,12 +89,12 @@ public class OrderView implements Serializable {
     this.phone = phone;
   }
 
-  public String getReciver() {
-    return reciver;
+  public String getReceiver() {
+    return receiver;
   }
 
-  public void setReciver(String reciver) {
-    this.reciver = reciver;
+  public void setReceiver(String receiver) {
+    this.receiver = receiver;
   }
 
   public String getProvince() {

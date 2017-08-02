@@ -99,7 +99,7 @@ public class OrderEntity implements Serializable {
   /**
    * 收货人
    */
-  private String reciver;
+  private String receiver;
 
   /**
    * 收货人电话
@@ -228,12 +228,12 @@ public class OrderEntity implements Serializable {
     this.invoiceInfo = invoiceInfo;
   }
 
-  public String getReciver() {
-    return reciver;
+  public String getReceiver() {
+    return receiver;
   }
 
-  public void setReciver(String reciver) {
-    this.reciver = reciver;
+  public void setReceiver(String receiver) {
+    this.receiver = receiver;
   }
 
   public String getPhone() {

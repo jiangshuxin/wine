@@ -407,8 +407,8 @@ public class WineController {
             for (UserAddressEntity address:page.getContent()){
                 UserAddressDto view = new UserAddressDto();
                 view.setAddressId(address.getId());
-                view.setIsDefualt(address.getIsDefualt());
-                view.setReciver(address.getReciver());
+                view.setIsDefault(address.getIsDefault());
+                view.setReceiver(address.getReceiver());
                 view.setPhone(address.getPhone());
                 view.setProvince(address.getProvince());
                 view.setAddress(address.getAddress());
@@ -431,13 +431,13 @@ public class WineController {
         UserAddressEntity address = new UserAddressEntity();
         //如果为用户的第一个地址，自动设置为默认地址
         if(CollectionUtils.isEmpty(allAddr.getContent())){
-            address.setIsDefualt(1L);
+            address.setIsDefault(1L);
         }else{
-            address.setIsDefualt(paras.getIsDefualt());
+            address.setIsDefault(paras.getIsDefault());
         }
         address.setUserId(paras.getUserId());
         address.setPhone(paras.getPhone());
-        address.setReciver(paras.getReciver());
+        address.setReceiver(paras.getReceiver());
         address.setProvince(paras.getProvince());
         address.setAddress(paras.getAddress());
         if(paras.getAddressId() != null && paras.getAddressId().longValue() != 0L){
@@ -446,11 +446,11 @@ public class WineController {
         address = userService.saveOrUpdateUserAddress(address);
 
         //如果本次新增/修改的地址为默认地址，把本来是默认地址的改为非默认
-        if(address.getIsDefualt().longValue() == 1L){
+        if(address.getIsDefault().longValue() == 1L){
             if(CollectionUtils.isNotEmpty(allAddr.getContent())) {
                 for (UserAddressEntity addr : allAddr.getContent()) {
-                    if (addr.getId().longValue() != address.getId().longValue() && addr.getIsDefualt().longValue() == 1L) {
-                        addr.setIsDefualt(0L);
+                    if (addr.getId().longValue() != address.getId().longValue() && addr.getIsDefault().longValue() == 1L) {
+                        addr.setIsDefault(0L);
                         userService.saveOrUpdateUserAddress(addr);
                     }
                 }
@@ -522,7 +522,7 @@ public class WineController {
         order.setAddress(userAddress.getAddress());
         order.setPhone(userAddress.getPhone());
         order.setProvince(userAddress.getProvince());
-        order.setReciver(userAddress.getReciver());
+        order.setReceiver(userAddress.getReceiver());
 
         order = orderService.createOrder(order, details);
 

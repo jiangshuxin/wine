@@ -83,7 +83,7 @@
                 name: "invoiceInfo"
             },{
                 label: "收货人:",
-                name: "reciver"
+                name: "receiver"
             },{
                 label: "收货人电话:",
                 name: "phone"

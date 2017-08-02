@@ -10,73 +10,73 @@ import java.io.Serializable;
  */
 public class UserAddressDto implements Serializable {
 
-  private Long userId;
-  private Long addressId;
-  private Long isDefualt;
-  private String reciver;
-  private String phone;
-  private String province;
-  private String address;
+    private Long userId;
+    private Long addressId;
+    private Long isDefault;
+    private String receiver;
+    private String phone;
+    private String province;
+    private String address;
 
-  public Long getUserId() {
-    return userId;
-  }
+    public Long getUserId() {
+        return userId;
+    }
 
-  public void setUserId(Long userId) {
-    this.userId = userId;
-  }
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-  public Long getAddressId() {
-    return addressId;
-  }
+    public Long getAddressId() {
+        return addressId;
+    }
 
-  public void setAddressId(Long addressId) {
-    this.addressId = addressId;
-  }
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
+    }
 
-  public Long getIsDefualt() {
-    return isDefualt;
-  }
+    public Long getIsDefault() {
+        return isDefault;
+    }
 
-  public void setIsDefualt(Long isDefualt) {
-    this.isDefualt = isDefualt;
-  }
+    public void setIsDefault(Long isDefault) {
+        this.isDefault = isDefault;
+    }
 
-  public String getReciver() {
-    return reciver;
-  }
+    public String getReceiver() {
+        return receiver;
+    }
 
-  public void setReciver(String reciver) {
-    this.reciver = reciver;
-  }
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
 
-  public String getPhone() {
-    return phone;
-  }
+    public String getPhone() {
+        return phone;
+    }
 
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-  public String getProvince() {
-    return province;
-  }
+    public String getProvince() {
+        return province;
+    }
 
-  public void setProvince(String province) {
-    this.province = province;
-  }
+    public void setProvince(String province) {
+        this.province = province;
+    }
 
-  public String getAddress() {
-    return address;
-  }
+    public String getAddress() {
+        return address;
+    }
 
-  public void setAddress(String address) {
-    this.address = address;
-  }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-  @Override
-  public String toString() {
-    return new Gson().toJson(this);
-  }
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 
 }
