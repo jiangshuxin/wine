@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.web.view;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -133,6 +135,11 @@ public class OrderView implements Serializable {
 
   public void setInvoiceInfo(String invoiceInfo) {
     this.invoiceInfo = invoiceInfo;
+  }
+
+  @Override
+  public String toString() {
+    return new Gson().toJson(this);
   }
 
 }

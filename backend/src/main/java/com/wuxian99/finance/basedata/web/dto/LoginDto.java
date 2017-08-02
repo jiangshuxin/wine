@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.web.dto;
 
+import com.google.gson.Gson;
+
 /**
  * 登录请求参数
  */
@@ -42,5 +44,10 @@ public class LoginDto {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

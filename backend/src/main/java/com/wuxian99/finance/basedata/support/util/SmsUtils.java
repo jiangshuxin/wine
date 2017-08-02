@@ -44,6 +44,7 @@ public class SmsUtils {
     static {
         //key=发送类型  value=短信模板
         smsSendTypeMap.put(SmsSendType.Login,"SMS_78895054");
+        smsSendTypeMap.put(SmsSendType.ModifyPwd,"SMS_78895051");
     }
 
     public static SendSmsResponse sendSms(SmsSendRequest smsSendRequest) {
@@ -141,7 +142,8 @@ public class SmsUtils {
     }
 
     public static enum SmsSendType{
-        Login
+        Login,
+        ModifyPwd
     }
 
     public static void main(String[] args) throws ClientException {

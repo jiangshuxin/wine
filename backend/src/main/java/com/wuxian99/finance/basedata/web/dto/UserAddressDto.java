@@ -74,4 +74,9 @@ public class UserAddressDto implements Serializable {
     this.address = address;
   }
 
+  @Override
+  public String toString() {
+    return new Gson().toJson(this);
+  }
+
 }

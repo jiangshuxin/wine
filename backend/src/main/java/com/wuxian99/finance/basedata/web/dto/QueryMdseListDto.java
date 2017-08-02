@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.web.dto;
 
+import com.google.gson.Gson;
+
 public class QueryMdseListDto extends Pagination{
     private String merchantId;
     private String catagory;
@@ -43,7 +45,8 @@ public class QueryMdseListDto extends Pagination{
         return mdseIds;
     }
 
-    public void setMdseIds(String mdseIds) {
-        this.mdseIds = mdseIds;
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

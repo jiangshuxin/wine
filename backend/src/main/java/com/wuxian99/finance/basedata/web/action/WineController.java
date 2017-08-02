@@ -1,18 +1,21 @@
 package com.wuxian99.finance.basedata.web.action;
 
 import com.alibaba.fastjson.JSON;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.google.gson.Gson;
 import com.wuxian99.finance.basedata.domain.*;
 import com.wuxian99.finance.basedata.service.pay.WxPayService;
 import com.wuxian99.finance.basedata.service.wine.*;
+import com.wuxian99.finance.basedata.support.util.SmsUtils;
 import com.wuxian99.finance.basedata.web.dto.*;
 import com.wuxian99.finance.basedata.web.view.*;
 import com.wuxian99.finance.common.Result;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.http.entity.ContentType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -21,7 +24,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,6 +69,8 @@ public class WineController {
     @Autowired
     private OrderService orderService;
 
+    private static final Logger logger = LoggerFactory.getLogger(WineController.class);
+
     /**
      * 获取首页Banner
      * @param merchantId
@@ -74,6 +78,7 @@ public class WineController {
      */
     @RequestMapping(value="getBanners/{merchantId}", method={RequestMethod.GET})
     public Result<List<BannerListView>> getBanners(@PathVariable String merchantId){
+        logger.info("getBanners request: {}", merchantId);
         List<BannerEntity> banners =  bannerService.findByMerchantId(merchantId);
         List<BannerListView> bannerViews = new ArrayList<>();
         if(CollectionUtils.isNotEmpty(banners)){
@@ -84,6 +89,7 @@ public class WineController {
                 bannerViews.add(view);
             }
         }
+        logger.info("getBanners response: {}", new Gson().toJson(bannerViews));
         return Result.buildSuccess(bannerViews);
     }
 
@@ -94,6 +100,7 @@ public class WineController {
      */
     @RequestMapping(value="getDiscovers", method={RequestMethod.POST})
     public Result<List<DiscoverListView>> getDiscovers(@RequestBody QueryDiscoverListDto paras){
+        logger.info("getDiscovers request: {}", paras);
         Page<DiscoverEntity> page =  discoverService.findDiscovers(paras);
         List<DiscoverListView> discoverListViews = new ArrayList<DiscoverListView>();
         if(CollectionUtils.isNotEmpty(page.getContent())){
@@ -107,6 +114,7 @@ public class WineController {
                 discoverListViews.add(discoverListView);
             }
         }
+        logger.info("getDiscovers response: {}", new Gson().toJson(discoverListViews));
         return Result.buildSuccess(discoverListViews, page.getTotalElements());
     }
 
@@ -117,12 +125,14 @@ public class WineController {
      */
     @RequestMapping(value="getDiscoverDetails/{discoverId}", method={RequestMethod.GET})
     public Result<List<DiscoverDetailEntity>> getDiscoverDetails(@PathVariable Long discoverId){
+        logger.info("getDiscoverDetails request: {}", discoverId);
         List<DiscoverDetailEntity> discoverDetails =  discoverService.findDetailByDiscoverId(discoverId);
         if(CollectionUtils.isNotEmpty(discoverDetails)){
             for(DiscoverDetailEntity discoverDetail : discoverDetails){
                 discoverDetail.setPic(picPath + discoverDetail.getPic());
             }
         }
+        logger.info("getDiscoverDetails response: {}", new Gson().toJson(discoverDetails));
         return Result.buildSuccess(discoverDetails);
     }
 
@@ -133,6 +143,7 @@ public class WineController {
      */
     @RequestMapping(value="getMdses", method={RequestMethod.POST})
     public Result<List<MdseListView>> getMdses(@RequestBody QueryMdseListDto paras){
+        logger.info("getMdses request: {}", paras);
         Page<MdseEntity> page = mdseService.findMdses(paras);
         List<MdseListView> mdseListViews = new ArrayList<MdseListView>();
         if(CollectionUtils.isNotEmpty(page.getContent())){
@@ -147,6 +158,7 @@ public class WineController {
                 mdseListViews.add(mdseListView);
             }
         }
+        logger.info("getMdses response: {}", new Gson().toJson(mdseListViews));
         return Result.buildSuccess(mdseListViews, page.getTotalElements());
     }
 
@@ -157,6 +169,7 @@ public class WineController {
      */
     @RequestMapping(value="getMdseDetail/{mdseId}", method={RequestMethod.POST,RequestMethod.GET})
     public Result<MdseView> getMdseDetail(@PathVariable Long mdseId){
+        logger.info("getMdseDetail request: {}", mdseId);
         MdseEntity mdse =  mdseService.findMdseById(mdseId);
         if(mdse != null){
             MdseView view = new MdseView();
@@ -180,8 +193,10 @@ public class WineController {
             view.setBigPic3(picPath + mdse.getBigPic3());
             view.setBigPic4(picPath + mdse.getBigPic4());
             view.setStoryPic(picPath + mdse.getStoryPic());
+            logger.info("getMdseDetail response: {}", view);
             return Result.buildSuccess(view);
         }else{
+            logger.info("getMdseDetail response: {}", "商品不存在");
             return Result.buildFail("商品不存在");
         }
     }
@@ -193,6 +208,7 @@ public class WineController {
      */
     @RequestMapping(value="verifyUserName/{userName}", method={RequestMethod.POST,RequestMethod.GET})
     public Result<Map<String, Boolean>> verifyUserName(@PathVariable String userName){
+        logger.info("verifyUserName request: {}", userName);
         if(StringUtils.isBlank(userName) || !StringUtils.isNumeric(userName) || userName.length() != 11){
             return Result.buildFail("手机号不正确");
         }
@@ -204,6 +220,7 @@ public class WineController {
         }
         Map<String, Boolean> data = new HashMap<>();
         data.put("isExist", isExist);
+        logger.info("verifyUserName response: {}", new Gson().toJson(data));
         return Result.buildSuccess(data);
     }
 
@@ -215,6 +232,7 @@ public class WineController {
      */
     @RequestMapping(value="sendVerifyCode/{userName}/{type}", method={RequestMethod.POST,RequestMethod.GET})
     public Result<Map<String, String>> sendVerifyCode(@PathVariable String userName, @PathVariable Long type){
+        logger.info("sendVerifyCode request: {}, {}", userName, type);
         if(StringUtils.isBlank(userName) || !StringUtils.isNumeric(userName) || userName.length() != 11){
             return Result.buildFail("手机号不正确");
         }
@@ -227,9 +245,14 @@ public class WineController {
         }
         verifyCodeCache.put(userName + "_" + type, verifyCode);
 
-        //TODO 发送短信验证码
+        Map<String,String> smsParas = new HashMap<>();
+        smsParas.put("code", verifyCode);
+        SendSmsResponse response = SmsUtils.sendSms(SmsUtils.SmsSendRequest.build(userName, type==1? SmsUtils.SmsSendType.Login : SmsUtils.SmsSendType.ModifyPwd, smsParas));
+        logger.info("发送验证码短信返回: " + new Gson().toJson(response));
+
         Map<String, String> data = new HashMap<>();
         data.put("verifyCode", verifyCode);
+        logger.info("sendVerifyCode response: {}", new Gson().toJson(data));
         return Result.buildSuccess(data);
     }
 
@@ -240,6 +263,7 @@ public class WineController {
      */
     @RequestMapping(value="login", method={RequestMethod.POST})
     public Result<UserInfoDto> login(@RequestBody LoginDto paras){
+        logger.info("login request: {}", paras);
         String userName = paras.getUserName();
         if(StringUtils.isBlank(userName) || !StringUtils.isNumeric(userName) || userName.length() != 11){
             return Result.buildFail("用户名不正确");
@@ -283,6 +307,7 @@ public class WineController {
         userInfoDto.setRealName(user.getRealName());
         userInfoDto.setGender(user.getGender());
         userInfoDto.setBirthday(user.getBirthday());
+        logger.info("login response: {}", userInfoDto);
         return Result.buildSuccess(userInfoDto);
     }
 
@@ -293,6 +318,7 @@ public class WineController {
      */
     @RequestMapping(value="modifyPwd", method={RequestMethod.POST})
     public Result<Map<String, Long>> modifyPwd(@RequestBody ModifyPwdDto paras){
+        logger.info("modifyPwd request: {}", paras);
         if(StringUtils.isBlank(paras.getPassword())){
             return Result.buildFail("新密码不能为空");
         }
@@ -308,6 +334,7 @@ public class WineController {
 
         Map<String, Long> data = new HashMap<>();
         data.put("userId", user.getId());
+        logger.info("modifyPwd response: {}", new Gson().toJson(data));
         return Result.buildSuccess(data);
     }
 
@@ -318,6 +345,7 @@ public class WineController {
      */
     @RequestMapping(value="getUserInfo/{userId}", method={RequestMethod.POST,RequestMethod.GET})
     public Result<UserInfoDto> getUserInfo(@PathVariable Long userId) {
+        logger.info("getUserInfo request: {}", userId);
         UserEntity user = userService.findByUserId(userId);
         if (user == null) {
             return Result.buildFail("用户ID不正确");
@@ -330,6 +358,7 @@ public class WineController {
         userInfoDto.setRealName(user.getRealName());
         userInfoDto.setGender(user.getGender());
         userInfoDto.setBirthday(user.getBirthday());
+        logger.info("getUserInfo response: {}", userInfoDto);
         return Result.buildSuccess(userInfoDto);
     }
 
@@ -340,6 +369,7 @@ public class WineController {
      */
     @RequestMapping(value="modifyUserInfo", method={RequestMethod.POST})
     public Result<UserInfoDto> modifyUserInfo(@RequestBody UserInfoDto paras){
+        logger.info("modifyUserInfo request: {}", paras);
         UserEntity user = userService.findByUserId(paras.getUserId());
         if(user == null){
             return Result.buildFail("用户ID不正确");
@@ -357,6 +387,7 @@ public class WineController {
         userInfoDto.setRealName(user.getRealName());
         userInfoDto.setGender(user.getGender());
         userInfoDto.setBirthday(user.getBirthday());
+        logger.info("modifyUserInfo response: {}", userInfoDto);
         return Result.buildSuccess(userInfoDto);
     }
 
@@ -367,6 +398,7 @@ public class WineController {
      */
     @RequestMapping(value="getUserAddresses", method={RequestMethod.POST,RequestMethod.GET})
     public Result<List<UserAddressDto>> getUserAddresses(@RequestBody QueryUserAddressListDto paras){
+        logger.info("getUserAddresses request: {}", paras);
         Sort sort = new Sort(Sort.Direction.DESC,"id");
         PageRequest pageRequest = paras.convert(sort);
         Page<UserAddressEntity> page = userService.findUserAddressesByUserId(paras.getUserId(), pageRequest);
@@ -383,6 +415,7 @@ public class WineController {
                 views.add(view);
             }
         }
+        logger.info("getUserAddresses response: {}", new Gson().toJson(views));
         return Result.buildSuccess(views, page.getTotalElements());
     }
 
@@ -393,6 +426,7 @@ public class WineController {
      */
     @RequestMapping(value="modifyUserAddress", method={RequestMethod.POST})
     public Result<Long> modifyUserAddress(@RequestBody UserAddressDto paras){
+        logger.info("modifyUserAddress request: {}", paras);
         Page<UserAddressEntity> allAddr = userService.findUserAddressesByUserId(paras.getUserId(), null);
         UserAddressEntity address = new UserAddressEntity();
         //如果为用户的第一个地址，自动设置为默认地址
@@ -422,6 +456,7 @@ public class WineController {
                 }
             }
         }
+        logger.info("modifyUserAddress response: {}", address.getId());
         return Result.buildSuccess(address.getId());
     }
 
@@ -433,6 +468,7 @@ public class WineController {
      */
     @RequestMapping(value="createOrder", method={RequestMethod.POST})
     public Result<OrderView> createOrder(@RequestBody CreateOrderDto paras){
+        logger.info("createOrder request: {}", paras);
         if(paras.getUserId() == null || paras.getAddressId() == null || paras.getAddressId() == null || paras.getMdseInfo() == null){
             return Result.buildFail("必填参数不能为空");
         }
@@ -493,6 +529,7 @@ public class WineController {
         OrderView view = new OrderView();
         view.setOrderId(order.getId());
         view.setAmount(order.getAmount());
+        logger.info("createOrder response: {}", view);
         return Result.buildSuccess(view);
     }
 
@@ -503,6 +540,7 @@ public class WineController {
      */
     @RequestMapping(value="getOrders", method={RequestMethod.POST,RequestMethod.GET})
     public Result<List<OrderListView>> getOrders(@RequestBody QueryOrderListDto paras){
+        logger.info("getOrders request: {}", paras);
         List<OrderListView> views = new ArrayList<>();
         Page<OrderEntity> page = orderService.findOrders(paras);
         if(CollectionUtils.isNotEmpty(page.getContent())){
@@ -531,6 +569,7 @@ public class WineController {
                 views.add(view);
             }
         }
+        logger.info("getOrders response: {}", new Gson().toJson(views));
         return Result.buildSuccess(views, page.getTotalElements());
     }
 
@@ -541,8 +580,10 @@ public class WineController {
      */
     @RequestMapping(value="getOrderDetail/{orderId}", method={RequestMethod.POST,RequestMethod.GET})
     public Result<OrderView> getOrderDetail(@PathVariable Long orderId){
+        logger.info("getOrderDetail request: {}", orderId);
         OrderView order = orderService.findOrderViewById(orderId);
         if(order != null){
+            logger.info("getOrderDetail response: {}", order);
             return Result.buildSuccess(order);
         }else{
             return Result.buildFail("商品不存在");
@@ -556,12 +597,14 @@ public class WineController {
      */
     @RequestMapping(value="cancelOrder/{orderId}", method={RequestMethod.POST,RequestMethod.GET})
     public Result<Map<String, Long>> cancelOrder(@PathVariable Long orderId){
+        logger.info("cancelOrder request: {}", orderId);
         String errMsg = orderService.cancelOrder(orderId);
         if(errMsg != null){
             return Result.buildFail(errMsg);
         }else{
             Map<String, Long> data = new HashMap<>();
             data.put("orderId", orderId);
+            logger.info("cancelOrder response: {}", new Gson().toJson(data));
             return Result.buildSuccess(data);
         }
     }
@@ -574,6 +617,7 @@ public class WineController {
      */
     @RequestMapping(value="pay/{orderId}/{payType}", method={RequestMethod.POST,RequestMethod.GET})
     public Result<PayResultView> pay(@PathVariable Long orderId, @PathVariable Long payType){
+        logger.info("pay request: {}, {}", orderId, payType);
         OrderEntity order = orderService.findOrderById(orderId);
         if(order == null){
             return Result.buildFail("订单不存在");
@@ -591,6 +635,7 @@ public class WineController {
         if(payType == 2){
             payResultView.setPayPic(picPath + order.getPayPic());
         }
+        logger.info("pay response: {}", payResultView);
         return Result.buildSuccess(payResultView);
     }
 

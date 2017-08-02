@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.web.dto;
 
+import com.google.gson.Gson;
+
 /**
  * 修改密码请求参数
  */
@@ -31,5 +33,10 @@ public class ModifyPwdDto {
 
     public void setVerifyCode(String verifyCode) {
         this.verifyCode = verifyCode;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

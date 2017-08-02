@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.web.view;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 
 /**
@@ -204,5 +206,10 @@ public class MdseView implements Serializable {
 
   public void setStoryPic(String storyPic) {
     this.storyPic = storyPic;
+  }
+
+  @Override
+  public String toString() {
+    return new Gson().toJson(this);
   }
 }
