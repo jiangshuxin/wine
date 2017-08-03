@@ -11,12 +11,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface Ddic {
 	/**
-     * (Optional) The name of the ddicCategory. Defaults to
-     * the tableName_field.
+     * 字典值
      */
-    String name() default "";
+    String name();
     /**
-     * The field need map fill value.
+     * 映射字段名称(默认当前字段+Name)
      */
     String mapTo() default "";
 }

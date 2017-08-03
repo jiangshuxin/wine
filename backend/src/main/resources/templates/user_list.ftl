@@ -7,12 +7,13 @@
             <th>编号</th>
             <th>推荐人编号</th>
             <th>用户名(手机号)</th>
-            <th>状态</th>
+            <th>状态名称</th>
             <th>类型</th>
             <th>余额</th>
             <th>姓名</th>
             <th>性别</th>
             <th>生日</th>
+            <th>状态</th>
         </tr>
         </thead>
 
@@ -21,12 +22,13 @@
             <th>编号</th>
             <th>推荐人编号</th>
             <th>用户名(手机号)</th>
-            <th>状态</th>
+            <th>状态名称</th>
             <th>类型</th>
             <th>余额</th>
             <th>姓名</th>
             <th>性别</th>
             <th>生日</th>
+            <th>状态</th>
         </tr>
         </tfoot>
     </table>
@@ -70,12 +72,13 @@
                 { data: "id"},
                 { data: "parentId" },
                 { data: "userName" },
-                { data: "status"},
+                { data: "statusName",searchType:"select",ddic:"userStatus",ddicRef:"status"},
                 { data: "type"},
                 { data: "balance"},
                 { data: "realName"},
                 { data: "gender"},
-                { data: "birthday"}
+                { data: "birthday"},
+                { data: "status"}//不展示的枚举值，放列表最后，便于隐藏
             ],[
                 { extend: "create", editor: editor },
                 { extend: "edit",   editor: editor },
@@ -83,7 +86,11 @@
             ],{initComplete: function ()
             {
 
-            }}) );
+            }, "columnDefs": [
+                { "visible": false, "targets": [9] }
+            ]
+                , order: [[ 0, 'desc' ]]
+            }) );
 
             DataTable.enableColumnSearch(table);
         } );

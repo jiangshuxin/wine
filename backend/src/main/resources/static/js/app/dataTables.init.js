@@ -94,6 +94,13 @@ var DataTable = {
      * @returns {*}
      */
     dataTableConfig : function(moduleId,columnArray,buttonGroup,otherConfig){
+        //前端一般只配置data,默认情况下data=name,设置name可以让后续table.column('xx:name')方法生效
+        for(var k in columnArray){
+            var temp = columnArray[k];
+            if(temp['data'] && !temp['name']){//data有值 name没值
+                temp['name'] = temp['data'];
+            }
+        }
 
         return $.extend({
             module:moduleId,
@@ -172,24 +179,24 @@ var DataTable = {
         $('#dataTable tfoot th').each( function (i) {
             var $that = $(this);
             var searchType = table.init().columns[i].searchType || 'text';
+            var category = table.init().columns[i].ddic || '';
 
             if(searchType == 'select'){
-            	var moduleId = table.init().module;
-                $.post(DataTable.CONTEXT_PATH+"/api/"+moduleId+"/ddic",
-                    function(data){
-                        for(var k in data){
-                            if(k != table.init().columns[i].ddicRef) continue;
-                            var selectHtml = [];
-                            selectHtml.push('<select>');
-                            selectHtml.push('<option value="">-----全部-----</option>');
-                            for(var m in data[k]){
-                                selectHtml.push('<option value="'+data[k][m]['key']+'">'+data[k][m]['value']+'</option>');
-                            }
-                            selectHtml.push('</select>');
-                            $that.html(selectHtml.join('\n'));
-                            DataTable._bindSearchEvent(table);
+                $.post(DataTable.CONTEXT_PATH+"/api/"+category+"/ddic",
+                    function(result){
+                        if(!result.success){
+                            return;
                         }
-
+                        var data = result.data;
+                        var selectHtml = [];
+                        selectHtml.push('<select>');
+                        selectHtml.push('<option value="">-----全部-----</option>');
+                        for(var k in data){
+                            selectHtml.push('<option value="'+data[k]['itemKey']+'">'+data[k]['itemValue']+'</option>');
+                        }
+                        selectHtml.push('</select>');
+                        $that.html(selectHtml.join('\n'));
+                        DataTable._bindSearchEvent(table);
                     },'json');
 
             }else{//text & date
@@ -210,12 +217,15 @@ var DataTable = {
                 that = table.column(table.init().columns[i].ddicRef+':name');
             }
 
-            $( 'input,select', this.footer() ).on( 'blur keyup change', function (e) {
+            $( 'input', this.footer() ).on( 'blur keyup', function (e) {
                 if(e.keyCode){
                     if(e.keyCode == 13) that.search( this.value ).draw();
                 }else if (that.search() !== this.value ) {
                     that.search( this.value ).draw();
                 }
+            } );
+            $( 'select', this.footer() ).on( 'change', function (e) {
+                that.search( this.value ).draw();
             } );
         } );
     },

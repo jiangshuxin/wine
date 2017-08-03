@@ -13,7 +13,5 @@ public interface MetadataService {
 	
 	MetadataInfo save(MetadataInfo metadataInfo);
 	
-	Map<String, Object> findDdic(String module);
-
 	Map<String, Map<String, UploadRef>> getEntityUploadRefMap();
 }

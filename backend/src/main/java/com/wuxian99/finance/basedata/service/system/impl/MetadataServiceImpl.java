@@ -1,17 +1,13 @@
 package com.wuxian99.finance.basedata.service.system.impl;
 
-import com.wuxian99.finance.basedata.domain.entity.system.DdicItemEntity;
 import com.wuxian99.finance.basedata.domain.entity.system.MetadataEntity;
 import com.wuxian99.finance.basedata.domain.model.MetadataInfo;
-import com.wuxian99.finance.basedata.domain.model.Select;
 import com.wuxian99.finance.basedata.repository.system.DdicItemRepository;
 import com.wuxian99.finance.basedata.repository.system.MetadataRepository;
 import com.wuxian99.finance.basedata.service.system.MetadataService;
-import com.wuxian99.finance.basedata.support.annotation.Ddic;
 import com.wuxian99.finance.basedata.support.annotation.UploadRef;
 import com.wuxian99.finance.basedata.support.util.ClassUtil;
 import com.wuxian99.finance.basedata.support.util.StringUtils;
-import com.wuxian99.finance.common.Constants;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.EntityType;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -95,7 +90,7 @@ public class MetadataServiceImpl implements MetadataService, InitializingBean {
 		metadataInfo.setEntityJavaType(ClassUtil.getJavaType(entityClass));
 		metadataInfo.setRepositoryInstance(repositoryInstance);
 		metadataInfo.setPds(ReflectUtils.getBeanProperties(metadataInfo.getEntityJavaType()));
-		setDdic(metadataInfo);
+		//setDdic(metadataInfo);
 	}
 
 	/**
@@ -103,7 +98,7 @@ public class MetadataServiceImpl implements MetadataService, InitializingBean {
 	 * 
 	 * @param metadataInfo
 	 */
-	private void setDdic(MetadataInfo metadataInfo) {
+	/*private void setDdic(MetadataInfo metadataInfo) {
 		List<PropertyDescriptor> pds = ClassUtil.findDdicAnnationProperty(metadataInfo.getPds());
 		for (PropertyDescriptor pd : pds) {
 			Ddic ddic = pd.getReadMethod().getAnnotation(Ddic.class);
@@ -115,7 +110,7 @@ public class MetadataServiceImpl implements MetadataService, InitializingBean {
 				metadataInfo.getDdicInfo().put(category, select);
 			}
 		}
-	}
+	}*/
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -134,18 +129,6 @@ public class MetadataServiceImpl implements MetadataService, InitializingBean {
 				}
 			}
 		}
-	}
-
-	@Override
-	public Map<String, Object> findDdic(String module) {
-		MetadataInfo meta = findByModule(module);
-		Map<String, Object> map = new HashMap<>();
-		for (PropertyDescriptor pd : meta.getPds()) {
-			Ddic ddic = pd.getReadMethod().getAnnotation(Ddic.class);
-			if (ddic != null)
-				map.put(pd.getName(), meta.getDdicInfo().get(ddic.name()));
-		}
-		return map;
 	}
 
 	public Map<String, Map<String, UploadRef>> getEntityUploadRefMap() {

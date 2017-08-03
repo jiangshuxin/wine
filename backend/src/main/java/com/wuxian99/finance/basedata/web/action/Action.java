@@ -2,6 +2,7 @@ package com.wuxian99.finance.basedata.web.action;
 
 import com.wuxian99.finance.basedata.domain.model.SigninUser;
 import com.wuxian99.finance.basedata.service.IService;
+import com.wuxian99.finance.basedata.service.system.DdicItemService;
 import com.wuxian99.finance.basedata.service.system.MetadataService;
 import com.wuxian99.finance.basedata.service.system.impl.UploadFileService;
 import com.wuxian99.finance.common.*;
@@ -18,6 +19,8 @@ public class Action {
 	@Autowired IService service;
 	@Autowired
 	MetadataService metadataService;
+	@Autowired
+	DdicItemService ddicItemService;
 
 	@RequestMapping("/api/{module}/list")
     public Result<?> findAll(ModelMap modelMap, @RequestBody QueryCommand command, @PathVariable String module, @SessionAttribute("signinUser") SigninUser signinUser){
@@ -43,9 +46,9 @@ public class Action {
         return result;
     }
 
-	@RequestMapping("/api/{module}/ddic")
-	public Object ddic(@PathVariable String module) {
-		return metadataService.findDdic(module);
+	@RequestMapping("/api/{category}/ddic")
+	public Object ddic(@PathVariable String category) {
+		return Result.buildSuccess(ddicItemService.findByCategory(category));
 	}
 
 	@Autowired
