@@ -124,6 +124,8 @@
 
 <script>
     $(document).ready(function(){
+        Ddic.init();
+
         $('#waitUpload').click(function(){
             $('#waitUploadModal').modal();
         });

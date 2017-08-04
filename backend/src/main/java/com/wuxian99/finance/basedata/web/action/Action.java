@@ -48,6 +48,9 @@ public class Action {
 
 	@RequestMapping("/api/{category}/ddic")
 	public Object ddic(@PathVariable String category) {
+		if("all".equalsIgnoreCase(category)){
+			return Result.buildSuccess(ddicItemService.findAll());
+		}
 		return Result.buildSuccess(ddicItemService.findByCategory(category));
 	}
 
