@@ -46,4 +46,8 @@ public class UserService {
         return userAddressRepository.save(address);
     }
 
+    public void deleteUserAddressById(Long addressId) {
+        userAddressRepository.delete(addressId);
+    }
+
 }

@@ -462,6 +462,18 @@ public class WineController {
 
 
     /**
+     * 删除用户收货地址
+     * @param addressId
+     * @return
+     */
+    @RequestMapping(value="deleteUserAddress/{addressId}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<UserInfoDto> deleteUserAddress(@PathVariable Long addressId) {
+        logger.info("deleteUserAddress request: {}", addressId);
+        userService.deleteUserAddressById(addressId);
+        return Result.buildSuccess(null);
+    }
+
+    /**
      * 下单
      * @param paras
      * @return
