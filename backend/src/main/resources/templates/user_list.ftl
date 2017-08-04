@@ -47,10 +47,24 @@
                 name: "userName"
             }, {
                 label: "状态:",
-                name: "status"
+                name: "status",
+                type:  "select",
+                options: [
+                    { label: "1 (highest)", value: "1" },
+                    { label: "2",           value: "2" },
+                    { label: "3",           value: "3" },
+                    { label: "4",           value: "4" },
+                    { label: "5 (lowest)",  value: "5" }
+                ]
             }, {
                 label: "类型:",
-                name: "type"
+                name: "type",
+                type:  "radio",
+                options: [
+                    { label: "To do", value: 0 },
+                    { label: "Done",  value: 1 }
+                ],
+                def: 0
             }, {
                 label: "余额:",
                 name: "balance"
