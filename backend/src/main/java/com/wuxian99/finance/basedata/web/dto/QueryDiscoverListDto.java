@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.web.dto;
 
+import com.google.gson.Gson;
+
 public class QueryDiscoverListDto extends Pagination{
 
     private String merchantId;
@@ -22,4 +24,8 @@ public class QueryDiscoverListDto extends Pagination{
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }

@@ -1,15 +1,22 @@
 package com.wuxian99.finance.basedata.service;
 
+import com.wuxian99.finance.basedata.domain.entity.system.DdicItemEntity;
 import com.wuxian99.finance.basedata.domain.model.ExecuteInfo;
 import com.wuxian99.finance.basedata.domain.model.MetadataInfo;
 import com.wuxian99.finance.basedata.domain.model.Select;
 import com.wuxian99.finance.basedata.domain.model.SigninUser;
+import com.wuxian99.finance.basedata.repository.system.DdicItemRepository;
+import com.wuxian99.finance.basedata.service.system.MetadataService;
+import com.wuxian99.finance.basedata.service.system.impl.UploadFileService;
 import com.wuxian99.finance.basedata.support.annotation.Ddic;
+import com.wuxian99.finance.basedata.support.annotation.UploadRef;
 import com.wuxian99.finance.basedata.support.convert.ExecuteConvert;
 import com.wuxian99.finance.basedata.support.util.ClassUtil;
 import com.wuxian99.finance.common.*;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -17,7 +24,12 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ServiceImpl implements IService {
@@ -25,7 +37,12 @@ public class ServiceImpl implements IService {
 	ApplicationContext context;
 	@Autowired
 	ExecuteConvert convert;
-
+    @Autowired
+    UploadFileService uploadFileService;
+    @Autowired
+    MetadataService metadataService;
+	@Autowired
+    DdicItemRepository ddicItemRepository;
 	/*
 	 * 1.组合方法执行要素 2.执行方法返回结果 3.将结果转化为view层Result
 	 */
@@ -62,9 +79,42 @@ public class ServiceImpl implements IService {
 		if (command.isQuery()) {
 			Page<?> pageResult = (Page<?>) obj;
 			PageableResult result = new PageableResult();
-			result.setRecordsTotal((int) pageResult.getTotalElements());
+            List<?> content = pageResult.getContent();
+            result.setRecordsTotal((int) pageResult.getTotalElements());
 			result.setRecordsFiltered((int) pageResult.getTotalElements());
-			result.setData(pageResult.getContent());
+			result.setData(content);
+
+            List<Integer> ids = new ArrayList<>();
+            Map<String,UploadRef> uploadRefMap = null;
+            for(int i=0;i<content.size();i++){
+                Object element = content.get(i);
+                if(i == 0){
+                    uploadRefMap = metadataService.getEntityUploadRefMap().get(element.getClass().getSimpleName());
+                }
+
+                if(uploadRefMap != null && !uploadRefMap.isEmpty()){
+                    for(String key : uploadRefMap.keySet()){
+                        try {
+                            Object property = PropertyUtils.getProperty(element, key);
+                            if(property != null){
+                                ids.add(Integer.parseInt(property.toString()));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            }
+            //load upload_file
+			Map files = new HashMap<>();
+			List list = new ArrayList();
+            Map<String,UploadFileInfo> uploadFileInfos = uploadFileService.findByIds(ids);
+            //List<UploadFileInfo> uploadFileInfos = uploadFileService.findByIds(ids.toArray(new Integer[0]));
+
+            list.add(uploadFileInfos);
+			files.put("files",uploadFileInfos);
+			result.setFiles(files);
 			return result;
 		} else {
 			CUDResult<Object> result = new CUDResult<Object>();
@@ -74,8 +124,35 @@ public class ServiceImpl implements IService {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked" })
 	private void fillDdic(Object obj, MetadataInfo metadata) {
+		Field[] declaredFields = metadata.getEntityJavaType().getDeclaredFields();
+		List<Field> fieldList = ClassUtil.findDdicAnnationProperty(declaredFields);
+		if (fieldList.isEmpty()) return;
+		Page<?> pageResult = (Page<?>) obj;
+		List<?> content = pageResult.getContent();
+		try {
+			for (Object e : content) {
+                for(Field field : fieldList){
+                    Ddic ddic = field.getAnnotation(Ddic.class);
+                    List<DdicItemEntity> itemEntities = ddicItemRepository.findByCategory(ddic.name());
+                    Map<String,DdicItemEntity> map = new HashMap<>();
+                    for(DdicItemEntity entity : itemEntities){
+                        map.put(entity.getItemKey(),entity);
+                    }
+                    //请求url是根据module找所有ddic，FIX
+                    Object original = PropertyUtils.getProperty(e,field.getName());
+                    if(original == null || !map.containsKey(original.toString()))continue;
+                    DdicItemEntity entity = map.get(original.toString());
+                    PropertyUtils.setProperty(e,ddic.mapTo(),entity.getItemValue());
+                }
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	/*private void fillDdic(Object obj, MetadataInfo metadata) {
 		List<PropertyDescriptor> pds = ClassUtil.findDdicAnnationProperty(metadata.getPds());
 		if (pds.isEmpty())
 			return;
@@ -88,7 +165,8 @@ public class ServiceImpl implements IService {
 						? metadata.getTableName() + Constants.UNDERLINE_SEPERATOR + pd.getName() : ddic.name();
 				List<Select> items = (List<Select>) metadata.getDdicInfo().get(mapFrom);
 				// 找到数据字典K,V
-				String ddicKey = (String) ReflectionUtils.invokeMethod(pd.getReadMethod(), e);
+				Object result = ReflectionUtils.invokeMethod(pd.getReadMethod(), e);
+				String ddicKey = result.toString();
 				String ddicValue = findDdicValue(ddicKey, items);
 				// 设值
 				String mapTo = ddic.mapTo();
@@ -96,7 +174,7 @@ public class ServiceImpl implements IService {
 						ddicValue);
 			}
 		}
-	}
+	}*/
 
 	/**
 	 * @param ddicKey

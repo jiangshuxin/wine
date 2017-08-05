@@ -19,6 +19,8 @@ public class MdseListView implements Serializable {
 
   private Long price;
 
+  private String year;
+
   public Long getMdseId() {
     return mdseId;
   }
@@ -59,4 +61,11 @@ public class MdseListView implements Serializable {
     this.price = price;
   }
 
+  public String getYear() {
+    return year;
+  }
+
+  public void setYear(String year) {
+    this.year = year;
+  }
 }

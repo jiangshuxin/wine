@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -72,7 +73,22 @@ public class ClassUtil {
 		}
 		return pdResult;
 	}
-	
+
+	/**
+	 * @param fields
+	 * @return
+	 */
+	public static List<Field> findDdicAnnationProperty(Field[] fields) {
+		List<Field> fieldList = new ArrayList<>();
+		for (Field field : fields) {
+			Ddic ddic = field.getAnnotation(Ddic.class);
+			if (!ObjectUtils.isEmpty(ddic)) {
+				fieldList.add(field);
+			}
+		}
+		return fieldList;
+	}
+
 	/**
 	 * @param beanProperties
 	 * @param name

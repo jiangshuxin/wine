@@ -4,6 +4,8 @@ import com.wuxian99.finance.basedata.domain.model.ExecuteInfo;
 import com.wuxian99.finance.basedata.domain.model.MetadataInfo;
 import com.wuxian99.finance.basedata.domain.model.SigninUser;
 import com.wuxian99.finance.basedata.service.system.MetadataService;
+import com.wuxian99.finance.basedata.service.system.impl.UploadFileService;
+import com.wuxian99.finance.basedata.support.annotation.UploadRef;
 import com.wuxian99.finance.basedata.support.util.ClassUtil;
 import com.wuxian99.finance.common.*;
 import org.apache.commons.beanutils.BeanUtils;
@@ -44,6 +46,8 @@ public class ExecuteConvert {
     MetadataService metadataService;
 	@Autowired
 	EntityManager entityManager;
+	@Autowired
+	UploadFileService uploadFileService;
 	static final String DEFAULT_JSR303_MSG = "系统JSR303验证失败, 包含未配置消息";
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -100,6 +104,24 @@ public class ExecuteConvert {
                         BeanUtils.populate(entity, value);
                         dataList.add(entity);
                     }
+
+					Map<String, UploadRef> uploadRefMap = metadataService.getEntityUploadRefMap().get(metadata.getEntityJavaType().getSimpleName());
+					if(uploadRefMap != null){
+						List<Integer> ids = new ArrayList<>();
+						for(String key : uploadRefMap.keySet()){
+							String property = BeanUtils.getProperty(entity, key);
+							ids.add(Integer.parseInt(property));
+						}
+						Map<String,UploadFileInfo> uploadFileInfoMap = uploadFileService.findByIds(ids);
+						for(String key : uploadRefMap.keySet()){
+							UploadRef uploadRef = uploadRefMap.get(key);
+							if(PropertyUtils.isWriteable(entity,uploadRef.ref())){
+								String property = BeanUtils.getProperty(entity, key);
+								UploadFileInfo uploadFileInfo = uploadFileInfoMap.get(property);
+								PropertyUtils.setProperty(entity,uploadRef.ref(),uploadFileInfo.getRelative_path());
+							}
+						}
+					}
 				}
 				info.setVerificationResult(validate(dataList));
 				info.setArgs(new Object[] { dataList });

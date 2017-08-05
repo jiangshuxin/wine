@@ -4,7 +4,11 @@ import com.wuxian99.finance.basedata.domain.UserAddressEntity;
 import com.wuxian99.finance.basedata.domain.UserEntity;
 import com.wuxian99.finance.basedata.repository.wine.UserAddressRepository;
 import com.wuxian99.finance.basedata.repository.wine.UserRepository;
+import com.wuxian99.finance.basedata.web.dto.QueryUserAddressListDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,12 +38,20 @@ public class UserService {
         return userAddressRepository.findByUserId(userId);
     }
 
+    public Page<UserAddressEntity> findUserAddressesByUserId(Long userId, PageRequest pageRequest) {
+        return userAddressRepository.findByUserId(userId, pageRequest);
+    }
+
     public UserAddressEntity findUserAddressById(Long addressId) {
         return userAddressRepository.findOne(addressId);
     }
 
     public UserAddressEntity saveOrUpdateUserAddress(UserAddressEntity address){
         return userAddressRepository.save(address);
+    }
+
+    public void deleteUserAddressById(Long addressId) {
+        userAddressRepository.delete(addressId);
     }
 
 }

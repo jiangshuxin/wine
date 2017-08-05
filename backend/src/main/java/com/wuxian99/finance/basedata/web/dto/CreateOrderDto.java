@@ -64,4 +64,8 @@ public class CreateOrderDto implements Serializable {
     this.invoiceInfo = invoiceInfo;
   }
 
+  @Override
+  public String toString() {
+    return new Gson().toJson(this);
+  }
 }

@@ -1,6 +1,7 @@
 package com.wuxian99.finance.basedata.domain;
 
 import com.google.gson.Gson;
+import com.wuxian99.finance.basedata.support.annotation.Ddic;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,7 +37,11 @@ public class UserEntity implements Serializable {
   /**
    * 状态，1:正常，0:停用
    */
+  @Ddic(name = "userStatus",mapTo = "statusName")
   private Long status;
+
+  @Transient
+  private String statusName;
 
   /**
    * 角色，1:销售（管理员添加），2:普通用户（前端注册）
@@ -102,6 +107,14 @@ public class UserEntity implements Serializable {
 
   public void setStatus(Long status) {
     this.status = status;
+  }
+
+  public String getStatusName() {
+    return statusName;
+  }
+
+  public void setStatusName(String statusName) {
+    this.statusName = statusName;
   }
 
   public Long getType() {

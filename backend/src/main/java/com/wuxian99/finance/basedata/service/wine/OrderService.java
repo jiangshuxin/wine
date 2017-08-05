@@ -1,19 +1,27 @@
 package com.wuxian99.finance.basedata.service.wine;
 
+import com.wuxian99.finance.basedata.domain.MdseEntity;
 import com.wuxian99.finance.basedata.domain.OrderDetailEntity;
 import com.wuxian99.finance.basedata.domain.OrderEntity;
 import com.wuxian99.finance.basedata.domain.UserAddressEntity;
 import com.wuxian99.finance.basedata.repository.wine.OrderDetailRepository;
 import com.wuxian99.finance.basedata.repository.wine.OrderRepository;
 import com.wuxian99.finance.basedata.repository.wine.UserAddressRepository;
+import com.wuxian99.finance.basedata.web.dto.QueryOrderListDto;
 import com.wuxian99.finance.basedata.web.view.OrderMdseView;
 import com.wuxian99.finance.basedata.web.view.OrderListView;
 import com.wuxian99.finance.basedata.web.view.OrderView;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +37,6 @@ public class OrderService {
     @Autowired
     OrderDetailRepository orderDetailRepository;
 
-    @Autowired
-    UserAddressRepository userAddressRepository;
-
     public OrderEntity createOrder(OrderEntity order, List<OrderDetailEntity> details) {
         order = orderRepository.save(order);
         for(OrderDetailEntity detail : details){
@@ -39,6 +44,10 @@ public class OrderService {
         }
         orderDetailRepository.save(details);
         return order;
+    }
+
+    public OrderEntity updateOrder(OrderEntity order) {
+        return orderRepository.save(order);
     }
 
     public String cancelOrder(Long orderId){
@@ -78,7 +87,7 @@ public class OrderService {
             //收货地址
             view.setAddress(order.getAddress());
             view.setPhone(order.getPhone());
-            view.setReciver(order.getReciver());
+            view.setReceiver(order.getReceiver());
             view.setProvince(order.getProvince());
 
             //物流信息
@@ -109,45 +118,28 @@ public class OrderService {
         }
     }
 
-    public List<OrderListView> findOrders(Long userId, Long status){
-        List<OrderEntity> orders = null;
-        if(status == 1L){
-            orders = orderRepository.findByUserIdAndStatus(userId, 0L, 1L);
-        }else if(status == 2L){
-            orders = orderRepository.findByUserIdAndStatus(userId, 2L, 3L);
-        }else{
-            return null;
-        }
-
-        if(CollectionUtils.isEmpty(orders)){
-            return null;
-        }else{
-            List<OrderListView> views = new ArrayList<>();
-            for(OrderEntity order : orders){
-                OrderListView view = new OrderListView();
-                view.setAmount(order.getAmount());
-                view.setMdseCount(order.getMdseCount());
-                view.setOrderId(order.getId());
-                view.setOrderTime(order.getTime());
-                view.setStatus(order.getStatus());
-
-                //商品信息
-                List<OrderDetailEntity>  details = orderDetailRepository.findByOrderId(order.getId());
-                if(CollectionUtils.isNotEmpty(details)){
-                    List<OrderMdseView> orderMdseViews = new ArrayList<>();
-                    for(OrderDetailEntity detail : details){
-                        OrderMdseView orderMdseView = new OrderMdseView();
-                        orderMdseView.setName(detail.getMdseName());
-                        orderMdseView.setCount(detail.getCount());
-                        orderMdseView.setPic(picPath + detail.getMdseSmallPic());
-                        orderMdseView.setPrice(detail.getPrice());
-                        orderMdseViews.add(orderMdseView);
-                    }
-                    view.setMdseInfos(orderMdseViews);
+    public Page<OrderEntity> findOrders(QueryOrderListDto paras){
+        Sort sort = new Sort(Sort.Direction.DESC,"time");
+        PageRequest pageRequest = paras.convert(sort);
+        return orderRepository.findAll(new Specification<OrderEntity>() {
+            public Predicate toPredicate(Root<OrderEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Path<String> merchantIdPath = root.get("userId");
+                Predicate predicate = cb.equal(merchantIdPath, paras.getUserId());
+                Path<Long> status = root.get("status");
+                if(paras.getStatus() == 1L){
+                    predicate = cb.and(predicate, cb.le(status, 1L));
+                }else if(paras.getStatus() == 2L){
+                    predicate = cb.and(predicate, cb.ge(status, 2L));
                 }
-                views.add(view);
+                query.where(predicate);
+                return query.getRestriction();
             }
-            return views;
-        }
+        }, pageRequest);
+
     }
+
+    public List<OrderDetailEntity> findOrderDetail(long orderId){
+        return orderDetailRepository.findByOrderId(orderId);
+    }
+
 }

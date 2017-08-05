@@ -29,7 +29,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.1/css/select.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/editor.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/editor/css/editor.dataTables.css">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="${rc.contextPath}/bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
@@ -44,9 +44,9 @@
     </script>
     <script type="text/javascript" language="javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     </script>
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js">
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js">
     </script>
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js">
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js">
     </script>
     <script type="text/javascript" language="javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js">
     </script>
@@ -58,9 +58,9 @@
     </script>
     <script type="text/javascript" language="javascript" src="http://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js">
     </script>
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.1/js/dataTables.select.min.js">
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/select/1.2.2/js/dataTables.select.min.js">
     </script>
-    <script type="text/javascript" language="javascript" src="${rc.contextPath}/js/dataTables.editor.min.js">
+    <script type="text/javascript" language="javascript" src="${rc.contextPath}/editor/js/dataTables.editor.min.js">
     </script>
     <script type="text/javascript" language="javascript" src="${rc.contextPath}/js/app/dataTables.init.js">
     </script>

@@ -23,29 +23,45 @@
         </tfoot>
     </table>
     <script type="text/javascript" language="javascript" class="init">
-
+        var editor;
 
         $(document).ready(function() {
-
+            editor = DataTable.Editor.newInstance('${moduleName}',[ {
+                label: "编号:",
+                name: "id",
+            }, {
+                label: "商户编号:",
+                name: "merchantId"
+            },{
+                label: "图片路径:",
+                name: "picRef",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "Clear",
+                noImageText: 'No image'
+            }, {
+                label: "排序号:",
+                name: "sortValue"
+            }, {
+                label: "商品编号:",
+                name: "mdseId"
+            }
+            ],{
+                ajax:"${rc.contextPath}/api/upload/banner"
+            });
 
             table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[
                 { data: "id"},
                 { data: "merchantId" },
-                { data: "pic" },
+                { data: "picRef" },
                 { data: "sortValue"},
                 { data: "mdseId"}
             ],[
-                {
-                    extend: 'collection',
-                    text: '导出',
-                    buttons: [
-                        'copy',
-                        'excel',
-                        'csv',
-                        'pdf',
-                        'print'
-                    ]
-                }
+                { extend: "create", editor: editor },
+                { extend: "edit",   editor: editor },
+                { extend: "remove", editor: editor }
             ],{initComplete: function ()
             {
 

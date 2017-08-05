@@ -1,6 +1,7 @@
 package com.wuxian99.finance.basedata.domain;
 
 import com.google.gson.Gson;
+import com.wuxian99.finance.basedata.support.annotation.UploadRef;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,9 +24,17 @@ public class BannerEntity implements Serializable {
   private String merchantId;
 
   /**
-   * 广告图片
+   * 广告图片路径(不在支撑系统直接编辑)
    */
-  private String pic;
+  @Column(name = "pic_path")
+  private String picPath;
+
+  /**
+   * 广告图片关联上传记录id
+   */
+  @Column(name = "pic_ref")
+  @UploadRef(ref = "picPath")
+  private Integer picRef;
 
   /**
    * 排序，前端按升序展示
@@ -55,12 +64,20 @@ public class BannerEntity implements Serializable {
     this.merchantId = merchantId;
   }
 
-  public String getPic() {
-    return pic;
+  public String getPicPath() {
+    return picPath;
   }
 
-  public void setPic(String pic) {
-    this.pic = pic;
+  public void setPicPath(String picPath) {
+    this.picPath = picPath;
+  }
+
+  public Integer getPicRef() {
+    return picRef;
+  }
+
+  public void setPicRef(Integer picRef) {
+    this.picRef = picRef;
   }
 
   public Long getSortValue() {

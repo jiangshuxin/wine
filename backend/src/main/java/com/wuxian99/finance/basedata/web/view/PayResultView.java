@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.web.view;
 
+import com.google.gson.Gson;
+
 /**
  * 支付发起返回信息
  */
@@ -22,5 +24,10 @@ public class PayResultView {
 
   public void setPrepayId(String prepayId) {
     this.prepayId = prepayId;
+  }
+
+  @Override
+  public String toString() {
+    return new Gson().toJson(this);
   }
 }

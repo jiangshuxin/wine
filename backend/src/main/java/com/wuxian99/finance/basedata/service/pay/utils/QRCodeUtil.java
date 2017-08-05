@@ -33,11 +33,12 @@ public class QRCodeUtil {
 			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
 			BitMatrix bitMatrix = new MultiFormatWriter().encode(payUrl, BarcodeFormat.QR_CODE, 200, 200, hints);
 			String fileName = orderId + "_" + payType + ".png";
-			String dir = "./resources/static/images/pay/";
+			String dir = "../static/wineStatic/images/pay/";
 			if(!new File(dir).exists()){
 				new File(dir).mkdirs();
 			}
 			File outputFile = new File(dir + fileName);
+//			logger.info("iamgesPath:" + outputFile.getAbsoluteFile());
 			MatrixToImageWriter.writeToFile(bitMatrix, "png", outputFile);
 			return fileName;
 		}catch(Exception e){

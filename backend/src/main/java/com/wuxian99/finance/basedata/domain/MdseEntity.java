@@ -108,8 +108,26 @@ public class MdseEntity implements Serializable {
   /**
    * 大图路径，用于商品详情页展示
    */
-  @Column(name = "bigpic")
-  private String bigPic;
+  @Column(name = "bigpic1")
+  private String bigPic1;
+
+  /**
+   * 大图路径，用于商品详情页展示
+   */
+  @Column(name = "bigpic2")
+  private String bigPic2;
+
+  /**
+   * 大图路径，用于商品详情页展示
+   */
+  @Column(name = "bigpic3")
+  private String bigPic3;
+
+  /**
+   * 大图路径，用于商品详情页展示
+   */
+  @Column(name = "bigpic4")
+  private String bigPic4;
 
   /**
    * 推荐理由
@@ -258,12 +276,36 @@ public class MdseEntity implements Serializable {
     this.smallPic = smallPic;
   }
 
-  public String getBigPic() {
-    return bigPic;
+  public String getBigPic1() {
+    return bigPic1;
   }
 
-  public void setBigPic(String bigPic) {
-    this.bigPic = bigPic;
+  public void setBigPic1(String bigPic1) {
+    this.bigPic1 = bigPic1;
+  }
+
+  public String getBigPic2() {
+    return bigPic2;
+  }
+
+  public void setBigPic2(String bigPic2) {
+    this.bigPic2 = bigPic2;
+  }
+
+  public String getBigPic3() {
+    return bigPic3;
+  }
+
+  public void setBigPic3(String bigPic3) {
+    this.bigPic3 = bigPic3;
+  }
+
+  public String getBigPic4() {
+    return bigPic4;
+  }
+
+  public void setBigPic4(String bigPic4) {
+    this.bigPic4 = bigPic4;
   }
 
   public String getReason() {

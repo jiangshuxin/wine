@@ -1,13 +1,13 @@
 package com.wuxian99.finance.basedata.web.dto;
 
-/**
- * Created by sxjiang on 2017/7/20.
- */
+import com.google.gson.Gson;
+
 public class QueryMdseListDto extends Pagination{
     private String merchantId;
     private String catagory;
     private String year;
     private String price;
+    private String mdseIds;
 
     public String getMerchantId() {
         return merchantId;
@@ -39,5 +39,14 @@ public class QueryMdseListDto extends Pagination{
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getMdseIds() {
+        return mdseIds;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

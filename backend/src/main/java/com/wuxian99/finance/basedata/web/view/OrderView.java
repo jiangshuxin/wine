@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.web.view;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class OrderView implements Serializable {
   private List<OrderMdseView> mdseInfos;
   private String address;
   private String phone;
-  private String reciver;
+  private String receiver;
   private String province;
   private String comment;
   private String logisticsCompany;
@@ -87,12 +89,12 @@ public class OrderView implements Serializable {
     this.phone = phone;
   }
 
-  public String getReciver() {
-    return reciver;
+  public String getReceiver() {
+    return receiver;
   }
 
-  public void setReciver(String reciver) {
-    this.reciver = reciver;
+  public void setReceiver(String receiver) {
+    this.receiver = receiver;
   }
 
   public String getProvince() {
@@ -133,6 +135,11 @@ public class OrderView implements Serializable {
 
   public void setInvoiceInfo(String invoiceInfo) {
     this.invoiceInfo = invoiceInfo;
+  }
+
+  @Override
+  public String toString() {
+    return new Gson().toJson(this);
   }
 
 }

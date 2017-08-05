@@ -32,7 +32,7 @@ public class ForwardAction {
     private MenuService menuService;
     @Autowired
     private UserService userService;
-    @Value("${handpay.report.webPath}")
+    @Value("${wine.picPath}")
     private String webPath;
 
     @RequestMapping("/index")

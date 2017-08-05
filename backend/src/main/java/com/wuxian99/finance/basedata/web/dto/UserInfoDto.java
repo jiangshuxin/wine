@@ -73,4 +73,8 @@ public class UserInfoDto implements Serializable {
     this.birthday = birthday;
   }
 
+  @Override
+  public String toString() {
+    return new Gson().toJson(this);
+  }
 }
