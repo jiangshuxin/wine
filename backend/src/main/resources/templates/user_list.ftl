@@ -36,6 +36,8 @@
         var editor;
 
         $(document).ready(function() {
+            var userStatusDdic = Ddic.show('userStatus');
+
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "编号:",
                 name: "id",
@@ -47,10 +49,18 @@
                 name: "userName"
             }, {
                 label: "状态:",
-                name: "status"
+                name: "status",
+                type:  "select",
+                options:userStatusDdic
             }, {
                 label: "类型:",
-                name: "type"
+                name: "type",
+                type:  "radio",
+                options: [
+                    { label: "To do", value: 0 },
+                    { label: "Done",  value: 1 }
+                ],
+                def: 0
             }, {
                 label: "余额:",
                 name: "balance"

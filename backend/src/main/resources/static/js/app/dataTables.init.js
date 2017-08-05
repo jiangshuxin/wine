@@ -1,5 +1,5 @@
 var DataTable = {
-    CONTEXT_PATH : '/fdp',
+    CONTEXT_PATH : '/wine',
     /**
      * 编辑器配置
      * @param moduleId 模块编号
@@ -256,5 +256,38 @@ var DataTable = {
             DataTable.Editor.showMsgOnError(editor);
             return editor;
         }
+    }
+}
+
+var Ddic = {
+    get : function (name) {
+        var allDdicStr = localStorage.getItem('ddic');
+        var data = JSON.parse(allDdicStr);
+        if(!name){
+            return data;
+        }
+        return data[name];
+    },
+    show : function (name) {
+        var objList = this.get(name);
+        if(!objList || objList.length == 0)return;
+        var result = new Array();
+        for(var k in objList){
+            var temp = new Object();
+            temp.label = objList[k].itemValue;
+            temp.value = objList[k].itemKey;
+            result.push(temp);
+        }
+        return result;
+    },
+    init : function () {
+        $.post(DataTable.CONTEXT_PATH+"/api/all/ddic",
+            function(result){
+                if(!result.success){
+                    return;
+                }
+                var data = result.data;
+                localStorage.setItem('ddic',JSON.stringify(data));
+            },'json');
     }
 }
