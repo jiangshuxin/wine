@@ -427,10 +427,10 @@ public class WineController {
     @RequestMapping(value="modifyUserAddress", method={RequestMethod.POST})
     public Result<Long> modifyUserAddress(@RequestBody UserAddressDto paras){
         logger.info("modifyUserAddress request: {}", paras);
-        Page<UserAddressEntity> allAddr = userService.findUserAddressesByUserId(paras.getUserId(), null);
+        List<UserAddressEntity> allAddr = userService.findUserAddressesByUserId(paras.getUserId());
         UserAddressEntity address = new UserAddressEntity();
         //如果为用户的第一个地址，自动设置为默认地址
-        if(CollectionUtils.isEmpty(allAddr.getContent())){
+        if(CollectionUtils.isEmpty(allAddr)){
             address.setIsDefault(1L);
         }else{
             address.setIsDefault(paras.getIsDefault());
@@ -447,8 +447,8 @@ public class WineController {
 
         //如果本次新增/修改的地址为默认地址，把本来是默认地址的改为非默认
         if(address.getIsDefault().longValue() == 1L){
-            if(CollectionUtils.isNotEmpty(allAddr.getContent())) {
-                for (UserAddressEntity addr : allAddr.getContent()) {
+            if(CollectionUtils.isNotEmpty(allAddr)) {
+                for (UserAddressEntity addr : allAddr) {
                     if (addr.getId().longValue() != address.getId().longValue() && addr.getIsDefault().longValue() == 1L) {
                         addr.setIsDefault(0L);
                         userService.saveOrUpdateUserAddress(addr);

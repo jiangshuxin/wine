@@ -34,6 +34,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public List<UserAddressEntity> findUserAddressesByUserId(Long userId) {
+        return userAddressRepository.findByUserId(userId);
+    }
+
     public Page<UserAddressEntity> findUserAddressesByUserId(Long userId, PageRequest pageRequest) {
         return userAddressRepository.findByUserId(userId, pageRequest);
     }

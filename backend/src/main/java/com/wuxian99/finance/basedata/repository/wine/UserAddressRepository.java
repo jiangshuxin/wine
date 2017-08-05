@@ -12,6 +12,8 @@ import java.util.List;
 
 public interface UserAddressRepository extends JpaRepository<UserAddressEntity, Long>, PagingAndSortingRepository<UserAddressEntity, Long> {
 
+    List<UserAddressEntity> findByUserId(Long userId);
+
     Page<UserAddressEntity> findByUserId(Long userId, Pageable page);
 
 }
