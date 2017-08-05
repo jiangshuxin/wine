@@ -4,8 +4,7 @@ const webpackDevConfig = require('../build/webpack.dev.conf');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpack = require('webpack');
-// const bodyParser = require('body-parser');
-// const multer = require('multer');
+const bodyParser = require('body-parser');
 
 const app = new Express();
 const compiler = webpack(webpackDevConfig);
@@ -23,8 +22,8 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler));
 // proxy
 app.use(require('./proxyServer'));
-
 // mock
+app.use(bodyParser.json());
 app.use(require('../mock'));
 
 console.log('Starting server, Please wait a moment...');

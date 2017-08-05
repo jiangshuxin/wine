@@ -6,6 +6,14 @@ export function mallFilterSelectedInfo(state) {
     return state.filterSelectedInfo;
 }
 
-export function mallCommodityList(state) {
-    return state.commodityList;
+export function mallMdseList(state) {
+    return state.mdseList;
+}
+
+export function mallMdsePageInfo(state) {
+    const {pageNumber, totalPage} = state.basicInfo;
+    return {
+        pageNumber,
+        totalPage
+    };
 }

@@ -1,13 +1,14 @@
 <script>
 export default {
     created() {
-        console.log('user');
     }
 };
 </script>
 
 <template>
-    <div class="user">user</div>
+    <div class="user">
+        <router-view></router-view>
+    </div>
 </template>
 
 <style lang="stylus" scoped>

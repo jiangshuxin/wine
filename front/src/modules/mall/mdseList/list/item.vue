@@ -1,4 +1,5 @@
 <script>
+import { formatPrice } from 'common/util';
 export default {
     props: {
         item: {
@@ -6,57 +7,55 @@ export default {
             require: true
         }
     },
-    data() {
-        return {
-            tapOptions: {domEvents: true},
-            count: 0
-        };
-    },
     methods: {
-        test(e) {
-            // 出了点问题
+        goDetail(e) {
             if (e.target === this.$refs['add-cart'].$el) {
                 return;
             }
-            console.log('goDetail');
-        },
-        goDetail(e) {
-            console.log('goDetail');
-            console.log(e);
-            alert('go');
+            this.$router.push({name: 'mdseDetail', query: {
+                mdseId: this.item.mdseId,
+                merchantId: this.$route.query.merchantId
+            }});
         },
         addShopCart(e) {
-            e.changedPointers[0].stopPropagation();
-            console.log(e);
             e.srcEvent.stopPropagation();
-            console.log('addShopCart');
-            console.log(e);
-        }
+            e.preventDefault();
+            this.$emit('addShopCart', this.item);
+        },
+        formatPrice
     }
 };
 </script>
 
 <template>
-    <v-touch tag="div" ref="list-item-wrapper" class="list-item-wrapper" @tap="goDetail" :options="tapOptions">
+    <v-touch tag="div" ref="list-item-wrapper" class="list-item-wrapper" @tap="goDetail">
         <div class="img">
-            <img :src="item.url" alt="item.name">
+            <img :src="item.smallPic" alt="item.name">
         </div>
         <div class="content">
             <div class="title">
                 <p class="name">{{item.name}}</p>
                 <p class="year">{{item.year}}</p>
             </div>
-            <p class="description">{{item.description}}</p>
+            <p class="description">{{item.nameEn}}</p>
             <div class="content-footer">
-                <p class="price">￥{{item.price}}</p>
-                <v-touch tag="div" ref='add-cart' class="add-cart" @tap="addShopCart" :options="tapOptions">加入购物车</v-touch>
+                <p class="price">￥{{formatPrice(item.price / 100)}}</p>
+                <v-touch
+                    tag="div"
+                    ref='add-cart'
+                    class="add-cart"
+                    :options="{domEvents: true}"
+                    @tap="addShopCart"
+                >
+                    加入购物车
+                </v-touch>
             </div>
         </div>
     </v-touch>
 </template>
 
 <style lang="stylus" scoped>
-@import '../../../common/mixin.styl';
+@import '../../../../common/mixin.styl';
 p
     margin 0
     padding 0

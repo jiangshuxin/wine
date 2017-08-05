@@ -1,9 +1,8 @@
 const httpProxy = require('http-proxy');
 const fs = require('fs');
 const proxy = httpProxy.createProxyServer();
-// const mockServer = require('./mockServer');
 const devEnv = {
-    dev: ''
+    dev: 'http://123.57.234.184:7080'
 };
 
 module.exports = function proxyServer(req, res, next) {
@@ -15,5 +14,7 @@ module.exports = function proxyServer(req, res, next) {
              console.log(err);
         });
     }
-    return next();
+    setTimeout(() => {
+        next();
+    }, 1000);
 };

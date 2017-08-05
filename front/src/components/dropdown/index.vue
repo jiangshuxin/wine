@@ -99,6 +99,7 @@ export default {
 </template>
 
 <style lang="stylus" scoped>
+@import '../../common/mixin.styl';
 ul,
 li
     margin 0
@@ -116,10 +117,37 @@ li
     display inline-block
 .dropdown-list
     position absolute
+    max-height 300px
     border-bottom 1px solid #eee
     overflow hidden
+    overflow-y auto
     text-align left
     background #fff
+    &::-webkit-scrollbar-track-piece {
+      background-color: rgba(0, 0, 0, 0);
+      border-left: 1px solid rgba(0, 0, 0, 0);
+    }
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 13px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.5);
+      background-clip: padding-box;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      min-height: 28px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
     li
         margin-left 20px
         line-height 40px

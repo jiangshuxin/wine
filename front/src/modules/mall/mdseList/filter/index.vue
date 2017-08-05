@@ -36,6 +36,7 @@ export default {
         changeSelected(val) {
             this.changeSelectedInfo({id: this.nowId, value: val});
             this.init();
+            this.$parent.getList(true);
         }
     },
     components: {
@@ -76,7 +77,7 @@ export default {
 </template>
 
 <style lang="stylus" scoped>
-@import '../../../common/mixin.styl';
+@import '../../../../common/mixin.styl';
 ul,
 p
     margin 0
