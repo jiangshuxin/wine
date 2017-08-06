@@ -35,4 +35,6 @@ config.plugins = (config.plugins || []).concat([
     })
 ])
 
+config.output.publicPath = './';
+
 module.exports = config;

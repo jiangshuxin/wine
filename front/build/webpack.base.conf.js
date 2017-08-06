@@ -10,7 +10,7 @@ module.exports = {
     output: {
         // 输出路径，绝对路径
         path: path.resolve(__dirname, '../release'),
-        publicPath: '/',
+        publicPath: './',
         filename: '[name].[hash].js',
         chunkFilename: '[id].[chunkhash].js'
     },
