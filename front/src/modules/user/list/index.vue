@@ -38,6 +38,7 @@ export default {
             <v-touch
                 tag="div"
                 v-for="item in layout"
+                :key="item.routeName"
                 @tap="routeHandler(item)"
             >
                 <mint-cell :title="item.text" is-link style="fontSize: 12px;"></mint-cell>

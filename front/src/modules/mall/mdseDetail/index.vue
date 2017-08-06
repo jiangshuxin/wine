@@ -85,7 +85,8 @@ export default {
             <mint-swipe :auto="4000">
                 <mint-swipe-item
                     class="swipe-item"
-                    v-for="item in mdse.bigPic"
+                    v-for="(item, index) in mdse.bigPic"
+                    :key="index"
                 >
                     <div class="img" :style="{'background': `url(${item}) center/cover no-repeat`}"></div>
                 </mint-swipe-item>

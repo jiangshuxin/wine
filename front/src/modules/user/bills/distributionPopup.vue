@@ -59,6 +59,7 @@ export default {
             tag="div"
             class="distribution-item-container"
             v-for="item in list"
+            :key="item.id"
             @tap="checked(item.id)"
         >
             <mint-cell

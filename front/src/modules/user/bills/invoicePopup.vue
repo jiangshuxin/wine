@@ -65,6 +65,7 @@ export default {
                     class="invoice-label"
                     :class="{'selected': item.id === selected.id}"
                     v-for="item in invoice.list"
+                    :key="item.id"
                     @tap="changeItem(item.id)"
                 >
                     {{item.text}}

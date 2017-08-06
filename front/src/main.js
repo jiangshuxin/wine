@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import 'mint-ui/lib/style.css';
-import 'common/global';
+import 'common/iconfont.css';
+import 'common/global.styl';
 import Vue from 'vue';
 import app from './app';
 import router from './router';
