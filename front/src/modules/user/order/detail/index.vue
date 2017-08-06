@@ -71,7 +71,11 @@ export default {
 </script>
 
 <template>
-    <div class="order-detail-wrapper" v-if="detail.orderId !== -1">
+    <div
+        class="order-detail-wrapper"
+        v-if="detail.orderId !== -1"
+        :style="{paddingBottom: detail.status === 1 ? '55px': '0'}"
+    >
         <mint-cell class="address">
             <div slot="title" class="address-cell">
                 <i class="iconfont icon-position icon-address"></i>
@@ -144,7 +148,6 @@ export default {
         </div>
         <div
             class="order-price"
-            :style="{marginBottom: detail.status === 1 ? '55px': '0'}"
         >
             {{[0, 1].indexOf(detail.status) >= 0 ? '应' : '实'}}付款:
             <span>

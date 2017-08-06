@@ -57,7 +57,7 @@ export default {
         <div class="mdse-count-wrapper">
             <div class="mdse-info">
                 <div class="mdse-info-img">
-                    <img :src="mdseInfo.smallPic" alt="mdseInfo.name" width="100%" height="100%">
+                    <img :src="mdseInfo.smallPic" :alt="mdseInfo.name" width="100%" height="100%">
                 </div>
                 <div class="mdse-info-name">
                     <h4>{{mdseInfo.name}}</h4>

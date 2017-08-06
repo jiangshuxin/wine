@@ -11,14 +11,16 @@ config.plugins = (config.plugins || []).concat([
             NODE_ENV: '"production"'
         }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false,
-            // 上线时移除debugger以及console，防止报错
-            drop_console: true,
-            drop_debugger: true
-        }
-    }),
+    /*
+     *new webpack.optimize.UglifyJsPlugin({
+     *    compress: {
+     *        warnings: false,
+     *        // 上线时移除debugger以及console，防止报错
+     *        drop_console: true,
+     *        drop_debugger: true
+     *    }
+     *}),
+     */
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
         template: path.resolve(__dirname, '../src/main.html'),
