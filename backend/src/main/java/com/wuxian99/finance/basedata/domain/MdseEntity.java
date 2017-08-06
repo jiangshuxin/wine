@@ -1,6 +1,7 @@
 package com.wuxian99.finance.basedata.domain;
 
 import com.google.gson.Gson;
+import com.wuxian99.finance.basedata.support.annotation.Ddic;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -41,7 +42,11 @@ public class MdseEntity implements Serializable {
   /**
    * 状态，1:上架，0:下架，2:售罄
    */
+  @Ddic(name = "mdseStatus",mapTo = "statusName")
   private Long status;
+
+  @Transient
+  private String statusName;
 
   /**
    * 分类，1:红葡萄酒，2:白葡萄酒，3:起泡酒，4:冰酒，5:桃红葡萄酒
@@ -186,6 +191,14 @@ public class MdseEntity implements Serializable {
 
   public void setStatus(Long status) {
     this.status = status;
+  }
+
+  public String getStatusName() {
+    return statusName;
+  }
+
+  public void setStatusName(String statusName) {
+    this.statusName = statusName;
   }
 
   public String getCatagory() {

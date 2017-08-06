@@ -46,7 +46,11 @@ public class UserEntity implements Serializable {
   /**
    * 角色，1:销售（管理员添加），2:普通用户（前端注册）
    */
+  @Ddic(name = "userType",mapTo = "typeName")
   private Long type;
+
+  @Transient
+  private String typeName;
 
   /**
    * 返佣余额，单位分
@@ -155,6 +159,14 @@ public class UserEntity implements Serializable {
 
   public void setBirthday(String birthday) {
     this.birthday = birthday;
+  }
+
+  public String getTypeName() {
+    return typeName;
+  }
+
+  public void setTypeName(String typeName) {
+    this.typeName = typeName;
   }
 
   @Override

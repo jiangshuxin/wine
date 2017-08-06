@@ -281,7 +281,7 @@ var Ddic = {
         return result;
     },
     init : function () {
-        $.post(DataTable.CONTEXT_PATH+"/api/all/ddic",
+        $.post(DataTable.CONTEXT_PATH+"/api/all/ddic?r="+new Date().getTime(),
             function(result){
                 if(!result.success){
                     return;
