@@ -20,6 +20,8 @@
     <!-- Custom styles for this template -->
     <link href="${rc.contextPath}/bootstrap/examples/signin/signin.css" rel="stylesheet">
 
+    <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" language="javascript" src="${rc.contextPath}/js/app/dataTables.init.js"></script>
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="${rc.contextPath}/bootstrap/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="${rc.contextPath}/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
@@ -56,5 +58,11 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="${rc.contextPath}/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script>
+        $(document).ready(function() {
+            DataTable.CONTEXT_PATH = '${rc.contextPath}';
+            Ddic.init();
+        });
+    </script>
   </body>
 </html>

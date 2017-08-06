@@ -216,6 +216,9 @@ public class ExecuteConvert {
 			if (notWriteable(pd, column)) 
 				continue;
 			Class<?> parameterType = PropertyUtils.getPropertyType(entity, column.getData());
+			if(parameterType == null){
+				throw new IllegalStateException(String.format("there is no setter/getter for property=%s",column.getData()));
+			}
 			// 优先找String类型匹配
 			if(column.getNullable() != null) {
 				if(column.getNullable()){

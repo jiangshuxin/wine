@@ -14,6 +14,7 @@
             <th>性别</th>
             <th>生日</th>
             <th>状态</th>
+            <th>类型</th>
         </tr>
         </thead>
 
@@ -29,6 +30,7 @@
             <th>性别</th>
             <th>生日</th>
             <th>状态</th>
+            <th>类型</th>
         </tr>
         </tfoot>
     </table>
@@ -37,6 +39,7 @@
 
         $(document).ready(function() {
             var userStatusDdic = Ddic.show('userStatus');
+            var userTypeDdic = Ddic.show('userType');
 
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "编号:",
@@ -51,16 +54,14 @@
                 label: "状态:",
                 name: "status",
                 type:  "select",
-                options:userStatusDdic
+                options:userStatusDdic,
+                def: 1
             }, {
                 label: "类型:",
                 name: "type",
                 type:  "radio",
-                options: [
-                    { label: "To do", value: 0 },
-                    { label: "Done",  value: 1 }
-                ],
-                def: 0
+                options: userTypeDdic
+                //def: 0
             }, {
                 label: "余额:",
                 name: "balance"
@@ -83,11 +84,12 @@
                 { data: "parentId" },
                 { data: "userName" },
                 { data: "statusName",searchType:"select",ddic:"userStatus",ddicRef:"status"},
-                { data: "type"},
+                { data: "typeName",searchType:"select",ddic:"userType",ddicRef:"type"},
                 { data: "balance"},
                 { data: "realName"},
                 { data: "gender"},
                 { data: "birthday"},
+                { data: "type"},
                 { data: "status"}//不展示的枚举值，放列表最后，便于隐藏
             ],[
                 { extend: "create", editor: editor },
@@ -97,7 +99,7 @@
             {
 
             }, "columnDefs": [
-                { "visible": false, "targets": [9] }
+                { "visible": false, "targets": [9,10] }
             ]
                 , order: [[ 0, 'desc' ]]
             }) );
