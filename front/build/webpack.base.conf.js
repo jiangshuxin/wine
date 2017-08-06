@@ -83,6 +83,6 @@ module.exports = {
         }]
     },
     plugins: [
-        new ExtractTextPlugin('[name].[conetnthash].css')
+        new ExtractTextPlugin('[name].[contenthash].css')
     ]
 }
