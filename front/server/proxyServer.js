@@ -2,7 +2,7 @@ const httpProxy = require('http-proxy');
 const fs = require('fs');
 const proxy = httpProxy.createProxyServer();
 const devEnv = {
-    dev: 'http://123.57.234.184:7080'
+    dev: 'http://123.57.234.184'
 };
 
 module.exports = function proxyServer(req, res, next) {
