@@ -56,7 +56,7 @@ public class OrderEntity implements Serializable {
   private Long status;
 
   /**
-   * 支付时间
+   * 支付完成时间
    */
   @Column(name = "paytime")
   private String payTime;
@@ -115,6 +115,18 @@ public class OrderEntity implements Serializable {
    * 详细地址
    */
   private String address;
+
+  /**
+   * 最后查询支付状态的时间，毫秒数，不存数据库
+   */
+  @Transient
+  private long lastQueryPayStatusTime;
+
+  /**
+   * 查询支付状态的次数，不存数据库
+   */
+  @Transient
+  private long queryPayStatusCount;
 
   public Long getId() {
     return id;
@@ -266,6 +278,22 @@ public class OrderEntity implements Serializable {
 
   public void setPayPic(String payPic) {
     this.payPic = payPic;
+  }
+
+  public long getLastQueryPayStatusTime() {
+    return lastQueryPayStatusTime;
+  }
+
+  public void setLastQueryPayStatusTime(long lastQueryPayStatusTime) {
+    this.lastQueryPayStatusTime = lastQueryPayStatusTime;
+  }
+
+  public long getQueryPayStatusCount() {
+    return queryPayStatusCount;
+  }
+
+  public void setQueryPayStatusCount(long queryPayStatusCount) {
+    this.queryPayStatusCount = queryPayStatusCount;
   }
 
   @Override

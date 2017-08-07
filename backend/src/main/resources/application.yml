@@ -39,5 +39,6 @@ spring:
       auto_import: common/datatable.ftl as dt,common/spring.ftl as spring
 wine:
   picPath: http://123.57.234.184/wineStatic/images/  #图片访问路径
+  wxPayNotifyUrl: http://123.57.234.184/wine/pay/wxPayNotify #微信支付通知地址
   storePath: /data/wine/static/
   #storePath: /Users/sxjiang/Documents/wine/
