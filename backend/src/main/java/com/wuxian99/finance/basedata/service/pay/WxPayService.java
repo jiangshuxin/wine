@@ -1,10 +1,7 @@
 package com.wuxian99.finance.basedata.service.pay;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.wuxian99.finance.basedata.domain.OrderEntity;
 import com.wuxian99.finance.basedata.service.pay.utils.*;
@@ -96,6 +93,10 @@ public class WxPayService {
 				order.setPayPic("pay/" + payPicName);
 				orderService.updateOrder(order);
 
+				order.setQueryPayStatusCount(1L);
+				order.setLastQueryPayStatusTime(System.currentTimeMillis());
+				orderService.pushPayingQueue(order);//放入支付状态同步队列
+
 				PayResultView result = new PayResultView();
 				if(payType == 1){
 					result.setAppId(APP_ID);
@@ -150,7 +151,8 @@ public class WxPayService {
 			String trade_state = (String) map.get("trade_state");
 			if(StringUtils.equals(return_code, "SUCCESS")){
 				if(StringUtils.equals(trade_state, "SUCCESS")){
-					//TODO 更新支付完成时间、支付状态
+					order.setStatus(2L);
+					order.setPayTime(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 					return order;
 				}
 			}
@@ -373,8 +375,12 @@ public class WxPayService {
 		}
 
 		if(verify(map1, sign1, SECRET_KEY)){
-			//OrderEntity order = orderDao.findByOrderNo(out_trade_no);
-			//TODO 更新支付完成时间、支付状态
+			OrderEntity order = orderService.findOrderById(Long.parseLong(out_trade_no));
+			if(order.getStatus() == 1L) {
+				order.setStatus(2L);
+				order.setPayTime(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+				orderService.updateOrder(order);
+			}
 		}
 	}
 	
