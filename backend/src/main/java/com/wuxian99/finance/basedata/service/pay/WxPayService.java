@@ -8,6 +8,8 @@ import java.util.TreeMap;
 
 import com.wuxian99.finance.basedata.domain.OrderEntity;
 import com.wuxian99.finance.basedata.service.pay.utils.*;
+import com.wuxian99.finance.basedata.service.wine.OrderService;
+import com.wuxian99.finance.basedata.web.view.PayResultView;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -15,6 +17,8 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,9 +39,17 @@ public class WxPayService {
 	private final static String PAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	private final static String QUERY_URL = "https://api.mch.weixin.qq.com/pay/orderquery";
 	private final static String REFUND_URL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
-	private final static String NOTIFY_URL = "http://test.xxxwine.com/wine/pay/wxPayNotify";
 	private final static String SERVER_IP = "";
 	private static final Logger logger = LoggerFactory.getLogger(WxPayService.class);
+
+	@Autowired
+	private OrderService orderService;
+
+	@Value("${wine.picPath}")
+	private String picPath;
+
+	@Value("${wine.wxPayNotifyUrl}")
+	private String wxPayNotifyUrl;
 	
 	/**
 	 * 支付
@@ -45,13 +57,13 @@ public class WxPayService {
 	 * @param payType 1:微信支付，2:扫码支付
 	 * @return
 	 */
-	public OrderEntity pay(OrderEntity order, Long payType) {
+	public PayResultView pay(OrderEntity order, Long payType) {
 		
 		try{
 			String currTime = PayCommonUtil.getCurrTime();
 			String strTime = currTime.substring(8, currTime.length());  
 			String strRandom = PayCommonUtil.buildRandom(4) + "";  
-			String nonce_str = strTime + strRandom;  
+			String nonce_str = strTime + strRandom;
 			SortedMap<Object,Object> packageParams = new TreeMap<Object,Object>();  
 			packageParams.put("appid", APP_ID);
 			packageParams.put("mch_id", MCH_ID);
@@ -61,7 +73,7 @@ public class WxPayService {
 			//单位分
 			packageParams.put("total_fee", order.getPayAmount() + "");  
 			packageParams.put("spbill_create_ip", SERVER_IP);  
-			packageParams.put("notify_url", NOTIFY_URL);  
+			packageParams.put("notify_url", wxPayNotifyUrl);
 			packageParams.put("trade_type", "NATIVE");  
 
 			String sign = PayCommonUtil.createSign("UTF-8", packageParams, SECRET_KEY);
@@ -74,15 +86,35 @@ public class WxPayService {
 			String return_code = (String) map.get("return_code");
 			if(StringUtils.equals(return_code, "SUCCESS")){
 				String payUrl = (String) map.get("code_url");
-				String prepay_id = (String) map.get("prepay_id");  
-				if(StringUtils.isNotEmpty(prepay_id)){
-					order.setPaySeqs(prepay_id);
-					if(payType == 2 && StringUtils.isNotBlank(payUrl)){
-						String payPicName = QRCodeUtil.createQRCodeImg(order.getId(), payUrl, "weixin");
-						order.setPayPic("pay/" + payPicName);
-					}
-					return order;
+				String prepay_id = (String) map.get("prepay_id");
+				if(StringUtils.isEmpty(prepay_id) || StringUtils.isEmpty(payUrl)){
+					logger.error("订单[{}]发起微信支付异常，返回信息为空，prepay_id:{}，payUrl:{}", order.getId(), prepay_id, payUrl);
+					return null;
 				}
+				order.setPaySeqs(prepay_id);
+				String payPicName = QRCodeUtil.createQRCodeImg(order.getId(), payUrl, "weixin");
+				order.setPayPic("pay/" + payPicName);
+				orderService.updateOrder(order);
+
+				PayResultView result = new PayResultView();
+				if(payType == 1){
+					result.setAppId(APP_ID);
+					result.setTimeStamp(System.currentTimeMillis()+"");
+					result.setNonceStr(nonce_str);
+					result.setPackAge("prepay_id=" + prepay_id);
+					result.setSignType("MD5");
+					SortedMap<Object,Object> h5PayParams = new TreeMap<Object,Object>();
+					h5PayParams.put("appId", result.getAppId());
+					h5PayParams.put("timeStamp", result.getTimeStamp());
+					h5PayParams.put("nonceStr", result.getNonceStr());
+					h5PayParams.put("package", result.getPackAge());
+					h5PayParams.put("signType", result.getSignType());
+					String paySign = PayCommonUtil.createSign("UTF-8", h5PayParams, SECRET_KEY);
+					result.setPaySign(paySign);
+				}else{
+					result.setPayPic(picPath + order.getPayPic());
+				}
+				return result;
 			}
 		}catch(Exception e){
 			logger.error("订单[{}]发起微信支付异常", order.getId(), e);

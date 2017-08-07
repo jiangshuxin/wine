@@ -637,18 +637,12 @@ public class WineController {
         if(order.getStatus() != 1){
             return Result.buildFail("该订单状态不允许支付");
         }
-        order = wxPayService.pay(order, payType);
-        if(order == null){
+        PayResultView result = wxPayService.pay(order, payType);
+        if(result == null){
             return Result.buildFail("发起支付异常");
         }
-        orderService.updateOrder(order);
-        PayResultView payResultView = new PayResultView();
-        payResultView.setPrepayId(order.getPaySeqs());
-        if(payType == 2){
-            payResultView.setPayPic(picPath + order.getPayPic());
-        }
-        logger.info("pay response: {}", payResultView);
-        return Result.buildSuccess(payResultView);
+        logger.info("pay response: {}", result);
+        return Result.buildSuccess(result);
     }
 
     @ExceptionHandler(Exception.class)
