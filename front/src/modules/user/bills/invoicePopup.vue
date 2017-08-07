@@ -30,10 +30,14 @@ export default {
         ...mapMutations({
             setSelected: 'SET_INVOICE_SELECTED'
         }),
-        changeItem(id) {
+        changeItem(e, id) {
+            e.preventDefault();
+            e.srcEvent.stopPropagation();
             this.selected.id = id;
         },
-        submit() {
+        submit(e) {
+            e.preventDefault();
+            e.srcEvent.stopPropagation();
             this.setSelected(this.selected);
             this.$emit('close');
         }
@@ -66,7 +70,8 @@ export default {
                     :class="{'selected': item.id === selected.id}"
                     v-for="item in invoice.list"
                     :key="item.id"
-                    @tap="changeItem(item.id)"
+                    @tap="changeItem($event, item.id)"
+                    :options="{domEvents: true}"
                 >
                     {{item.text}}
                 </v-touch>
@@ -78,6 +83,7 @@ export default {
                 v-model="selected.input"
             ></mint-field>
         </div>
+        <v-touch tag="div" class="submit" @tap="submit" :options="{domEvents: true}">确定</v-touch>
     </mint-popup>
 </template>
 

@@ -25,6 +25,16 @@ export default {
         }
     },
     methods: {
+        changeDistribution(e) {
+            e.preventDefault();
+            e.srcEvent.stopPropagation();
+            this.showDistribution = true;
+        },
+        changeInvoice(e) {
+            e.preventDefault();
+            e.srcEvent.stopPropagation();
+            this.showInvoice = true;
+        }
     },
     components: {
         mintCell: Cell,
@@ -36,10 +46,10 @@ export default {
 
 <template>
     <div class="other-wrapper">
-        <v-touch tag="div" class="distribution" @tap="() => showDistribution = true">
+        <v-touch tag="div" class="distribution" @tap="changeDistribution" :options="{domEvents: true}">
             <mint-cell title="配送信息" is-link :value="distributionItem.text + ' 包邮'"></mint-cell>
         </v-touch>
-        <v-touch tag="div" class="invoice" @tap="() => showInvoice = true">
+        <v-touch tag="div" class="invoice" @tap="changeInvoice" :options="{domEvents: true}">
             <mint-cell title="发票信息" is-link>
                 <p class="invoice-info">{{invoiceItem.input || invoiceItem.text}}</p>
             </mint-cell>
@@ -55,7 +65,6 @@ p
     margin 0
     padding 0
 .other-wrapper
-    padding-left 15px
     background #fff
     .mint-cell,
     .mint-cell-wrapper
@@ -66,6 +75,11 @@ p
         font-size 14px
     .distribution
         border-bottom 1px solid #c0c0c0
+        .mint-cell-wrapper
+            padding-left 15px
+    .invoice
+        .mint-cell-wrapper
+            padding-left 15px
     .invoice-info
         max-width 100px
         ellipsis()

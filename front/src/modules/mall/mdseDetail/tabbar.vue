@@ -1,13 +1,7 @@
 <script>
 import { Badge, Indicator } from 'mint-ui';
 import { mapGetters, mapActions } from 'vuex';
-import popupMdseCount from 'components/popupMdseCount';
 export default {
-    props: {
-        mdse: {
-            type: Object
-        }
-    },
     created() {
         this.init();
     },
@@ -33,19 +27,12 @@ export default {
         showPopup(e) {
             e.srcEvent.stopPropagation();
             e.preventDefault();
-            this.$emit('showPopup');
+            this.$emit('showShopPopup');
         },
-        buy() {
-            this.$refs.mdseBuyCount.setMdseInfo(this.mdse);
-        },
-        goBills(info) {
-            this.$router.push({
-                name: 'bills',
-                query: {
-                    merchantId: this.$route.query.merchantId,
-                    mdseId: `${info.mdse.mdseId}-${info.count}`
-                }
-            });
+        buy(e) {
+            e.srcEvent.stopPropagation();
+            e.preventDefault();
+            this.$emit('showBuyPopup');
         },
         goShopCart(e) {
             e.srcEvent.stopPropagation();
@@ -54,8 +41,7 @@ export default {
         }
     },
     components: {
-        mintBadge: Badge,
-        popupMdseCount
+        mintBadge: Badge
     }
 };
 </script>
@@ -71,13 +57,12 @@ export default {
                 </div>
             </v-touch>
             <li class="buy">
-                <v-touch tag="div" @tap="buy">立即购买</v-touch>
+                <v-touch tag="div" @tap="buy" :options="{domEvents: true}">立即购买</v-touch>
             </li>
             <li class="add-shop-cart">
                 <v-touch tag="div" @tap="showPopup" :options="{domEvents: true}">加入购物车</v-touch>
             </li>
         </ul>
-        <popup-mdse-count class="mdse-buy-count" ref="mdseBuyCount" @submit="goBills"></popup-mdse-count>
     </div>
 </template>
 

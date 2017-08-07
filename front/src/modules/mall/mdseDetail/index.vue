@@ -54,8 +54,11 @@ export default {
         goBack() {
             this.$router.go(-1);
         },
-        showPopup() {
+        showShopPopup() {
             this.$refs.mdseCount.setMdseInfo(this.mdse);
+        },
+        showBuyPopup() {
+            this.$refs.mdseBuyCount.setMdseInfo(this.mdse);
         },
         async addShopCart(info) {
             const result = await this.setShopCart(info);
@@ -64,6 +67,15 @@ export default {
             } else {
                 this.changeHint('商品已添加至购物车');
             }
+        },
+        goBills(info) {
+            this.$router.push({
+                name: 'bills',
+                query: {
+                    merchantId: this.$route.query.merchantId,
+                    mdseId: `${info.mdse.mdseId}-${info.count}`
+                }
+            });
         },
         formatPrice
     },
@@ -82,7 +94,7 @@ export default {
             <i class="iconfont icon-left back-icon"></i>
         </v-touch>
         <div class="mdse-swipe-wrapper">
-            <mint-swipe :auto="4000">
+            <mint-swipe :auto="4000" :prevent="true" :stopPropagation="true">
                 <mint-swipe-item
                     class="swipe-item"
                     v-for="(item, index) in mdse.bigPic"
@@ -120,8 +132,9 @@ export default {
                 </li>
             </ul>
         </div>
-        <tabbar class="mdse-detai-tabbar" :mdse="mdse" @showPopup="showPopup"></tabbar>
+        <tabbar class="mdse-detai-tabbar" @showShopPopup="showShopPopup" @showBuyPopup="showBuyPopup"></tabbar>
         <popup-mdse-count class="mdse-detail-count" ref="mdseCount" @submit="addShopCart"></popup-mdse-count>
+        <popup-mdse-count class="mdse-buy-count" ref="mdseBuyCount" @submit="goBills"></popup-mdse-count>
     </div>
 </template>
 
@@ -200,7 +213,8 @@ ul
     bottom 0
     right 0
     left 0
-.mdse-detail-count
+.mdse-detail-count,
+.mdse-buy-count
     width 100%
     padding 0
 </style>

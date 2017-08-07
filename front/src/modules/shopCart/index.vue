@@ -35,11 +35,17 @@ export default {
 </script>
 
 <template>
-    <div class="shop-cart">
+    <div
+        class="shop-cart"
+        :style="{paddingBottom: '50px'}"
+    >
         <shop-list></shop-list>
+         <!--
+            -&& !envIsPC
+            -->
         <shop-tabbar
             class="shop-tabbar"
-            :style="{bottom: $route.name === 'shopCart' && !envIsPC ? '56px': '0px'}"
+            :style="{bottom: $route.name === 'shopCart' ? '56px': '0px'}"
         ></shop-tabbar>
     </div>
 </template>

@@ -65,6 +65,8 @@ export default {
 </template>
 
 <style lang="stylus" scoped>
+.bills-wrapper
+    padding-bottom 65px
 .address,
 .list,
 .payment
