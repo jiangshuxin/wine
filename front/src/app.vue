@@ -107,6 +107,19 @@ export default {
             }
         },
         goBack() {
+            const route = this.$route;
+            if (route.name === 'gopay') {
+                if (route.query.from === 'bills') {
+                    this.$router.replace({
+                        name: 'orderDetail',
+                        query: {
+                            merchantId: route.query.merchantId,
+                            orderId: route.query.orderId
+                        }
+                    });
+                    return;
+                }
+            }
             this.$router.go(-1);
         },
         checkAgent,
@@ -168,7 +181,9 @@ export default {
     font-size 16px
     color #181818
 .content
+    margin 0 auto
     width 100%
+    max-width 1000px
 .tabbar
     position fixed
     right 0

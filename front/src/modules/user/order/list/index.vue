@@ -66,7 +66,7 @@ export default {
         goDetail(e, item) {
             e.preventDefault();
             e.srcEvent.stopPropagation();
-            if (this.$refs.goPay.some(item => item.$el === e.target)) {
+            if (this.$refs.goPay && this.$refs.goPay.some(item => item.$el === e.target)) {
                 return;
             }
             this.$router.push({
@@ -80,7 +80,13 @@ export default {
         goPay(e, item) {
             e.preventDefault();
             e.srcEvent.stopPropagation();
-            console.log(e, item);
+            this.$router.push({
+                name: 'gopay',
+                query: Object.assign({}, this.$route.query, {
+                    orderId: item.orderId,
+                    from: 'orderList'
+                })
+            });
         },
         formatPrice
     },

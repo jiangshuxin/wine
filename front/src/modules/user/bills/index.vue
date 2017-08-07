@@ -3,14 +3,17 @@ import addressBar from './address';
 import list from './list';
 import payment from './payment';
 import otherInfo from './otherInfo';
-import { mapGetters } from 'vuex';
+import { Indicator } from 'mint-ui';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { formatPrice } from 'common/util';
 export default {
     created() {
     },
     computed: {
         ...mapGetters({
-            mdseList: 'billsMdseList'
+            mdseList: 'billsMdseList',
+            nowAddress: 'addressNowSelected',
+            orderDetail: 'orderDetail'
         }),
         formatMdseInfo() {
             let mdseInfo = this.$route.query.mdseId;
@@ -34,8 +37,38 @@ export default {
         }
     },
     methods: {
-        pay() {
-            console.log(1);
+        ...mapActions({
+            createSingleOrder: 'createSingleOrder'
+        }),
+        ...mapMutations({
+            changeHint: 'CHANGE_ENV_HINT_INFO',
+            initShopCart: 'INIT_SHOP_CART_INFO'
+        }),
+        async createOrder() {
+            Indicator.open();
+            try {
+                await this.createSingleOrder(this.formatMdseInfo);
+            } catch (e) {
+                Indicator.close();
+                throw e;
+            }
+            Indicator.close();
+        },
+        async pay() {
+            if (!this.nowAddress) {
+                this.changeHint('请选择您的收货地址');
+                return;
+            }
+            await this.createOrder();
+            this.initShopCart([]);
+            this.$router.replace({
+                name: 'gopay',
+                query: {
+                    merchantId: this.$route.query.merchantId,
+                    orderId: this.orderDetail.orderId,
+                    from: 'bills'
+                }
+            });
         },
         formatPrice
     },
@@ -59,7 +92,7 @@ export default {
                 <span>合计</span>
                 ￥{{totalPrice ? formatPrice(totalPrice / 100) : 0}}
             </div>
-            <v-touch tag="div" class="go-pay" @tap="pay">结算</v-touch>
+            <v-touch tag="div" class="go-pay" @tap="pay">支付</v-touch>
         </div>
     </div>
 </template>

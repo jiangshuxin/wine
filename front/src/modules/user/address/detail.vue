@@ -97,8 +97,8 @@ export default {
     left 0
     right 0
     bottom 0
-    height 40px
-    line-height 40px
+    height 50px
+    line-height 50px
     text-align center
     font-size 14px
     background #cf1f34

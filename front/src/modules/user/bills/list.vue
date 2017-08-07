@@ -32,6 +32,14 @@ export default {
         }),
         async init() {
             await this.getMdseList();
+            if (!this.mdseList.length) {
+                this.$router.replace({
+                    name: 'home',
+                    query: {
+                        merchantId: this.$route.query.merchantId
+                    }
+                });
+            }
         },
         async getMdseList() {
             Indicator.open();

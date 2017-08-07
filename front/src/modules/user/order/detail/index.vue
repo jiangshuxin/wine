@@ -47,20 +47,29 @@ export default {
                 }
             });
         },
-        cancel(id) {
+        cancel(e, id) {
+            e.preventDefault();
+            e.srcEvent.stopPropagation();
             Indicator.open();
             try {
                 this.cancelOrder(id);
-            } catch (e) {
+            } catch (err) {
                 Indicator.close();
-                throw e;
+                throw err;
             }
             Indicator.close();
             this.changeHint('已成功取消订单');
             this.$router.go(-1);
         },
-        pay(id) {
-            console.log(id);
+        pay(e) {
+            e.preventDefault();
+            e.srcEvent.stopPropagation();
+            this.$router.push({
+                name: 'gopay',
+                query: Object.assign({}, this.$route.query, {
+                    from: 'orderDetail'
+                })
+            });
         },
         formatPrice
     },
@@ -156,9 +165,9 @@ export default {
         </div>
         <div class="footer" v-if="detail.status === 1">
             <div class="cancel-container">
-                <v-touch tag="div" class="cancel" @tap="cancel(detail.orderId)">取消订单</v-touch>
+                <v-touch tag="div" class="cancel" @tap="cancel($event, detail.orderId)" :options="{domEvents: true}">取消订单</v-touch>
             </div>
-            <v-touch tag="div" class="pay" @tap="pay(detail.orderId)">支付</v-touch>
+            <v-touch tag="div" class="pay" @tap="pay($event, detail.orderId)" :options="{domEvents: true}">支付</v-touch>
         </div>
     </div>
 </template>
@@ -268,8 +277,8 @@ h4, p, ul, li
     left 0
     right 0
     bottom 0
-    height 40px
-    line-height 40px
+    height 50px
+    line-height 50px
     text-align right
     font-size 0px
     background #fff
