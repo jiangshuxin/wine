@@ -19,4 +19,10 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long>, JpaSp
     @Query("select t from OrderEntity t where t.status=1 and t.time<?1")
     public List<OrderEntity> findExpiredOrders(String expiredTime);
 
+    /**
+     * 查询订单已完成，未计算返佣的订单
+     * @return
+     */
+    @Query("select t from OrderEntity t where t.status=3 and t.commissionFlag=0")
+    public List<OrderEntity> findCommissionOrders();
 }

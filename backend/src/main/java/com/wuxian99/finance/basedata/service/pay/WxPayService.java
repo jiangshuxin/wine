@@ -93,7 +93,6 @@ public class WxPayService {
 				order.setPayPic("pay/" + payPicName);
 				orderService.updateOrder(order);
 
-				order.setQueryPayStatusCount(1L);
 				order.setLastQueryPayStatusTime(System.currentTimeMillis());
 				orderService.pushPayingQueue(order);//放入支付状态同步队列
 
@@ -139,7 +138,7 @@ public class WxPayService {
 			packageParams.put("appid", APP_ID);
 			packageParams.put("mch_id", MCH_ID);
 			packageParams.put("nonce_str", nonce_str);  
-			packageParams.put("out_trade_no", order.getId());
+			packageParams.put("out_trade_no", order.getId() + "");
 			String sign = PayCommonUtil.createSign("UTF-8", packageParams, SECRET_KEY);
 			packageParams.put("sign", sign);
 			String requestXML = PayCommonUtil.getRequestXml(packageParams); 
@@ -152,7 +151,7 @@ public class WxPayService {
 			if(StringUtils.equals(return_code, "SUCCESS")){
 				if(StringUtils.equals(trade_state, "SUCCESS")){
 					order.setStatus(2L);
-					order.setPayTime(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+					order.setPayTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 					return order;
 				}
 			}
@@ -378,7 +377,7 @@ public class WxPayService {
 			OrderEntity order = orderService.findOrderById(Long.parseLong(out_trade_no));
 			if(order.getStatus() == 1L) {
 				order.setStatus(2L);
-				order.setPayTime(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+				order.setPayTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 				orderService.updateOrder(order);
 			}
 		}
@@ -403,7 +402,7 @@ public class WxPayService {
 	}
 	
 	public static void main(String[] args) {
-//		new WxPayService().pay(order);
-//		new WxPayService().refund(order);
+		Long a = 1L;
+		System.out.print(a + "");
 	}
 }

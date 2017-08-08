@@ -117,16 +117,16 @@ public class OrderEntity implements Serializable {
   private String address;
 
   /**
+   * 返佣标记，0:未返佣，1:已返佣，2:不需要返佣(酒庄未配置返佣规则，或订单未达到返佣门槛金额，或者用户没有分销上级)
+   */
+  @Column(name = "commissionflag")
+  private Long commissionFlag;
+
+  /**
    * 最后查询支付状态的时间，毫秒数，不存数据库
    */
   @Transient
   private long lastQueryPayStatusTime;
-
-  /**
-   * 查询支付状态的次数，不存数据库
-   */
-  @Transient
-  private long queryPayStatusCount;
 
   public Long getId() {
     return id;
@@ -284,16 +284,16 @@ public class OrderEntity implements Serializable {
     return lastQueryPayStatusTime;
   }
 
+  public Long getCommissionFlag() {
+    return commissionFlag;
+  }
+
+  public void setCommissionFlag(Long commissionFlag) {
+    this.commissionFlag = commissionFlag;
+  }
+
   public void setLastQueryPayStatusTime(long lastQueryPayStatusTime) {
     this.lastQueryPayStatusTime = lastQueryPayStatusTime;
-  }
-
-  public long getQueryPayStatusCount() {
-    return queryPayStatusCount;
-  }
-
-  public void setQueryPayStatusCount(long queryPayStatusCount) {
-    this.queryPayStatusCount = queryPayStatusCount;
   }
 
   @Override

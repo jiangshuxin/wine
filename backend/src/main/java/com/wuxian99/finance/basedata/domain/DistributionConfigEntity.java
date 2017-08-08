@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 分销配置
@@ -23,30 +24,30 @@ public class DistributionConfigEntity implements Serializable {
   private String merchantId;
 
   /**
-   * 商品编号，可不填，代表该酒庄的默认配置
+   * 商品编号，为空代表该酒庄的默认配置
    */
   @Column(name = "mdseid")
   private Long mdseId;
 
   /**
-   * 分销金额，单位分
+   * 返佣门槛金额，订单维度，单位分
    */
   private Long amount;
 
   /**
    * 一级返佣比例，0~100
    */
-  private Long rebate1;
+  private BigDecimal rebate1;
 
   /**
    * 二级返佣比例，0~100
    */
-  private Long rebate2;
+  private BigDecimal rebate2;
 
   /**
    * 三级返佣比例，0~100
    */
-  private Long rebate3;
+  private BigDecimal rebate3;
 
   public Long getId() {
     return id;
@@ -80,27 +81,27 @@ public class DistributionConfigEntity implements Serializable {
     this.amount = amount;
   }
 
-  public Long getRebate1() {
+  public BigDecimal getRebate1() {
     return rebate1;
   }
 
-  public void setRebate1(Long rebate1) {
+  public void setRebate1(BigDecimal rebate1) {
     this.rebate1 = rebate1;
   }
 
-  public Long getRebate2() {
+  public BigDecimal getRebate2() {
     return rebate2;
   }
 
-  public void setRebate2(Long rebate2) {
+  public void setRebate2(BigDecimal rebate2) {
     this.rebate2 = rebate2;
   }
 
-  public Long getRebate3() {
+  public BigDecimal getRebate3() {
     return rebate3;
   }
 
-  public void setRebate3(Long rebate3) {
+  public void setRebate3(BigDecimal rebate3) {
     this.rebate3 = rebate3;
   }
 

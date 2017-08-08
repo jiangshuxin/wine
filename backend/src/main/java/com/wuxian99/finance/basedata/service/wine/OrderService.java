@@ -1,7 +1,10 @@
 package com.wuxian99.finance.basedata.service.wine;
 
+import com.wuxian99.finance.basedata.domain.DistributionConfigEntity;
 import com.wuxian99.finance.basedata.domain.OrderDetailEntity;
 import com.wuxian99.finance.basedata.domain.OrderEntity;
+import com.wuxian99.finance.basedata.domain.UserEntity;
+import com.wuxian99.finance.basedata.repository.wine.DistributionConfigRepository;
 import com.wuxian99.finance.basedata.repository.wine.OrderDetailRepository;
 import com.wuxian99.finance.basedata.repository.wine.OrderRepository;
 import com.wuxian99.finance.basedata.service.pay.WxPayService;
@@ -24,6 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,11 +42,22 @@ public class OrderService {
     @Value("${wine.picPath}")
     private String picPath;
 
+    /**
+     * 订单过期时间，单位分钟
+     */
+    private int expiredMinute = 30;
+
     @Autowired
     OrderRepository orderRepository;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     OrderDetailRepository orderDetailRepository;
+
+    @Autowired
+    DistributionConfigRepository distributionConfigRepository;
 
     @Autowired
     private WxPayService wxPayService;
@@ -153,28 +168,35 @@ public class OrderService {
     }
 
     //订单过期自动关闭处理线程
-    private ExecutorService expiredExecuters;
+    private ExecutorService expiredExecutor;
+
+    //返佣计算处理线程
+    private ExecutorService commissionExecutor;
 
     //订单支付状态查询线程
-    private ExecutorService payingExecuters;
+    private ExecutorService payingExecutor;
 
     //订单支付状态查询队列
     private BlockingQueue<OrderEntity> payingQueue;
 
     @PostConstruct
     private void init() {
-        this.expiredExecuters = Executors.newSingleThreadExecutor();
+        this.expiredExecutor = Executors.newSingleThreadExecutor();
         this.startExpiredThread();
 
-        this.payingExecuters = Executors.newFixedThreadPool(5);
+        this.commissionExecutor = Executors.newSingleThreadExecutor();
+        this.startCommissionThread();
+
+        this.payingExecutor = Executors.newFixedThreadPool(5);
         this.payingQueue = new LinkedBlockingQueue<OrderEntity>();
         this.startPayingThread();
     }
 
     @PreDestroy
     private void destroy() {
-        this.expiredExecuters.shutdown();
-        this.payingExecuters.shutdown();
+        this.expiredExecutor.shutdown();
+        this.commissionExecutor.shutdown();
+        this.payingExecutor.shutdown();
         this.payingQueue = null;
     }
 
@@ -182,7 +204,7 @@ public class OrderService {
      * 启动订单过期自动关闭线程
      */
     private void startExpiredThread(){
-        this.expiredExecuters.execute(new Runnable() {
+        this.expiredExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -199,11 +221,38 @@ public class OrderService {
         });
     }
 
+    /**
+     * 启动分销返佣计算线程
+     */
+    private void startCommissionThread(){
+        this.commissionExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try{
+                        logger.info("开始执行分销返佣计算任务...");
+                        int count = commission();
+                        logger.info("完成 {} 个订单的分销返佣计算", count);
+                    }catch(Exception ex){
+                        logger.error("订单分销返佣计算异常", ex);
+                    }
+                    try{Thread.sleep(600*1000);}catch(Exception ex){};
+                }
+            }
+        });
+    }
+
+
+
+    /**
+     * 关闭过期未付订单
+     * @return
+     */
     @Transactional
     public int closeExpiredOrders(){
-        //订单30分钟未支付，自动关闭
-        Date expiredTime = new Date(System.currentTimeMillis() - 30*60*1000);
-        List<OrderEntity> orders = orderRepository.findExpiredOrders(new SimpleDateFormat("yyyyMMddHHmmss").format(expiredTime));
+        //订单超过过期时间未支付，自动关闭
+        Date expiredTime = new Date(System.currentTimeMillis() - expiredMinute*60*1000);
+        List<OrderEntity> orders = orderRepository.findExpiredOrders(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(expiredTime));
         if(CollectionUtils.isEmpty(orders)){
             return 0;
         }else{
@@ -216,10 +265,97 @@ public class OrderService {
     }
 
     /**
+     * 分销返佣
+     * @return
+     */
+    public int commission(){
+        List<OrderEntity> orders = orderRepository.findCommissionOrders();
+        if(CollectionUtils.isNotEmpty(orders)){
+            for(OrderEntity order : orders){
+                List<DistributionConfigEntity> configs = distributionConfigRepository.findByMerchantId(order.getMerchantId());
+                UserEntity user = userService.findByUserId(order.getUserId());
+                boolean needCommission = true;
+                if(CollectionUtils.isEmpty(configs) || user.getParentId() == null){
+                    needCommission = false;
+                }else{
+                    for (DistributionConfigEntity config : configs) {
+                        if (config.getMdseId() == null) {
+                            if (order.getAmount() < config.getAmount()) {
+                                needCommission = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if(!needCommission){
+                    order.setCommissionFlag(2L);
+                    orderRepository.save(order);
+                }else{
+                    calculateOrderCommission(order, configs, user);
+                }
+            }
+            return orders.size();
+        }else{
+            return 0;
+        }
+    }
+
+    /**
+     * 根据分销配置，计算订单返佣金额，并返佣给分销上级
+     * @param order
+     * @param configs
+     * @param user
+     */
+    @Transactional
+    public void calculateOrderCommission(OrderEntity order, List<DistributionConfigEntity> configs, UserEntity user){
+        List<OrderDetailEntity> details = orderDetailRepository.findByOrderId(order.getId());
+        Integer rebateAmount1 = 0;
+        Integer rebateAmount2 = 0;
+        Integer rebateAmount3 = 0;
+        for(OrderDetailEntity detail : details){
+            DistributionConfigEntity detailConfig = null;
+            for(DistributionConfigEntity config : configs) {
+                if(config.getMdseId() == null) {
+                    detailConfig = config;
+                }else if(config.getMdseId() == detail.getMdseId()) {
+                    if(detailConfig == null) {
+                        detailConfig = config;
+                    }
+                }
+            }
+            if(detailConfig != null) {
+                rebateAmount1 = rebateAmount1 + detailConfig.getRebate1().multiply(new BigDecimal(detail.getPrice())).divide(new BigDecimal("100")).intValue();
+                rebateAmount2 = rebateAmount2 + detailConfig.getRebate2().multiply(new BigDecimal(detail.getPrice())).divide(new BigDecimal("100")).intValue();
+                rebateAmount3 = rebateAmount3 + detailConfig.getRebate3().multiply(new BigDecimal(detail.getPrice())).divide(new BigDecimal("100")).intValue();
+            }
+        }
+
+        UserEntity rebateUser1 = userService.findByUserId(user.getParentId());
+        rebateUser1.setBalance(rebateUser1.getBalance() + rebateAmount1);
+        userService.saveOrUpdateUser(rebateUser1);
+
+        if(rebateUser1.getParentId() != null){
+            UserEntity rebateUser2 = userService.findByUserId(rebateUser1.getParentId());
+            rebateUser2.setBalance(rebateUser2.getBalance() + rebateAmount2);
+            userService.saveOrUpdateUser(rebateUser2);
+
+            if(rebateUser2.getParentId() != null) {
+                UserEntity rebateUser3 = userService.findByUserId(rebateUser2.getParentId());
+                rebateUser3.setBalance(rebateUser3.getBalance() + rebateAmount3);
+                userService.saveOrUpdateUser(rebateUser3);
+            }
+        }
+
+        order.setCommissionFlag(1L);
+        orderRepository.save(order);
+    }
+
+    /**
      * 启动支付状态查询线程
      */
     private void startPayingThread(){
-        this.payingExecuters.execute(new Runnable() {
+        this.payingExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -270,12 +406,10 @@ public class OrderService {
             //支付成功，更新订单
             orderRepository.save(result);
             logger.info("查询到支付结果，更新订单支付状态，order:{}", order);
-        }else if(order.getQueryPayStatusCount() < 6*30){
-            //待支付，未超过30分钟，继续放入支付状态同步队列
-            order.setQueryPayStatusCount(order.getQueryPayStatusCount() + 1);
-            pushPayingQueue(order);
         }else{
-            //超过10分钟，还未支付完成，不再查询支付状态
+            //继续放入支付状态同步队列
+            order.setLastQueryPayStatusTime(System.currentTimeMillis());
+            pushPayingQueue(order);
         }
     }
 
