@@ -4,7 +4,7 @@ import { mapGetters, mapActions, mapMutations } from 'vuex';
 export default {
     data() {
         return {
-            payType: 1
+            payType: 2
         };
     },
     created() {
