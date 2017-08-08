@@ -37,3 +37,16 @@ export async function cancel(id) {
         url: `/wine/api/front/cancelOrder/${id}`
     });
 }
+
+export async function createOrder(data) {
+    return await request.post({
+        url: '/wine/api/front/createOrder',
+        data
+    });
+}
+
+export async function pay(id, type) {
+    return await request.get({
+        url: `/wine/api/front/pay/${id}/${type}`
+    });
+}

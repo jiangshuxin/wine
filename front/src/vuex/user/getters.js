@@ -34,7 +34,9 @@ export function addressDetailInfo(state) {
 }
 
 export function addressNowSelected(state) {
-    return state.userInfo.nowAddress;
+    const id = state.userInfo.nowAddress;
+    const list = state.addressList.list;
+    return list.length && list.filter(item => item.addressId === id)[0];
 }
 
 // 结算
@@ -76,3 +78,6 @@ export function orderTab(state) {
     return state.orderTab;
 }
 
+export function payPic(state) {
+    return state.payInfo.payPic;
+}

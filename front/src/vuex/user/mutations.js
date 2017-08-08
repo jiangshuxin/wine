@@ -1,5 +1,6 @@
 import {
-    setStorageItem
+    setStorageItem,
+    removeStorageItem
 } from 'common/util';
 
 export function SET_USER_INFO(state, info) {
@@ -16,9 +17,23 @@ export function SET_USER_INFO(state, info) {
     state.isLogin = true;
 }
 
+export function USER_LOGOUT(state) {
+    const userInfo = state.userInfo;
+    userInfo.balance = '';
+    userInfo.birthday = '';
+    userInfo.gender = '';
+    userInfo.userId = -1;
+    userInfo.userName = '';
+    userInfo.realName = '';
+    userInfo.type = '';
+    state.isLogin = false;
+    removeStorageItem('wineUserId');
+}
+
 export function SET_ADDRESS_LIST(state, list) {
     state.addressList.list = list;
-    state.userInfo.nowAddress = list.filter(item => item.isDefault)[0];
+    const address = list.filter(item => item.isDefault)[0];
+    state.userInfo.nowAddress = address ? address.addressId : null;
 }
 
 export function SET_ADDRESS_FORM_INFO(state, {id, value}) {
@@ -60,7 +75,7 @@ export function SET_BILLS_MDSE_LIST(state, list) {
 }
 
 export function SET_NOW_ADDRESS(state, address) {
-    state.userInfo.nowAddress = address;
+    state.userInfo.nowAddress = address.addressId;
 }
 
 export function SET_PAYMENT_SELECTED(state, id) {
@@ -121,4 +136,13 @@ export function SET_ORDER_DETAIL(state, data) {
 
 export function INIT_ORDER_DETAIL(state) {
     state.orderDetail = state.generatorOrderDetail();
+}
+
+// 支付信息
+export function SET_PAY_INFO(state, data) {
+    state.payInfo = data;
+}
+
+export function INIT_PAY_INFO(state) {
+    state.payInfo = state.generatorPayInfo();
 }

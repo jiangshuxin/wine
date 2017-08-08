@@ -76,7 +76,7 @@ const order = {
         }
     }, {
         name: 'orderDetail',
-        path: '/detail',
+        path: '/order/detail',
         meta: {
             requiresQuery: ['merchantId', 'orderId'],
             requiresAuth: ['userId']
@@ -99,6 +99,30 @@ const bills = {
     }
 };
 
+const gopay = {
+    name: 'gopay',
+    path: '/gopay',
+    meta: {
+        requiresQuery: ['merchantId', 'orderId'],
+        requiresAuth: ['userId']
+    },
+    component(resolve) {
+        require.ensure([], require => resolve(require('../modules/user/pay')));
+    }
+};
+
+const personal = {
+    name: 'personal',
+    path: '/personal',
+    meta: {
+        requiresQuery: ['merchantId'],
+        requiresAuth: ['userId']
+    },
+    component(resolve) {
+        require.ensure([], require => resolve(require('../modules/user/personal')));
+    }
+};
+
 export default {
     name: 'user',
     path: '/user',
@@ -110,5 +134,5 @@ export default {
     component(resolve) {
         require.ensure([], require => resolve(require('../modules/user')));
     },
-    children: [list, address, order, bills]
+    children: [list, address, order, bills, gopay, personal]
 };

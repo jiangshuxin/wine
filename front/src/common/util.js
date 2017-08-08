@@ -67,8 +67,8 @@ export function formatPrice(price) {
         return num + '.00';
     }
     const before = num.slice(0, index);
-    const after = num.slice(index);
-    return before + '.' + after.length >= 2 ? after.toFixed(2) : after + '0';
+    const after = num.slice(index + 1);
+    return before + '.' + (after.length >= 2 ? after.slice(0, 2) : after + '0');
 }
 
 

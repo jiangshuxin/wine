@@ -103,6 +103,18 @@ function generatorOrderDetail() {
     };
 }
 
+function generatorPayInfo() {
+    return {
+        appId: '',
+        timeStamp: '',
+        nonceStr: '',
+        package: '',
+        signType: '',
+        paySign: '',
+        payPic: ''
+    };
+}
+
 export default {
     isLogin: false,
     userInfo,
@@ -110,15 +122,17 @@ export default {
     addressDetailLayout,
     addressList: generatorAddressList(),
     addressDetail: generatorAddressDetail(),
-    generatorAddressDetail,
-    generatorAddressList,
     billsMdseList: [],
     payment,
     distribution,
     invoice,
     orderList: generatorOrderList(),
     orderDetail: generatorOrderDetail(),
+    orderTab,
+    payInfo: generatorPayInfo(),
+    generatorAddressDetail,
+    generatorAddressList,
     generatorOrderList,
     generatorOrderDetail,
-    orderTab
+    generatorPayInfo
 };

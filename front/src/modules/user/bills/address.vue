@@ -46,14 +46,17 @@ export default {
     <div class="bills-address">
         <v-touch tag="div" @tap="goAddressList">
             <mint-cell is-link>
-                <div slot="title" class="address-cell" v-if="nowAddress">
+                <div slot="title" class="address-cell">
                     <i class="iconfont icon-position icon-address"></i>
-                    <div class="title">
+                    <div class="title" v-if="nowAddress">
                         <div class="name">
                             <h4>{{nowAddress.receiver}}</h4>
                             <p>{{nowAddress.phone}}</p>
                         </div>
                         <div class="address">{{nowAddress.province}}{{nowAddress.address}}</div>
+                    </div>
+                    <div v-else class="no-more">
+                        请选择您的收货地址
                     </div>
                 </div>
             </mint-cell>
@@ -76,7 +79,7 @@ h4, p
         align-self center
         margin-right 15px
         font-size 20px
-        color #c0c0c0
+        color #999
     .name
         height 34px
         line-height 34px
@@ -91,5 +94,9 @@ h4, p
         margin-bottom 6px
         line-height 1.5
         font-size 12px
+        color #999
+    .no-more
+        font-size 14px
+        line-height 20px
         color #999
 </style>

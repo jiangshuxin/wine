@@ -4,7 +4,9 @@ import {
     modifyUserAddress,
     getOrders,
     getOrder,
-    cancel
+    cancel,
+    createOrder,
+    pay
 } from './api';
 
 import { getList } from '../mall/api';
@@ -73,6 +75,28 @@ export async function getBillsMdseList({rootState, commit}, mdseIds) {
     commit('SET_BILLS_MDSE_LIST', result.data);
 }
 
+export async function createSingleOrder({rootState, state, commit}, countInfo) {
+    const { userId, nowAddress } = state.userInfo;
+    const { merchantId } = rootState.env;
+    const mdseInfo = state.billsMdseList
+        .reduce((arr, obj) => {
+            arr.push(`${obj.mdseId}:${countInfo[obj.mdseId]}`);
+            return arr;
+        }, [])
+        .join(',');
+    const nowInvoiceId = state.invoice.selected;
+    const invoice = state.invoice.list.filter(item => item.id === nowInvoiceId)[0];
+    const invoiceInfo = nowInvoiceId === 3 ? invoice.text + ',' + invoice.input : invoice.text;
+    const result = await createOrder({
+        userId,
+        merchantId,
+        mdseInfo,
+        invoiceInfo,
+        addressId: nowAddress
+    });
+    commit('SET_ORDER_DETAIL', result.data);
+}
+
 // 订单
 export async function getOrderList({state, commit}) {
     const userId = state.userInfo.userId;
@@ -83,153 +107,12 @@ export async function getOrderList({state, commit}) {
         pageNumber,
         pageSize
     });
-    result = {
-        pageNumber: pageNumber,
-        pageSize: 10,
-        totalCount: 100,
-        data: [{
-            orderId: 123123,
-            orderTime: '2017-8-1 15:42:28',
-            status: 1,
-            amount: 50000,
-            mdseCount: 12,
-            mdseInfos: [{
-                name: '测试酒1',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 2000,
-                count: 2
-            }, {
-                name: '测试酒2',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 6000,
-                count: 6
-            }, {
-                name: '测试酒3',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 2500,
-                count: 4
-            }]
-        }, {
-            orderId: 123123,
-            orderTime: '2017-8-1 15:42:28',
-            status: 2,
-            amount: 50000,
-            mdseCount: 12,
-            mdseInfos: [{
-                name: '测试酒1',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 2000,
-                count: 2
-            }, {
-                name: '测试酒2',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 6000,
-                count: 6
-            }, {
-                name: '测试酒3',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 2500,
-                count: 4
-            }, {
-                name: '测试酒1',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 2000,
-                count: 2
-            }, {
-                name: '测试酒2',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 6000,
-                count: 6
-            }, {
-                name: '测试酒3',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 2500,
-                count: 4
-            }, {
-                name: '测试酒1',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 2000,
-                count: 2
-            }, {
-                name: '测试酒2',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 6000,
-                count: 6
-            }, {
-                name: '测试酒3',
-                pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-                price: 2500,
-                count: 4
-            }]
-        }]
-    };
     commit('SET_ORDER_LIST', result.data);
     commit('SET_ORDER_LIST_TOTAL_PAGE', Math.ceil(result.totalCount / pageSize));
 }
 
 export async function getOrderDetail({commit}, orderId) {
     let result = await getOrder(orderId);
-    result.data = {
-        orderId: 123123,
-        orderTime: '2017-8-1 15:42:28',
-        status: 1,
-        amount: 50000,
-        mdseCount: 12,
-        mdseInfos: [{
-            name: '测试酒1',
-            pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-            price: 2000,
-            count: 2
-        }, {
-            name: '测试酒2',
-            pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-            price: 6000,
-            count: 6
-        }, {
-            name: '测试酒3',
-            pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-            price: 2500,
-            count: 4
-        }, {
-            name: '测试酒1',
-            pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-            price: 2000,
-            count: 2
-        }, {
-            name: '测试酒2',
-            pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-            price: 6000,
-            count: 6
-        }, {
-            name: '测试酒3',
-            pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-            price: 2500,
-            count: 4
-        }, {
-            name: '测试酒1',
-            pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-            price: 2000,
-            count: 2
-        }, {
-            name: '测试酒2',
-            pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-            price: 6000,
-            count: 6
-        }, {
-            name: '测试酒3',
-            pic: 'http://123.57.234.184/wineStatic/images/M0001/mdse/10000_small.png',
-            price: 2500,
-            count: 4
-        }],
-        receiver: '王子健',
-        phone: 18810032068,
-        province: '北京市海淀区',
-        address: '丹棱街6号，中国电子大厦B座11层',
-        comment: '',
-        logisticsCompany: '顺丰',
-        logisticsSeqs: 'M123098DE1238',
-        invoiceInfo: '无'
-    };
     commit('SET_ORDER_DETAIL', result.data);
 }
 
@@ -238,3 +121,50 @@ export async function cancelOrder({state}, id) {
     await cancel(id);
 }
 /* eslint-enable */
+
+export async function goPay({commit}, {orderId, payType}) {
+    const result = await pay(orderId, payType);
+    commit('SET_PAY_INFO', result.data);
+    /* eslint-disable */
+/*
+ *    function onBridgeReady() {
+ *        WeixinJSBridge.invoke('getBrandWCPayRequest',
+ *            {
+ *
+ *                "appId": "wx79c1c7fa2255f655",
+ *                "timeStamp": "1502093354466",
+ *                "nonceStr": "1609135115",
+ *                "package": "prepay_id=wx20170807160913539a22112d0766233032",
+ *                "signType": "MD5",
+ *                "paySign": "7738009E306331CAF2C70DDAF86B47BD"
+ *            },
+ *            function(res){
+ *                console.log(res);
+ *                if (res.err_msg === 'get_brand_wcpay_request：ok') {
+ *                    alert('success');
+ *                }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+ *                else{
+ *                    alert(res.err_msg + '' + res.err_desc);
+ *                }
+ *            }
+ *        );
+ *    }
+ *    function pay() {
+ *        if (typeof WeixinJSBridge == 'undefined') {
+ *            alert('not wx ...');
+ *            if (document.addEventListener) {
+ *                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+ *            } else if ( document.attachEvent) {
+ *                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+ *                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+ *            }
+ *        } else {
+ *            alert('start pay....');
+ *            console.log('start pay...');
+ *            onBridgeReady();
+ *        }
+ *    }
+ *    pay();
+ */
+    /* eslint-enable */
+}

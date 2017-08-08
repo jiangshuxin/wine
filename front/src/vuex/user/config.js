@@ -1,4 +1,8 @@
 export const layout = [{
+    id: 'personal',
+    text: '个人中心',
+    routeName: 'personal'
+}, {
     id: 'order',
     text: '我的订单',
     routeName: 'order'

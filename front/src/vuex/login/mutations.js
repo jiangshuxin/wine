@@ -12,13 +12,27 @@ export function SET_LOGIN_FORM(state, {id, value}) {
 }
 
 export function SET_LOGIN_DELAY(state, delay) {
+    state.layoutMap = state.generatorLayoutMap();
+    state.layout = {
+        2: [
+            state.layoutMap.phone,
+            state.layoutMap.verifyCode,
+            state.layoutMap.parentId
+        ],
+        1: [
+            state.layoutMap.phone,
+            state.layoutMap.password,
+            state.layoutMap.parentId
+        ]
+    };
     state.options.delay = delay;
     setStorageItem('wineVerifyDelay', delay);
 }
 
 export function INIT_LOGIN(state) {
     state.options = state.generatorOptions();
-    state.options.delay = +getStorageItem('wineVerifyDelay') || 0;
+    const delay = +getStorageItem('wineVerifyDelay');
+    state.options.delay = delay > 0 ? delay : 0;
 }
 
 export function CHECK_LOGIN_FORM(state, id) {

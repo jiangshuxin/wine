@@ -54,6 +54,9 @@ export default {
             this.setForm({id, value});
         },
         async getVerify() {
+            if (this.delay > 0) {
+                return;
+            }
             this.checkForm('phone');
             const phone = this.layout.filter(item => item.id === 'phone')[0];
             if (phone.state !== 'success') {
@@ -87,6 +90,7 @@ export default {
                     throw e;
                 }
                 Indicator.close();
+                this.setDelay(0);
                 if (this.from) {
                     this.$router.go(-1);
                     return;
@@ -95,7 +99,6 @@ export default {
                     name: 'home',
                     query: this.$route.query
                 });
-                this.setDelay(0);
             }
         }
     },
@@ -221,7 +224,7 @@ ul, li
     .get-verify
         display inline-block
         margin-left 10px
-        width 100px
+        width 120px
         height 30px
         line-height 30px
         text-align center
@@ -229,7 +232,6 @@ ul, li
         background #181818
         color #fff
     .delay
-        width 120px
         background #999
     .login
         margin 80px 0 20px

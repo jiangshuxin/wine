@@ -47,6 +47,10 @@ export default {
             text: '购物车',
             goBack: true
         },
+        personal: {
+            text: '个人中心',
+            goBack: true
+        },
         addressList: {
             text: '我的地址',
             goBack: true
@@ -73,6 +77,10 @@ export default {
         },
         login: {
             text: '登录',
+            goBack: true
+        },
+        gopay: {
+            text: '微信支付',
             goBack: true
         }
     }
