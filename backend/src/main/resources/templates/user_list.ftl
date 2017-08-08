@@ -94,7 +94,17 @@
             ],[
                 { extend: "create", editor: editor },
                 { extend: "edit",   editor: editor },
-                { extend: "remove", editor: editor }
+                { extend: "remove", editor: editor },
+                {
+                    extend: "selectedSingle",
+                    text: "分销佣金打款",
+                    action: function ( e, dt, node, config ) {
+                        var selData = table.row('.selected').data();
+                        var amount = window.prompt('请输入打款金额',0);
+                        //location.href = "${rc.contextPath}/uploadResult/list?refModuleName="+selData.moduleName+"&uploadId="+selData.id;
+                        alert(amount);
+                    }
+                }
             ],{initComplete: function ()
             {
 
