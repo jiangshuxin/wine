@@ -182,22 +182,17 @@ var DataTable = {
             var category = table.init().columns[i].ddic || '';
 
             if(searchType == 'select'){
-                $.post(DataTable.CONTEXT_PATH+"/api/"+category+"/ddic",
-                    function(result){
-                        if(!result.success){
-                            return;
-                        }
-                        var data = result.data;
-                        var selectHtml = [];
-                        selectHtml.push('<select>');
-                        selectHtml.push('<option value="">-----全部-----</option>');
-                        for(var k in data){
-                            selectHtml.push('<option value="'+data[k]['itemKey']+'">'+data[k]['itemValue']+'</option>');
-                        }
-                        selectHtml.push('</select>');
-                        $that.html(selectHtml.join('\n'));
-                        DataTable._bindSearchEvent(table);
-                    },'json');
+                var data = Ddic.get(category);
+                if(!data || data.length == 0)return true;
+                var selectHtml = [];
+                selectHtml.push('<select class="selectpicker">');
+                selectHtml.push('<option value="">-----全部-----</option>');
+                for(var k in data){
+                    selectHtml.push('<option value="'+data[k]['itemKey']+'">'+data[k]['itemValue']+'</option>');
+                }
+                selectHtml.push('</select>');
+                $that.html(selectHtml.join('\n'));
+                DataTable._bindSearchEvent(table);
 
             }else{//text & date
                 var title = $(this).text();
@@ -291,3 +286,20 @@ var Ddic = {
             },'json');
     }
 }
+
+var Select = {
+    init : function(path){
+        var jsonStr = $.ajax({
+            url: DataTable.CONTEXT_PATH + path,
+            async: false,
+            timeout:3000
+        }).responseText;
+        if(jsonStr){
+            var jsonObj = $.parseJSON(jsonStr);
+            if(jsonObj.success){
+                return jsonObj.data;
+            }
+        }
+        return false;
+    }
+};

@@ -12,5 +12,7 @@ public interface DdicItemService {
 
     List<DdicItemEntity> findByCategory(String category);
 
+    Map<String,DdicItemEntity> findMapByCategory(String category);
+
     Map<String,List<DdicItemEntity>> findAll();
 }

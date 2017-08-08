@@ -61,7 +61,7 @@
 
             table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[
                 { data: "id"},
-                { data: "userId" },
+                { data: "userId"<#if userId??>,searchValue:"${userId?trim}"</#if> },
                 { data: "receiver" },
                 { data: "phone"},
                 { data: "province"},

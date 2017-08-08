@@ -3,9 +3,8 @@ package com.wuxian99.finance.basedata.service;
 import com.wuxian99.finance.basedata.domain.entity.system.DdicItemEntity;
 import com.wuxian99.finance.basedata.domain.model.ExecuteInfo;
 import com.wuxian99.finance.basedata.domain.model.MetadataInfo;
-import com.wuxian99.finance.basedata.domain.model.Select;
 import com.wuxian99.finance.basedata.domain.model.SigninUser;
-import com.wuxian99.finance.basedata.repository.system.DdicItemRepository;
+import com.wuxian99.finance.basedata.service.system.DdicItemService;
 import com.wuxian99.finance.basedata.service.system.MetadataService;
 import com.wuxian99.finance.basedata.service.system.impl.UploadFileService;
 import com.wuxian99.finance.basedata.support.annotation.Ddic;
@@ -16,16 +15,11 @@ import com.wuxian99.finance.common.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +36,7 @@ public class ServiceImpl implements IService {
     @Autowired
     MetadataService metadataService;
 	@Autowired
-    DdicItemRepository ddicItemRepository;
+	DdicItemService ddicItemService;
 	/*
 	 * 1.组合方法执行要素 2.执行方法返回结果 3.将结果转化为view层Result
 	 */
@@ -131,18 +125,22 @@ public class ServiceImpl implements IService {
 		Page<?> pageResult = (Page<?>) obj;
 		List<?> content = pageResult.getContent();
 		try {
+			Map<String,Map<String,DdicItemEntity>> ddicCache = new HashMap<>();
 			for (Object e : content) {
                 for(Field field : fieldList){
                     Ddic ddic = field.getAnnotation(Ddic.class);
-                    List<DdicItemEntity> itemEntities = ddicItemRepository.findByCategory(ddic.name());
-                    Map<String,DdicItemEntity> map = new HashMap<>();
-                    for(DdicItemEntity entity : itemEntities){
-                        map.put(entity.getItemKey(),entity);
-                    }
+					if(ddic == null)continue;
+					Map<String,DdicItemEntity> ddicItemEntityMap = null;
+					if(ddicCache.containsKey(ddic.name())){
+						ddicItemEntityMap = ddicCache.get(ddic.name());
+					}else{
+						ddicItemEntityMap = ddicItemService.findMapByCategory(ddic.name());
+						ddicCache.put(ddic.name(),ddicItemEntityMap);
+					}
                     //请求url是根据module找所有ddic，FIX
                     Object original = PropertyUtils.getProperty(e,field.getName());
-                    if(original == null || !map.containsKey(original.toString()))continue;
-                    DdicItemEntity entity = map.get(original.toString());
+                    if(original == null || !ddicItemEntityMap.containsKey(original.toString()))continue;
+                    DdicItemEntity entity = ddicItemEntityMap.get(original.toString());
                     PropertyUtils.setProperty(e,ddic.mapTo(),entity.getItemValue());
                 }
             }
@@ -174,13 +172,13 @@ public class ServiceImpl implements IService {
 						ddicValue);
 			}
 		}
-	}*/
+	}
 
 	/**
 	 * @param ddicKey
 	 * @param items
 	 * @return
-	 */
+
 	private String findDdicValue(String ddicKey, List<Select> items) {
 		for (Select item : items) {
 			if (item.getKey().equals(ddicKey)) {
@@ -188,7 +186,7 @@ public class ServiceImpl implements IService {
 			}
 		}
 		throw new IllegalArgumentException("key:: " + ddicKey + " in ddic not exist");
-	}
+	}*/
 
 	/**
 	 * @param info
