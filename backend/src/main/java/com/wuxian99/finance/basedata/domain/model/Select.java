@@ -5,23 +5,23 @@ package com.wuxian99.finance.basedata.domain.model;
  *
  */
 public class Select {
-	private String key;
+	private String label;
 	private String value;
 
 	public Select() {
 	}
 
-	public Select(String key, String value) {
-		this.key = key;
+	public Select(String label, String value) {
+		this.label = label;
 		this.value = value;
 	}
 
-	public String getKey() {
-		return key;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	public String getValue() {

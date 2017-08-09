@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.google.gson.Gson;
 import com.wuxian99.finance.basedata.domain.*;
+import com.wuxian99.finance.basedata.domain.model.Select;
 import com.wuxian99.finance.basedata.service.pay.WxPayService;
 import com.wuxian99.finance.basedata.service.wine.*;
 import com.wuxian99.finance.basedata.support.util.SmsUtils;
@@ -68,6 +69,9 @@ public class WineController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private MerchantService merchantService;
 
     private static final Logger logger = LoggerFactory.getLogger(WineController.class);
 
@@ -643,6 +647,19 @@ public class WineController {
         }
         logger.info("pay response: {}", result);
         return Result.buildSuccess(result);
+    }
+
+    @RequestMapping(value="/merchant/queryAll", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<List<Select>> getAllMerchant(){
+        List<Select> selectList = new ArrayList<>();
+        List<MerchantEntity> merchantEntities = merchantService.queryAll();
+        if(CollectionUtils.isNotEmpty(merchantEntities)){
+            merchantEntities.forEach(merchantEntity -> {
+                Select select = new Select(merchantEntity.getName(),merchantEntity.getMerchantId());
+                selectList.add(select);
+            });
+        }
+        return Result.buildSuccess(selectList);
     }
 
     @ExceptionHandler(Exception.class)

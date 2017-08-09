@@ -4,7 +4,7 @@
         <thead>
         <tr>
             <th>编号</th>
-            <th>简称</th>
+            <th>栏目名</th>
             <th>中文名</th>
             <th>描述</th>
         </tr>
@@ -13,7 +13,7 @@
         <tfoot>
         <tr>
             <th>编号</th>
-            <th>简称</th>
+            <th>栏目名</th>
             <th>中文名</th>
             <th>描述</th>
         </tr>

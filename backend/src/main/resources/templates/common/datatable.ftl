@@ -30,6 +30,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.1/css/select.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="${rc.contextPath}/editor/css/editor.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/bootstrap-select-1.12.4/dist/css/bootstrap-select.min.css">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="${rc.contextPath}/bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
@@ -63,6 +64,10 @@
     <script type="text/javascript" language="javascript" src="${rc.contextPath}/editor/js/dataTables.editor.min.js">
     </script>
     <script type="text/javascript" language="javascript" src="${rc.contextPath}/js/app/dataTables.init.js">
+    </script>
+    <script type="text/javascript" language="javascript" src="${rc.contextPath}/bootstrap-select-1.12.4/dist/js/bootstrap-select.min.js">
+    </script>
+    <script type="text/javascript" language="javascript" src="${rc.contextPath}/bootstrap-select-1.12.4/dist/js/i18n/defaults-zh_CN.min.js">
     </script>
     <script type="text/javascript" language="javascript">
         DataTable.CONTEXT_PATH = '${rc.contextPath}';

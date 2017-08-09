@@ -30,6 +30,16 @@ public class DdicItemServiceImpl implements DdicItemService {
     }
 
     @Override
+    public Map<String, DdicItemEntity> findMapByCategory(String category) {
+        List<DdicItemEntity> ddicItemEntityList = this.findByCategory(category);
+        Map<String,DdicItemEntity> map = new HashMap<>();
+        for(DdicItemEntity entity : ddicItemEntityList){
+            map.put(entity.getItemKey(),entity);
+        }
+        return map;
+    }
+
+    @Override
     public Map<String, List<DdicItemEntity>> findAll() {
         List<DdicCategoryEntity> categoryEntityList = ddicCategoryRepository.findAll();
         List<DdicItemEntity> ddicItemEntityList = ddicItemRepository.findAll();

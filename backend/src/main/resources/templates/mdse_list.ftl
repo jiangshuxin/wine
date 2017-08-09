@@ -31,13 +31,16 @@
 
         $(document).ready(function() {
             var mdseStatusDdic = Ddic.show('mdseStatus');
+            var merchantData = Select.init('/api/front/merchant/queryAll');
 
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "编号:",
                 name: "id",
             }, {
                 label: "酒庄编号:",
-                name: "merchantId"
+                name: "merchantId",
+                type:  "select",
+                options:merchantData
             }, {
                 label: "中文名称:",
                 name: "name"

@@ -28,6 +28,7 @@
     </table>
     <script type="text/javascript" language="javascript" class="init">
         var editor;
+        var yesNoDdic = Ddic.show('yesNo');
 
         $(document).ready(function() {
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
@@ -50,7 +51,9 @@
                 name: "address"
             }, {
                 label: "是否为默认地址:",
-                name: "isDefault"
+                name: "isDefault",
+                type:  "select",
+                options:yesNoDdic
             }
             ],{
 
@@ -58,7 +61,7 @@
 
             table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[
                 { data: "id"},
-                { data: "userId" },
+                { data: "userId"<#if userId??>,searchValue:"${userId?trim}"</#if> },
                 { data: "receiver" },
                 { data: "phone"},
                 { data: "province"},
