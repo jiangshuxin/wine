@@ -55,7 +55,7 @@ public class UserEntity implements Serializable {
   /**
    * 返佣余额，单位分
    */
-  private Long balance;
+  private Long balance = 0L;
 
   /**
    * 姓名

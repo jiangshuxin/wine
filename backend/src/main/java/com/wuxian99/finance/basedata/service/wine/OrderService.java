@@ -272,27 +272,17 @@ public class OrderService {
         List<OrderEntity> orders = orderRepository.findCommissionOrders();
         if(CollectionUtils.isNotEmpty(orders)){
             for(OrderEntity order : orders){
-                List<DistributionConfigEntity> configs = distributionConfigRepository.findByMerchantId(order.getMerchantId());
-                UserEntity user = userService.findByUserId(order.getUserId());
-                boolean needCommission = true;
-                if(CollectionUtils.isEmpty(configs) || user.getParentId() == null){
-                    needCommission = false;
-                }else{
-                    for (DistributionConfigEntity config : configs) {
-                        if (config.getMdseId() == null) {
-                            if (order.getAmount() < config.getAmount()) {
-                                needCommission = false;
-                                break;
-                            }
-                        }
+                try {
+                    List<DistributionConfigEntity> configs = distributionConfigRepository.findByMerchantId(order.getMerchantId());
+                    UserEntity user = userService.findByUserId(order.getUserId());
+                    if (CollectionUtils.isEmpty(configs) || user.getParentId() == null) {
+                        order.setCommissionFlag(2L);
+                        orderRepository.save(order);
+                    } else {
+                        calculateOrderCommission(order, configs, user);
                     }
-                }
-
-                if(!needCommission){
-                    order.setCommissionFlag(2L);
-                    orderRepository.save(order);
-                }else{
-                    calculateOrderCommission(order, configs, user);
+                }catch (Exception e){
+                    logger.error("订单返佣计算出错, 订单信息:{}", order.toString(), e);
                 }
             }
             return orders.size();
@@ -332,18 +322,27 @@ public class OrderService {
         }
 
         UserEntity rebateUser1 = userService.findByUserId(user.getParentId());
-        rebateUser1.setBalance(rebateUser1.getBalance() + rebateAmount1);
+        Long preBalance1 = rebateUser1.getBalance();
+        rebateUser1.setBalance(preBalance1 + rebateAmount1);
         userService.saveOrUpdateUser(rebateUser1);
+        logger.info("用户[{}]获得一级返佣金额[{}], 返佣前余额[{}], 返佣后余额[{}], 订单号[{}], 订单金额[{}]",
+                rebateUser1.getUserName(), rebateAmount1, preBalance1, rebateUser1.getBalance(), order.getId(), order.getAmount());
 
         if(rebateUser1.getParentId() != null){
             UserEntity rebateUser2 = userService.findByUserId(rebateUser1.getParentId());
-            rebateUser2.setBalance(rebateUser2.getBalance() + rebateAmount2);
+            Long preBalance2 = rebateUser2.getBalance();
+            rebateUser2.setBalance(preBalance2 + rebateAmount2);
             userService.saveOrUpdateUser(rebateUser2);
+            logger.info("用户[{}]获得二级返佣金额[{}], 返佣前余额[{}], 返佣后余额[{}], 订单号[{}], 订单金额[{}]",
+                    rebateUser2.getUserName(), rebateAmount2, preBalance2, rebateUser2.getBalance(), order.getId(), order.getAmount());
 
             if(rebateUser2.getParentId() != null) {
                 UserEntity rebateUser3 = userService.findByUserId(rebateUser2.getParentId());
-                rebateUser3.setBalance(rebateUser3.getBalance() + rebateAmount3);
+                Long preBalance3 = rebateUser3.getBalance();
+                rebateUser3.setBalance(preBalance3 + rebateAmount3);
                 userService.saveOrUpdateUser(rebateUser3);
+                logger.info("用户[{}]获得三级返佣金额[{}], 返佣前余额[{}], 返佣后余额[{}], 订单号[{}], 订单金额[{}]",
+                        rebateUser3.getUserName(), rebateAmount3, preBalance3, rebateUser3.getBalance(), order.getId(), order.getAmount());
             }
         }
 
