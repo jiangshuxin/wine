@@ -171,6 +171,9 @@ var DataTable = {
             buttons: buttonGroup
         },otherConfig)
     },
+    reload : function(table){
+        table.ajax.reload();
+    },
     /**
      * 启用字段搜索功能
      * @param table

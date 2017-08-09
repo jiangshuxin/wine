@@ -112,17 +112,7 @@
             ],[
                 { extend: "create", editor: editor },
                 { extend: "edit",   editor: editor },
-                { extend: "remove", editor: editor },
-                {
-                    extend: "selectedSingle",
-                    text: "订单",
-                    action: function ( e, dt, node, config ) {
-                        var selData = table.row('.selected').data();
-                        var amount = window.prompt('请输入打款金额',0);
-                        //location.href = "${rc.contextPath}/uploadResult/list?refModuleName="+selData.moduleName+"&uploadId="+selData.id;
-                        alert(amount);
-                    }
-                }
+                { extend: "remove", editor: editor }
             ],{initComplete: function ()
             {
 
@@ -132,7 +122,19 @@
 
             editor.on( 'submitSuccess', function ( e, json, data ) {
                 if(data.logisticsSeqs){
-                    alert('触发订单完成');
+                    var jsonStr = $.ajax({
+                        url: DataTable.CONTEXT_PATH + '/api/front/order/'+data.id+'/status/3',
+                        async: false,
+                        type: 'POST',
+                        timeout:3000
+                    }).responseText;
+                    if(jsonStr){
+                        var jsonObj = $.parseJSON(jsonStr);
+                        if(jsonObj.success && jsonObj.data > 0){
+                            alert('更新成功，订单已完成！');
+                            DataTable.reload(table);
+                        }
+                    }
                 }
             } );
         } );

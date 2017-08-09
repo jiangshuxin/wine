@@ -26,11 +26,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -660,6 +657,15 @@ public class WineController {
             });
         }
         return Result.buildSuccess(selectList);
+    }
+
+    @RequestMapping(value="/order/{orderId}/status/{status}", method={RequestMethod.POST})
+    public Result<Integer> changeOrderStatus(@PathVariable Long orderId,@PathVariable Long status){
+        if(orderId == null || status == null){
+            return Result.buildFail("orderId or status cannot be null");
+        }
+        int data = orderService.updateOrderStatus(status, orderId);
+        return Result.buildSuccess(data);
     }
 
     @ExceptionHandler(Exception.class)

@@ -141,7 +141,13 @@ public class ServiceImpl implements IService {
                     Object original = PropertyUtils.getProperty(e,field.getName());
                     if(original == null || !ddicItemEntityMap.containsKey(original.toString()))continue;
                     DdicItemEntity entity = ddicItemEntityMap.get(original.toString());
-                    PropertyUtils.setProperty(e,ddic.mapTo(),entity.getItemValue());
+                    String mapTo = ddic.mapTo();
+                    if(StringUtils.isEmpty(mapTo)){//mapTo不配置，在原字段名基础上加Name后缀
+                    	mapTo = field.getName().concat("Name");
+					}
+					if(PropertyUtils.isWriteable(e,mapTo)){
+						PropertyUtils.setProperty(e,mapTo,entity.getItemValue());
+					}
                 }
             }
 		} catch (Exception e) {

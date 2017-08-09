@@ -1,6 +1,7 @@
 package com.wuxian99.finance.basedata.domain;
 
 import com.google.gson.Gson;
+import com.wuxian99.finance.basedata.support.annotation.Ddic;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -53,7 +54,11 @@ public class OrderEntity implements Serializable {
   /**
    * 0:已取消，1:未支付，2:已支付，3:已完成(已记录运单信息)
    */
+  @Ddic(name = "orderStatus")
   private Long status;
+
+  @Transient
+  private String statusName;
 
   /**
    * 支付完成时间
@@ -294,6 +299,14 @@ public class OrderEntity implements Serializable {
 
   public void setLastQueryPayStatusTime(long lastQueryPayStatusTime) {
     this.lastQueryPayStatusTime = lastQueryPayStatusTime;
+  }
+
+  public String getStatusName() {
+    return statusName;
+  }
+
+  public void setStatusName(String statusName) {
+    this.statusName = statusName;
   }
 
   @Override
