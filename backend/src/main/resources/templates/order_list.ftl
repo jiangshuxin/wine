@@ -122,18 +122,16 @@
 
             editor.on( 'submitSuccess', function ( e, json, data ) {
                 if(data.logisticsSeqs){
-                    var jsonStr = $.ajax({
-                        url: DataTable.CONTEXT_PATH + '/api/front/order/'+data.id+'/status/3',
-                        async: false,
-                        type: 'POST',
-                        timeout:3000
-                    }).responseText;
-                    if(jsonStr){
-                        var jsonObj = $.parseJSON(jsonStr);
-                        if(jsonObj.success && jsonObj.data > 0){
-                            alert('更新成功，订单已完成！');
-                            DataTable.reload(table);
-                        }
+                    var paramObj = {
+                        orderId: data.id,
+                        status: 3
+                    };
+                    var jsonObj = Invoker.post('/backend/order/updateStatus',paramObj);
+                    if(jsonObj.success && jsonObj.data > 0){
+                        alert('更新成功，订单已完成！');
+                        DataTable.reload(table);
+                    }else{
+                        alert(jsonObj.errorMsg);
                     }
                 }
             } );

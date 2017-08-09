@@ -101,8 +101,21 @@
                     action: function ( e, dt, node, config ) {
                         var selData = table.row('.selected').data();
                         var amount = window.prompt('请输入打款金额',0);
-                        //location.href = "${rc.contextPath}/uploadResult/list?refModuleName="+selData.moduleName+"&uploadId="+selData.id;
-                        alert(amount);
+
+                        if(!amount){
+                            return;
+                        }
+                        var paramObj = {
+                            userId: selData.id,
+                            amount: amount
+                        };
+                        var jsonObj = Invoker.post('/backend/user/updateBalance',paramObj);
+                        if(jsonObj.success && jsonObj.data > 0){
+                            alert('余额更新成功！');
+                            DataTable.reload(table);
+                        }else{
+                            alert(jsonObj.errorMsg);
+                        }
                     }
                 },
                 {

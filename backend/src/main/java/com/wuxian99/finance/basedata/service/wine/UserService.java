@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -28,6 +29,11 @@ public class UserService {
 
     public UserEntity findByUserId(Long userId) {
         return userRepository.findOne(userId);
+    }
+
+    @Transactional
+    public int updateBalanceByUserId(Long balance,Long id){
+        return userRepository.updateBalanceByUserId(balance,id);
     }
 
     public UserEntity saveOrUpdateUser(UserEntity user){

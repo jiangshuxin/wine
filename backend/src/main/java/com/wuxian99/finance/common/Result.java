@@ -72,4 +72,11 @@ public class Result<T> implements Serializable{
         result.setErrorMsg(msg);
         return result;
     }
+
+    public static <T> Result<T> buildFail(org.springframework.validation.FieldError fieldError){
+        Result<T> result = new Result<>();
+        result.setSuccess(false);
+        result.setErrorMsg(String.format("%s.%s%s",fieldError.getObjectName(),fieldError.getField(),fieldError.getDefaultMessage()));
+        return result;
+    }
 }
