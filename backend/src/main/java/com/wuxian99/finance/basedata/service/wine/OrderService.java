@@ -241,7 +241,7 @@ public class OrderService {
                     }catch(Exception ex){
                         logger.error("订单分销返佣计算异常", ex);
                     }
-                    try{Thread.sleep(600*1000);}catch(Exception ex){};
+                    try{Thread.sleep(120*1000);}catch(Exception ex){};
                 }
             }
         });
@@ -310,20 +310,22 @@ public class OrderService {
         Integer rebateAmount3 = 0;
         for(OrderDetailEntity detail : details){
             DistributionConfigEntity detailConfig = null;
+            logger.info("返佣计算================");
             for(DistributionConfigEntity config : configs) {
-                if(config.getMdseId() == null) {
+                logger.info("config:" + config);
+                if(detail.getMdseId().equals(config.getMdseId())) {
                     detailConfig = config;
-                }else if(config.getMdseId() == detail.getMdseId()) {
-                    if(detailConfig == null) {
-                        detailConfig = config;
-                    }
+                }else if(config.getMdseId() == null && detailConfig == null) {
+                    detailConfig = config;
                 }
             }
             if(detailConfig != null) {
-                rebateAmount1 = rebateAmount1 + detailConfig.getRebate1().multiply(new BigDecimal(detail.getPrice())).divide(new BigDecimal("100")).intValue();
-                rebateAmount2 = rebateAmount2 + detailConfig.getRebate2().multiply(new BigDecimal(detail.getPrice())).divide(new BigDecimal("100")).intValue();
-                rebateAmount3 = rebateAmount3 + detailConfig.getRebate3().multiply(new BigDecimal(detail.getPrice())).divide(new BigDecimal("100")).intValue();
+                rebateAmount1 = rebateAmount1 + detailConfig.getRebate1().multiply(new BigDecimal(detail.getPrice()*detail.getCount())).divide(new BigDecimal("100")).intValue();
+                rebateAmount2 = rebateAmount2 + detailConfig.getRebate2().multiply(new BigDecimal(detail.getPrice()*detail.getCount())).divide(new BigDecimal("100")).intValue();
+                rebateAmount3 = rebateAmount3 + detailConfig.getRebate3().multiply(new BigDecimal(detail.getPrice()*detail.getCount())).divide(new BigDecimal("100")).intValue();
             }
+            logger.info("orderDetail:" + detail);
+            logger.info("detailConfig:" + detailConfig);
         }
 
         UserEntity rebateUser1 = userService.findByUserId(user.getParentId());

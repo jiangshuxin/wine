@@ -106,4 +106,8 @@ public class OrderDetailEntity implements Serializable {
     this.mdseSmallPic = mdseSmallPic;
   }
 
+  @Override
+  public String toString() {
+    return new Gson().toJson(this);
+  }
 }
