@@ -34,6 +34,9 @@ public class MdseService {
                 Path<String> merchantIdPath = root.get("merchantId");
                 Predicate predicate = cb.equal(merchantIdPath, queryMdseListDto.getMerchantId());
 
+                Path<String> statusPath = root.get("status");
+                predicate = cb.and(predicate, cb.notEqual(statusPath, 0));
+
                 String catagory = queryMdseListDto.getCatagory();
                 if(StringUtils.isNotBlank(catagory)){
                     Path<String> catagoryPath = root.get("catagory");
