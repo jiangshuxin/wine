@@ -143,6 +143,11 @@ public class OrderService {
         }
     }
 
+    @Transactional
+    public int updateOrderStatus(Long status,Long id){
+        return orderRepository.updateOrderStatus(status,id);
+    }
+
     public Page<OrderEntity> findOrders(QueryOrderListDto paras){
         Sort sort = new Sort(Sort.Direction.DESC,"time");
         PageRequest pageRequest = paras.convert(sort);

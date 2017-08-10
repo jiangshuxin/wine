@@ -31,4 +31,7 @@
 	</mvc:interceptors>
 
 	<aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
+
+	<bean id="validator"
+		  class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 </beans>

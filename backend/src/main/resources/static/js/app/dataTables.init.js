@@ -171,6 +171,9 @@ var DataTable = {
             buttons: buttonGroup
         },otherConfig)
     },
+    reload : function(table){
+        table.ajax.reload();
+    },
     /**
      * 启用字段搜索功能
      * @param table
@@ -287,6 +290,10 @@ var Ddic = {
     }
 }
 
+/**
+ * 后台返回List<Select>，该方法用于产生dataTable识别的组件元素（select radio checkbox）
+ * @type {{init: Select.init}}
+ */
 var Select = {
     init : function(path){
         var jsonStr = $.ajax({
@@ -299,6 +306,35 @@ var Select = {
             if(jsonObj.success){
                 return jsonObj.data;
             }
+        }
+        return false;
+    }
+};
+
+var Invoker = {
+    post : function (path,paramObj) {
+        var jsonStr = $.ajax({
+            url: DataTable.CONTEXT_PATH + path,
+            async: false,
+            contentType: 'application/json',
+            type: 'POST',
+            data: JSON.stringify(paramObj),
+            timeout:3000
+        }).responseText;
+        if(jsonStr){
+            return $.parseJSON(jsonStr);
+        }
+        return false;
+    },
+    get : function (path) {
+        var jsonStr = $.ajax({
+            url: DataTable.CONTEXT_PATH + path,
+            async: false,
+            type: 'GET',
+            timeout:3000
+        }).responseText;
+        if(jsonStr){
+            return $.parseJSON(jsonStr);
         }
         return false;
     }

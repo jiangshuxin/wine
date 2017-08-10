@@ -31,7 +31,7 @@
 
         $(document).ready(function() {
             var mdseStatusDdic = Ddic.show('mdseStatus');
-            var merchantData = Select.init('/api/front/merchant/queryAll');
+            var merchantData = Select.init('/backend/merchant/queryAll');
 
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "编号:",

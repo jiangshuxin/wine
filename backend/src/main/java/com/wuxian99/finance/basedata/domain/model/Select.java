@@ -1,8 +1,7 @@
 package com.wuxian99.finance.basedata.domain.model;
 
 /**
- * 下拉框
- *
+ * DataTable单选/多选组件使用的数据类型
  */
 public class Select {
 	private String label;
