@@ -11,8 +11,6 @@
             <th>类型</th>
             <th>余额</th>
             <th>姓名</th>
-            <th>性别</th>
-            <th>生日</th>
             <th>状态</th>
             <th>类型</th>
         </tr>
@@ -27,8 +25,6 @@
             <th>类型</th>
             <th>余额</th>
             <th>姓名</th>
-            <th>性别</th>
-            <th>生日</th>
             <th>状态</th>
             <th>类型</th>
         </tr>
@@ -40,6 +36,7 @@
         $(document).ready(function() {
             var userStatusDdic = Ddic.show('userStatus');
             var userTypeDdic = Ddic.show('userType');
+            var genderDdic = Ddic.show('gender');
 
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "编号:",
@@ -70,7 +67,9 @@
                 name: "realName"
             },{
                 label: "性别:",
-                name: "gender"
+                name: "gender",
+                type: 'radio',
+                options:genderDdic
             }, {
                 label: "生日:",
                 name: "birthday"
@@ -87,8 +86,6 @@
                 { data: "typeName",searchType:"select",ddic:"userType",ddicRef:"type"},
                 { data: "balance"},
                 { data: "realName"},
-                { data: "gender"},
-                { data: "birthday"},
                 { data: "type"},
                 { data: "status"}//不展示的枚举值，放列表最后，便于隐藏
             ],[
@@ -125,17 +122,32 @@
                         var selData = table.row('.selected').data();
                         location.href = "${rc.contextPath}/userAddress/list?userId="+selData.id;
                     }
+                },
+                {
+                    extend: 'collection',
+                    text: '导出',
+                    buttons: [
+                        'copy',
+                        'excel',
+                        'csv',
+                        'pdf',
+                        'print'
+                    ]
                 }
             ],{initComplete: function ()
             {
 
             }, "columnDefs": [
-                { "visible": false, "targets": [9,10] }
+                { "visible": false, "targets": [7,8] }
             ]
                 , order: [[ 0, 'desc' ]]
             }) );
 
             DataTable.enableColumnSearch(table);
+
+            editor.on( 'open', function ( e, json, data ) {
+                DataTable.Editor.readonly('balance');
+            } );
         } );
 
 

@@ -34,6 +34,7 @@
     </table>
     <script type="text/javascript" language="javascript" class="init">
         var editor;
+        var orderStatusDdic = Ddic.show('orderStatus');
 
         $(document).ready(function() {
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
@@ -59,7 +60,9 @@
                 name: "payAmount"
             },{
                 label: "订单状态:",
-                name: "status"
+                name: "status",
+                type:'select',
+                options:orderStatusDdic
             },{
                 label: "支付时间:",
                 name: "payTime"
@@ -104,19 +107,42 @@
                 { data: "userId" },
                 { data: "merchantId"},
                 { data: "mdseCount"},
-                { data: "amount"},
-                { data: "payAmount"},
-                { data: "status"},
+                { data: "amount",render: function ( data, type, row ) {
+                    if(!isNaN(row.amount)){
+                        return new Number(row.amount)/100;
+                    }
+                }},
+                { data: "payAmount",render: function ( data, type, row ) {
+                    if(!isNaN(row.payAmount)){
+                        return new Number(row.payAmount)/100;
+                    }
+                }},
+                { data: "statusName",searchType:"select",ddic:"orderStatus",ddicRef:"status"},
                 { data: "payTime"},
-                { data: "logisticsCompany"}
+                { data: "logisticsCompany"},
+                { data: "status"}
             ],[
                 { extend: "create", editor: editor },
                 { extend: "edit",   editor: editor },
-                { extend: "remove", editor: editor }
+                { extend: "remove", editor: editor },
+                {
+                    extend: 'collection',
+                    text: '导出',
+                    buttons: [
+                        'copy',
+                        'excel',
+                        'csv',
+                        'pdf',
+                        'print'
+                    ]
+                }
             ],{initComplete: function ()
             {
 
-            }}) );
+            },"columnDefs": [
+                { "visible": false, "targets": [10] }
+            ]
+                , order: [[ 0, 'desc' ]]}) );
 
             DataTable.enableColumnSearch(table);
 
