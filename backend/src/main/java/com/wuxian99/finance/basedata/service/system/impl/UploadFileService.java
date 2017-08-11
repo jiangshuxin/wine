@@ -6,7 +6,6 @@ import com.wuxian99.finance.common.UploadFileInfo;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ public class UploadFileService {
     private String picPath;
 
     public UploadFileInfo save(MultipartFile file,String module) throws IOException {
-        String fileName = file.getOriginalFilename();
+        String fileName = StringUtils.join(UUID.randomUUID().toString(),".",StringUtils.substringAfterLast(file.getOriginalFilename(),"."));
         String yyyyMMdd = DateFormatUtils.format(new Date(),"/yyyy/MM/dd/");
         String dir = StringUtils.join(storePath,module,yyyyMMdd);
         String relativePath = StringUtils.join(module,yyyyMMdd,fileName);
@@ -62,7 +61,7 @@ public class UploadFileService {
         uploadResult.setFileName(fileName);
         uploadResult.setFileSize(String.valueOf(uploadFileEntity.getFileSize()));
         //FIXME mock
-        uploadResult.setWeb_path("http://123.57.234.184/wineStatic/2.png");
+        //uploadResult.setWeb_path("http://123.57.234.184/wineStatic/2.png");
         return uploadResult;
     }
 

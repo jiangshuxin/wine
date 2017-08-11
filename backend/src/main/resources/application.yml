@@ -19,7 +19,7 @@ spring:
     multipart:
       enabled: true # Enable support of multi-part uploads.
       file-size-threshold: 0 # Threshold after which files will be written to disk. Values can use the suffixed "MB" or "KB" to indicate a Megabyte or Kilobyte size.
-      location: /opt/fdp/upload/ #/Users/sxjiang/Documents/ # Intermediate location of uploaded files.
+      location: /data/wine/temp/ #/Users/sxjiang/Documents/ # Intermediate location of uploaded files.
       #location: /Users/sxjiang/Documents/wine #/Users/sxjiang/Documents/ # Intermediate location of uploaded files.
       max-file-size: 30MB # Max file size. Values can use the suffixed "MB" or "KB" to indicate a Megabyte or Kilobyte size.
       max-request-size: 35MB # Max request size. Values can use the suffixed "MB" or "KB" to indicate a Megabyte or Kilobyte size
@@ -40,5 +40,5 @@ spring:
 wine:
   picPath: http://123.57.234.184/wineStatic/images/  #图片访问路径
   wxPayNotifyUrl: http://123.57.234.184/wine/pay/wxPayNotify #微信支付通知地址
-  storePath: /data/wine/static/
+  storePath: /data/wine/static/wineStatic/images/
   #storePath: /Users/sxjiang/Documents/wine/
