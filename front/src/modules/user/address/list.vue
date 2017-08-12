@@ -1,6 +1,6 @@
 <script>
 import { phoneNumberShelter } from 'common/util';
-import { CellSwipe, Indicator } from 'mint-ui';
+import { CellSwipe, Indicator, MessageBox } from 'mint-ui';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
     created() {
@@ -49,10 +49,23 @@ export default {
                 }
             });
         },
-        del(e, item) {
+        async del(e, item) {
             e.preventDefault();
             e.srcEvent.stopPropagation();
-            this.deleteAddress(item.addressId);
+            try {
+                await MessageBox.confirm('是否删除地址?');
+            } catch (err) {
+                return;
+            }
+            Indicator.open();
+            try {
+                await this.deleteAddress(item.addressId);
+            } catch (err) {
+                Indicator.close();
+                throw err;
+            }
+            Indicator.close();
+            this.init();
         },
         goCreate() {
             this.$router.push({

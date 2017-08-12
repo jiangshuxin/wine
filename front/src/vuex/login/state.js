@@ -7,7 +7,8 @@ function generatorLayoutMap() {
             state: '',
             rule: [{
                 value: /^1[0-9]{10}$/
-            }]
+            }],
+            isShow: true
         },
         verifyCode: {
             id: 'verifyCode',
@@ -17,21 +18,24 @@ function generatorLayoutMap() {
             rule: [{
                 value: /^[0-9]{4}$/
             }],
-            dep: 'realVerifyCode'
+            dep: 'realVerifyCode',
+            isShow: true
         },
         password: {
             id: 'password',
-            type: 'text',
+            type: 'password',
             placeholder: '密码',
             state: '',
             rule: [{
                 value: /^\S+$/
-            }]
+            }],
+            isShow: true
         },
         parentId: {
             id: 'parentId',
             type: 'text',
-            placeholder: '推荐码(选填)'
+            placeholder: '推荐码(选填)',
+            isShow: true
         }
     };
 }
@@ -47,16 +51,8 @@ const tabs = [{
 }];
 
 const layout = {
-    2: [
-        layoutMap.phone,
-        layoutMap.verifyCode,
-        layoutMap.parentId
-    ],
-    1: [
-        layoutMap.phone,
-        layoutMap.password,
-        layoutMap.parentId
-    ]
+    2: ['phone', 'verifyCode', 'parentId'],
+    1: ['phone', 'password', 'parentId']
 };
 
 function generatorOptions() {
@@ -66,15 +62,16 @@ function generatorOptions() {
         realVerifyCode: '',
         password: '',
         parentId: '',
-        type: 2,
-        delay: 0
+        type: 2
     };
 }
 
 export default {
     layout,
+    layoutMap,
     tabs,
     options: generatorOptions(),
     generatorOptions,
-    generatorLayoutMap
+    generatorLayoutMap,
+    delay: 0
 };

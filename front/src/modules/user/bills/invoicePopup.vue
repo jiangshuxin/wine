@@ -28,7 +28,8 @@ export default {
     },
     methods: {
         ...mapMutations({
-            setSelected: 'SET_INVOICE_SELECTED'
+            setSelected: 'SET_INVOICE_SELECTED',
+            changeHint: 'CHANGE_ENV_HINT_INFO'
         }),
         changeItem(e, id) {
             e.preventDefault();
@@ -38,6 +39,10 @@ export default {
         submit(e) {
             e.preventDefault();
             e.srcEvent.stopPropagation();
+            if (this.selected.id === 3 && this.selected.input === '') {
+                this.changeHint('请填写发票抬头, 以及公司税号');
+                return;
+            }
             this.setSelected(this.selected);
             this.$emit('close');
         }
@@ -77,7 +82,7 @@ export default {
                 </v-touch>
             </ul>
             <mint-field v-if="selected.id === 3"
-                placeholder="请输入发票抬头"
+                placeholder="请输入发票抬头, 以及公司税号"
                 type="textarea"
                 rows="4"
                 v-model="selected.input"

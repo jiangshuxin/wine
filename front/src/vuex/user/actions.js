@@ -2,6 +2,7 @@ import {
     getUser,
     getAddress,
     modifyUserAddress,
+    deleteUserAddress,
     getOrders,
     getOrder,
     cancel,
@@ -42,9 +43,8 @@ export async function getAddressDetailInfo({state, commit, dispatch}, id) {
     commit('CHECK_ADDRESS_DETAIL');
 }
 
-export async function deleteAddress({state}, id) {
-    console.log(state);
-    console.log(id);
+export async function deleteAddress({}, id) {
+    await deleteUserAddress(id);
 }
 
 

@@ -1,6 +1,7 @@
 import {
     getVerifyCode,
-    login
+    login,
+    checkUserName
 } from './api';
 
 export async function getLoginVerifyCode({state, commit}) {
@@ -24,4 +25,13 @@ export async function loginWine({state, commit}) {
         parentId
     });
     commit('SET_USER_INFO', result);
+}
+
+export async function checkLoginPhone({commit}, phone) {
+    const result = await checkUserName(phone);
+    if (result.data.isExist) {
+        commit('HIDE_LOGIN_LAYOUT', 'parentId');
+    } else {
+        commit('SHOW_LOGIN_LAYOUT', 'parentId');
+    }
 }

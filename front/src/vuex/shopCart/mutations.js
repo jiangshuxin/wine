@@ -17,7 +17,17 @@ function setStorage(list) {
 }
 
 export function SET_SHOP_CART_INFO(state, info) {
-    state.list.push(info);
+    const index = state.list.findIndex(item => item.mdse.mdseId === info.mdse.mdseId);
+    if (index >= 0) {
+        state.list = state.list.map(item => {
+            if (item.mdse.mdseId === info.mdse.mdseId) {
+                return Object.assign({}, item, {count: +item.count + +info.count});
+            }
+            return item;
+        });
+    } else {
+        state.list.push(info);
+    }
     setStorage(state.list);
 }
 

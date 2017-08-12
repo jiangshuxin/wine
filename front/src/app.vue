@@ -26,6 +26,7 @@ export default {
         ...mapGetters({
             tabList: 'envTabList',
             headMap: 'envHeadMap',
+            isLogin: 'userIsLogin',
             selectedTab: 'envSelectedTab',
             selectedMap: 'envSelectedMap',
             envHint: 'envHintMsg',
@@ -95,7 +96,7 @@ export default {
         },
         async getUser() {
             const userId = this.getStorageItem('wineUserId');
-            if (userId) {
+            if (userId && !this.isLogin) {
                 Indicator.open();
                 try {
                     await this.getUserInfo(userId);

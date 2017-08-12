@@ -11,9 +11,6 @@ export const layout = [{
     text: '我的地址',
     routeName: 'address'
 }, {
-    id: 'commissions',
-    text: '我的佣金'
-}, {
     id: 'referrer',
     text: '推荐人'
 }];
