@@ -47,7 +47,7 @@ export default {
             text: '购物车',
             goBack: true
         },
-        personal: {
+        personalList: {
             text: '个人中心',
             goBack: true
         },

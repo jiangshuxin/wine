@@ -39,13 +39,8 @@ export default {
         showPopup(info) {
             this.$refs.mdseCount.setMdseInfo(info);
         },
-        async addShopCart(info) {
-            const result = await this.setShopCart(info);
-            if (!result) {
-                this.changeHint('购物车中已存在该商品');
-            } else {
-                this.changeHint('商品已添加至购物车');
-            }
+        addShopCart(info) {
+            this.setShopCart(info);
         }
     },
     components: {

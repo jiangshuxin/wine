@@ -4,7 +4,9 @@ import {
 } from 'common/util';
 
 export function SET_LOGIN_TYPE(state, type) {
+    state.options = state.generatorOptions();
     state.options.type = type;
+    state.layoutMap = state.generatorLayoutMap();
 }
 
 export function SET_LOGIN_FORM(state, {id, value}) {
@@ -12,45 +14,60 @@ export function SET_LOGIN_FORM(state, {id, value}) {
 }
 
 export function SET_LOGIN_DELAY(state, delay) {
-    state.layoutMap = state.generatorLayoutMap();
-    state.layout = {
-        2: [
-            state.layoutMap.phone,
-            state.layoutMap.verifyCode,
-            state.layoutMap.parentId
-        ],
-        1: [
-            state.layoutMap.phone,
-            state.layoutMap.password,
-            state.layoutMap.parentId
-        ]
-    };
-    state.options.delay = delay;
+    state.delay = delay;
     setStorageItem('wineVerifyDelay', delay);
 }
 
 export function INIT_LOGIN(state) {
     state.options = state.generatorOptions();
     const delay = +getStorageItem('wineVerifyDelay');
-    state.options.delay = delay > 0 ? delay : 0;
+    state.delay = delay > 0 ? delay : 0;
 }
 
 export function CHECK_LOGIN_FORM(state, id) {
     const type = state.options.type;
     const options = state.options;
-    state.layout[type] = state.layout[type].map(item => {
+    const nowLayout = state.layout[type].map(id => state.layoutMap[id]);
+    nowLayout.forEach(item => {
         if (id && item.id !== id) {
-            return item;
+            return;
         }
-        if (!item.rule) {
-            return item;
+        if (!item.rule || !item.isShow) {
+            return;
         }
         if (item.rule && item.rule.every(ru => ru.value.test(options[item.id]))) {
             if (item.dep && options[item.dep] !== options[item.id]) {
-                return Object.assign({}, item, {state: 'error'});
+                item.state = 'error';
+                return;
             }
-            return Object.assign({}, item, {state: 'success'});
+            item.state = 'success';
+            return;
         }
-        return Object.assign({}, item, {state: 'error'});
+        item.state = 'error';
+        return;
+    });
+}
+
+export function HIDE_LOGIN_LAYOUT(state, id) {
+    state.tabs.forEach(tab => {
+        state.layout[tab.id]
+            .map(id => state.layoutMap[id])
+            .forEach(item => {
+                if (item.id === id) {
+                    item.isShow = false;
+                }
+            });
+    });
+}
+
+export function SHOW_LOGIN_LAYOUT(state, id) {
+    state.tabs.forEach(tab => {
+        state.layout[tab.id]
+            .map(id => state.layoutMap[id])
+            .forEach(item => {
+                if (item.id === id) {
+                    item.isShow = true;
+                }
+            });
     });
 }

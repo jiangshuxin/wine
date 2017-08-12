@@ -12,3 +12,9 @@ export async function login(data) {
         data
     });
 }
+
+export async function checkUserName(phone) {
+    return await request.get({
+        url: `/wine/api/front/verifyUserName/${phone}`
+    });
+}

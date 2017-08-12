@@ -17,6 +17,20 @@ const userInfo = {
     nowAddress: null
 };
 
+const personalLayout = [{
+    id: 'userName',
+    text: '手机号'
+}, {
+    id: 'gender',
+    text: '性别'
+}, {
+    id: 'birthday',
+    text: '生日'
+}, {
+    id: 'balance',
+    text: '我的佣金'
+}];
+
 // TODO 为了省事和user共用一个model
 // 收获地址列表
 function generatorAddressList() {
@@ -130,6 +144,7 @@ export default {
     orderDetail: generatorOrderDetail(),
     orderTab,
     payInfo: generatorPayInfo(),
+    personalLayout,
     generatorAddressDetail,
     generatorAddressList,
     generatorOrderList,

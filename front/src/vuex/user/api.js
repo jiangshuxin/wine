@@ -19,6 +19,12 @@ export async function modifyUserAddress(data) {
     });
 }
 
+export async function deleteUserAddress(id) {
+    return await request.get({
+        url: `/wine/api/front/deleteUserAddress/${id}`
+    });
+}
+
 export async function getOrders(data) {
     return await request.post({
         url: '/wine/api/front/getOrders',

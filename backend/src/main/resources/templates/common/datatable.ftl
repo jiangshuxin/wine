@@ -112,7 +112,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${signinUser.name!"设置"} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="${rc.contextPath}/user">个人资料</a></li>
+                        <li><a href="#">个人资料</a></li>
                         <li><a href="${rc.contextPath}/signout">退出系统</a></li>
                     </ul>
                 </li>

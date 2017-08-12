@@ -47,11 +47,6 @@ export async function initShopCartInfo({rootState, state, commit}) {
     }
 }
 
-export function setShopCartInfo({state, commit}, info) {
-    const index = state.list.findIndex(item => item.mdse.mdseId === info.mdse.mdseId);
-    if (index >= 0) {
-        return false;
-    }
+export function setShopCartInfo({commit}, info) {
     commit('SET_SHOP_CART_INFO', Object.assign({}, info, {checked: true}));
-    return true;
 }

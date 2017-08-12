@@ -114,13 +114,25 @@ const gopay = {
 const personal = {
     name: 'personal',
     path: '/personal',
+    redirect: {name: 'personalList'},
     meta: {
         requiresQuery: ['merchantId'],
         requiresAuth: ['userId']
     },
     component(resolve) {
         require.ensure([], require => resolve(require('../modules/user/personal')));
-    }
+    },
+    children: [{
+        name: 'personalList',
+        path: '/',
+        meta: {
+            requiresQuery: ['merchantId'],
+            requiresAuth: ['userId']
+        },
+        component(resolve) {
+            require.ensure([], require => resolve(require('../modules/user/personal/list')));
+        }
+    }]
 };
 
 export default {

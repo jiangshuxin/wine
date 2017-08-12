@@ -1,5 +1,6 @@
 export function loginLayout(state) {
-    return state.layout[state.options.type];
+    const map = state.layoutMap;
+    return state.layout[state.options.type].map(id => map[id]);
 }
 
 export function loginTabs(state) {
@@ -11,5 +12,5 @@ export function loginOptions(state) {
 }
 
 export function loginVerifyDelay(state) {
-    return state.options.delay;
+    return state.delay;
 }

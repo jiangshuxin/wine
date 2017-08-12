@@ -81,3 +81,7 @@ export function orderTab(state) {
 export function payPic(state) {
     return state.payInfo.payPic;
 }
+
+export function personalLayout(state) {
+    return state.personalLayout;
+}

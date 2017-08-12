@@ -34,7 +34,8 @@ export default {
     methods: {
         ...mapActions({
             getVerifyCode: 'getLoginVerifyCode',
-            loginWine: 'loginWine'
+            loginWine: 'loginWine',
+            checkPhone: 'checkLoginPhone'
         }),
         ...mapMutations({
             initLogin: 'INIT_LOGIN',
@@ -52,6 +53,13 @@ export default {
         },
         changeForm(value, id) {
             this.setForm({id, value});
+        },
+        check(value, id) {
+            this.checkForm(id);
+            const phoneInfo = this.layout.filter(item => item.id === 'phone')[0];
+            if (id === 'phone' && phoneInfo.state === 'success') {
+                this.checkPhone(value);
+            }
         },
         async getVerify() {
             if (this.delay > 0) {
@@ -134,13 +142,15 @@ export default {
             <mint-field
                 :style="{fontSize: '14px'}"
                 class="form-item"
+                v-if="item.isShow"
                 v-for="item in layout"
+                :key="item.id"
                 :type="item.type"
                 :placeholder="item.placeholder"
-                :value="options[item]"
+                :value="options[item.id]"
                 :state="item.state"
                 @input="changeForm($event, item.id)"
-                @change="checkForm(item.id)"
+                @change="check($event, item.id)"
             >
                 <v-touch
                     v-if="item.id === 'verifyCode'"

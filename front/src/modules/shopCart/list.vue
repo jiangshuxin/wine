@@ -1,6 +1,6 @@
 <script>
 import { formatPrice } from 'common/util';
-import { CellSwipe, Button } from 'mint-ui';
+import { CellSwipe, Button, MessageBox } from 'mint-ui';
 import { mapGetters, mapMutations } from 'vuex';
 export default {
     computed: {
@@ -21,10 +21,16 @@ export default {
             e.preventDefault();
             this.changeItem(Object.assign({}, item, {count: +item.count + 1}));
         },
-        minus(e, item) {
+        async minus(e, item) {
             e.srcEvent.stopPropagation();
             e.preventDefault();
             if (item.count <= 1) {
+                try {
+                    await MessageBox.confirm('是否删除商品?');
+                } catch (err) {
+                    return;
+                }
+                this.del(item);
                 return;
             }
             this.changeItem(Object.assign({}, item, {count: +item.count - 1}));
