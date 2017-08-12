@@ -40,6 +40,8 @@ public class BackendController {
     @RequestMapping(value="/merchant/queryAll", method={RequestMethod.POST,RequestMethod.GET})
     public Result<List<Select>> getAllMerchant(){
         List<Select> selectList = new ArrayList<>();
+        Select all = new Select("------请选择-----","");
+        selectList.add(all);
         List<MerchantEntity> merchantEntities = merchantService.queryAll();
         if(CollectionUtils.isNotEmpty(merchantEntities)){
             merchantEntities.forEach(merchantEntity -> {

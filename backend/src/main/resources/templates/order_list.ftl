@@ -146,6 +146,20 @@
 
             DataTable.enableColumnSearch(table);
 
+            editor.on( 'open', function ( e, json, data ) {
+                var amount = new Number(editor.get('amount'));
+                editor.set('amount',amount/100);
+                var payAmount = new Number(editor.get('payAmount'));
+                editor.set('payAmount',payAmount/100);
+            } );
+            editor.on( 'preSubmit', function ( e, json, action ) {
+                var data = json.data;
+                for(var k in data){
+                    data[k].amount = data[k].amount*100;
+                    data[k].payAmount = data[k].payAmount*100;
+                }
+            } );
+
             editor.on( 'submitSuccess', function ( e, json, data ) {
                 if(data.logisticsSeqs){
                     var paramObj = {

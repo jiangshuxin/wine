@@ -30,12 +30,16 @@
         var editor;
 
         $(document).ready(function() {
+            var merchantData = Select.init('/backend/merchant/queryAll');
+
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "编号:",
                 name: "id",
             }, {
                 label: "商户编号:",
-                name: "merchantId"
+                name: "merchantId",
+                type:  "select",
+                options:merchantData
             },{
                 label: "图片路径:",
                 name: "picRef",

@@ -266,10 +266,16 @@ var Ddic = {
         }
         return data[name];
     },
+    /**
+     * 生成dataTable识别的select组件数据源
+     * @param name
+     * @returns {Array}
+     */
     show : function (name) {
         var objList = this.get(name);
         if(!objList || objList.length == 0)return;
         var result = new Array();
+        result.push({label:'-----请选择-----',value:''});
         for(var k in objList){
             var temp = new Object();
             temp.label = objList[k].itemValue;

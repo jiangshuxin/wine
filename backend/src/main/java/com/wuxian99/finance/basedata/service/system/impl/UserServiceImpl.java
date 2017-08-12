@@ -31,11 +31,16 @@ public class UserServiceImpl implements UserService {
         if(userEntity == null){
             return Result.buildFail("账号或密码错误！");
         }
-       // if(StringUtils.equals(userEntity.))
+        if(!StringUtils.equals(userEntity.getPassword(),signinCommand.getPassword())){
+            return Result.buildFail("账号或密码错误！");
+        }
+        if(userEntity.getType() != 3){//管理员权限才能登录
+            return Result.buildFail("账号或密码错误！");
+        }
 
-        user.setName("蒋树新");
+        user.setName(userEntity.getRealName());
         user.setDepartment("财富酒庄集团总部");
-        user.setAccount("sxjiang");
+        user.setAccount(userEntity.getUserName());
         return Result.buildSuccess(user);
     }
 

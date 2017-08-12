@@ -40,9 +40,9 @@ public class ForwardAction {
         return "index";
     }
 
-    @RequestMapping("/user")
+    @RequestMapping("/userTree")
     public String user(ModelMap modelMap, HttpServletRequest request, HttpSession session){
-        return "user";
+        return "userTree";
     }
 
     @RequestMapping("/menuRedirect/{menuKey}")
