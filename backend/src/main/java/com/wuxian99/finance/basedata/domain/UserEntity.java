@@ -73,6 +73,12 @@ public class UserEntity implements Serializable {
    */
   private String birthday;
 
+  /**
+   * 推荐码
+   */
+  @Column(name = "referralcode")
+  private String referralCode;
+
   public Long getId() {
     return id;
   }
@@ -167,6 +173,14 @@ public class UserEntity implements Serializable {
 
   public void setTypeName(String typeName) {
     this.typeName = typeName;
+  }
+
+  public String getReferralCode() {
+    return referralCode;
+  }
+
+  public void setReferralCode(String referralCode) {
+    this.referralCode = referralCode;
   }
 
   @Override

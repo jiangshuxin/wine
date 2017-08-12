@@ -18,4 +18,8 @@ public class MerchantService {
     public List<MerchantEntity> queryAll(){
         return merchantRepository.findAll();
     }
+
+    public MerchantEntity findByMerchantId(String merchantId){
+        return merchantRepository.findByMerchantId(merchantId);
+    }
 }

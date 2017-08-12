@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface MerchantRepository extends JpaRepository<MerchantEntity, Long>, JpaSpecificationExecutor<MerchantEntity>{
 
+    MerchantEntity findByMerchantId(String merchantId);
+
 }

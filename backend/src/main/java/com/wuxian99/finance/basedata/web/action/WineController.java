@@ -11,6 +11,7 @@ import com.wuxian99.finance.basedata.web.dto.*;
 import com.wuxian99.finance.basedata.web.view.*;
 import com.wuxian99.finance.common.Result;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.entity.ContentType;
@@ -66,7 +67,35 @@ public class WineController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    MerchantService merchantService;
+
     private static final Logger logger = LoggerFactory.getLogger(WineController.class);
+
+    /**
+     * 获取酒庄基本信息
+     * @param merchantId
+     * @return
+     */
+    @RequestMapping(value="getMerchantInfo/{merchantId}", method={RequestMethod.GET})
+    public Result<MerchantView> getMerchantInfo(@PathVariable String merchantId){
+        logger.info("getMerchantInfo request: {}", merchantId);
+        MerchantEntity merchant =  merchantService.findByMerchantId(merchantId);
+        MerchantView view = new MerchantView();
+        if(merchant == null){
+            return Result.buildFail("酒庄不存在");
+        }else if(merchant.getStatus() == 0){
+            return Result.buildFail("酒庄已停用");
+        }else{
+            try {
+                PropertyUtils.copyProperties(view, merchant);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        logger.info("getMerchantInfo response: {}", new Gson().toJson(view));
+        return Result.buildSuccess(view);
+    }
 
     /**
      * 获取首页Banner
@@ -152,6 +181,7 @@ public class WineController {
                 mdseListView.setSmallPic(picPath + mdse.getSmallPic());
                 mdseListView.setPrice(mdse.getPrice());
                 mdseListView.setYear(mdse.getYear());
+                mdseListView.setStatus(mdse.getStatus());
                 mdseListViews.add(mdseListView);
             }
         }
@@ -168,12 +198,19 @@ public class WineController {
     public Result<MdseView> getMdseDetail(@PathVariable Long mdseId){
         logger.info("getMdseDetail request: {}", mdseId);
         MdseEntity mdse =  mdseService.findMdseById(mdseId);
-        if(mdse != null){
+        if(mdse == null) {
+            logger.info("getMdseDetail response: {}", "商品不存在");
+            return Result.buildFail("商品不存在");
+        }else if(mdse.getStatus() == 0){
+            logger.info("getMdseDetail response: {}", "商品已下架");
+            return Result.buildFail("商品已下架");
+        }else{
             MdseView view = new MdseView();
             view.setMdseId(mdse.getId());
             view.setName(mdse.getName());
             view.setNameEn(mdse.getNameEn());
             view.setPrice(mdse.getPrice());
+            view.setStatus(mdse.getStatus());
             view.setWineType(mdse.getWineType());
             view.setGrapeType(mdse.getGrapeType());
             view.setYear(mdse.getYear());
@@ -192,9 +229,6 @@ public class WineController {
             view.setStoryPic(picPath + mdse.getStoryPic());
             logger.info("getMdseDetail response: {}", view);
             return Result.buildSuccess(view);
-        }else{
-            logger.info("getMdseDetail response: {}", "商品不存在");
-            return Result.buildFail("商品不存在");
         }
     }
 
@@ -287,7 +321,7 @@ public class WineController {
                 if(paras.getParentId() != null && paras.getParentId() != 0) {
                     user.setParentId(paras.getParentId());
                 }
-                user = userService.saveOrUpdateUser(user);
+                user = userService.addUser(user);
             }
         }else{
             if(user == null){
@@ -304,6 +338,7 @@ public class WineController {
         userInfoDto.setRealName(user.getRealName());
         userInfoDto.setGender(user.getGender());
         userInfoDto.setBirthday(user.getBirthday());
+        userInfoDto.setReferralCode(user.getReferralCode());
         logger.info("login response: {}", userInfoDto);
         return Result.buildSuccess(userInfoDto);
     }
@@ -327,7 +362,7 @@ public class WineController {
             return Result.buildFail("短信验证码不正确");
         }
         user.setPassword(paras.getPassword());
-        userService.saveOrUpdateUser(user);
+        userService.updateUser(user);
 
         Map<String, Long> data = new HashMap<>();
         data.put("userId", user.getId());
@@ -355,6 +390,7 @@ public class WineController {
         userInfoDto.setRealName(user.getRealName());
         userInfoDto.setGender(user.getGender());
         userInfoDto.setBirthday(user.getBirthday());
+        userInfoDto.setReferralCode(user.getReferralCode());
         logger.info("getUserInfo response: {}", userInfoDto);
         return Result.buildSuccess(userInfoDto);
     }
@@ -374,7 +410,7 @@ public class WineController {
         user.setRealName(paras.getRealName());
         user.setGender(paras.getGender());
         user.setBirthday(paras.getBirthday());
-        user = userService.saveOrUpdateUser(user);
+        user = userService.updateUser(user);
 
         UserInfoDto userInfoDto = new UserInfoDto();
         userInfoDto.setUserId(user.getId());
@@ -384,6 +420,7 @@ public class WineController {
         userInfoDto.setRealName(user.getRealName());
         userInfoDto.setGender(user.getGender());
         userInfoDto.setBirthday(user.getBirthday());
+        userInfoDto.setReferralCode(user.getReferralCode());
         logger.info("modifyUserInfo response: {}", userInfoDto);
         return Result.buildSuccess(userInfoDto);
     }

@@ -21,6 +21,8 @@ public class MdseListView implements Serializable {
 
   private String year;
 
+  private Long status;
+
   public Long getMdseId() {
     return mdseId;
   }
@@ -67,5 +69,13 @@ public class MdseListView implements Serializable {
 
   public void setYear(String year) {
     this.year = year;
+  }
+
+  public Long getStatus() {
+    return status;
+  }
+
+  public void setStatus(Long status) {
+    this.status = status;
   }
 }

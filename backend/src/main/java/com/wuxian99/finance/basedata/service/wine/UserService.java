@@ -36,7 +36,15 @@ public class UserService {
         return userRepository.updateBalanceByUserId(balance,id);
     }
 
-    public UserEntity saveOrUpdateUser(UserEntity user){
+    public UserEntity addUser(UserEntity user){
+        user = userRepository.save(user);
+
+        //创建用户时，生成用户的推荐码
+        user.setReferralCode(ShareCodeUtil.toSerialCode(user.getId()));
+        return userRepository.save(user);
+    }
+
+    public UserEntity updateUser(UserEntity user){
         return userRepository.save(user);
     }
 

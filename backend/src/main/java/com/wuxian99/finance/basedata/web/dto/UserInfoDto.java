@@ -16,6 +16,7 @@ public class UserInfoDto implements Serializable {
   private String realName;
   private String gender;
   private String birthday;
+  private String referralCode;
 
   public Long getUserId() {
     return userId;
@@ -71,6 +72,14 @@ public class UserInfoDto implements Serializable {
 
   public void setBirthday(String birthday) {
     this.birthday = birthday;
+  }
+
+  public String getReferralCode() {
+    return referralCode;
+  }
+
+  public void setReferralCode(String referralCode) {
+    this.referralCode = referralCode;
   }
 
   @Override
