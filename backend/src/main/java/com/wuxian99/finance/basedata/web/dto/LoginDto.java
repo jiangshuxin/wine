@@ -11,8 +11,8 @@ public class LoginDto {
     private String password;
     //1:密码登录，2:验证码登录
     private Long type;
-    //分销上级ID
-    private Long parentId;
+    //推荐码
+    private String referralCode;
 
     public String getUserName() {
         return userName;
@@ -38,12 +38,12 @@ public class LoginDto {
         this.type = type;
     }
 
-    public Long getParentId() {
-        return parentId;
+    public String getReferralCode() {
+        return referralCode;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setReferralCode(String referralCode) {
+        this.referralCode = referralCode;
     }
 
     @Override

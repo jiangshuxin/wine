@@ -8,7 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
+
     UserEntity findByUserName(String userName);
+
+    UserEntity findByReferralCode(String referralCode);
 
     @Modifying
     @Query("update UserEntity o set o.balance = ?1 where o.id = ?2")

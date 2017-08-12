@@ -289,6 +289,7 @@ public class WineController {
 
     /**
      * 用户登录
+     * type 1:密码登录，2:验证码登录
      * @param paras
      * @return
      */
@@ -318,8 +319,12 @@ public class WineController {
                 user.setBalance(0L);
                 user.setGender("男");
                 user.setBirthday("1990-01-01");
-                if(paras.getParentId() != null && paras.getParentId() != 0) {
-                    user.setParentId(paras.getParentId());
+
+                //绑定推荐人
+                if(StringUtils.isNotBlank(paras.getReferralCode())) {
+                    UserEntity referralUser = userService.findByReferralCode(paras.getReferralCode());
+                    if(referralUser != null)
+                    user.setParentId(referralUser.getId());
                 }
                 user = userService.addUser(user);
             }

@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.findByUserName(userName);
     }
 
+    public UserEntity findByReferralCode(String referralCode) {
+        return userRepository.findByReferralCode(referralCode);
+    }
+
     public UserEntity findByUserId(Long userId) {
         return userRepository.findOne(userId);
     }
