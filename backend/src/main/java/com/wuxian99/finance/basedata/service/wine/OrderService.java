@@ -331,7 +331,7 @@ public class OrderService {
         UserEntity rebateUser1 = userService.findByUserId(user.getParentId());
         Long preBalance1 = rebateUser1.getBalance();
         rebateUser1.setBalance(preBalance1 + rebateAmount1);
-        userService.saveOrUpdateUser(rebateUser1);
+        userService.updateUser(rebateUser1);
         logger.info("用户[{}]获得一级返佣金额[{}], 返佣前余额[{}], 返佣后余额[{}], 订单号[{}], 订单金额[{}]",
                 rebateUser1.getUserName(), rebateAmount1, preBalance1, rebateUser1.getBalance(), order.getId(), order.getAmount());
 
@@ -339,7 +339,7 @@ public class OrderService {
             UserEntity rebateUser2 = userService.findByUserId(rebateUser1.getParentId());
             Long preBalance2 = rebateUser2.getBalance();
             rebateUser2.setBalance(preBalance2 + rebateAmount2);
-            userService.saveOrUpdateUser(rebateUser2);
+            userService.updateUser(rebateUser2);
             logger.info("用户[{}]获得二级返佣金额[{}], 返佣前余额[{}], 返佣后余额[{}], 订单号[{}], 订单金额[{}]",
                     rebateUser2.getUserName(), rebateAmount2, preBalance2, rebateUser2.getBalance(), order.getId(), order.getAmount());
 
@@ -347,7 +347,7 @@ public class OrderService {
                 UserEntity rebateUser3 = userService.findByUserId(rebateUser2.getParentId());
                 Long preBalance3 = rebateUser3.getBalance();
                 rebateUser3.setBalance(preBalance3 + rebateAmount3);
-                userService.saveOrUpdateUser(rebateUser3);
+                userService.updateUser(rebateUser3);
                 logger.info("用户[{}]获得三级返佣金额[{}], 返佣前余额[{}], 返佣后余额[{}], 订单号[{}], 订单金额[{}]",
                         rebateUser3.getUserName(), rebateAmount3, preBalance3, rebateUser3.getBalance(), order.getId(), order.getAmount());
             }
