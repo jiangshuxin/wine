@@ -2,6 +2,11 @@
 import { Badge, Indicator } from 'mint-ui';
 import { mapGetters, mapActions } from 'vuex';
 export default {
+    props: {
+        status: {
+            type: Number
+        }
+    },
     created() {
         this.init();
     },
@@ -59,7 +64,7 @@ export default {
             <li class="buy">
                 <v-touch tag="div" @tap="buy" :options="{domEvents: true}">立即购买</v-touch>
             </li>
-            <li class="add-shop-cart">
+            <li class="add-shop-cart" :class="{'add-shop-cart-sellout': status === 2}">
                 <v-touch tag="div" @tap="showPopup" :options="{domEvents: true}">加入购物车</v-touch>
             </li>
         </ul>
@@ -114,6 +119,8 @@ ul, p
 .add-shop-cart
     background #cf1f34
     color #fff
+.add-shop-cart-sellout
+    background #ccc
 .mdse-buy-count
     padding 0
     width 100%

@@ -14,7 +14,8 @@ const userInfo = {
     realName: '',
     gender: '',
     birthday: '',
-    nowAddress: null
+    nowAddress: null,
+    referralCode: ''
 };
 
 const personalLayout = [{

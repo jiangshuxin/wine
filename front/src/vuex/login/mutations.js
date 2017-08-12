@@ -19,6 +19,7 @@ export function SET_LOGIN_DELAY(state, delay) {
 }
 
 export function INIT_LOGIN(state) {
+    state.layoutMap = state.generatorLayoutMap();
     state.options = state.generatorOptions();
     const delay = +getStorageItem('wineVerifyDelay');
     state.delay = delay > 0 ? delay : 0;

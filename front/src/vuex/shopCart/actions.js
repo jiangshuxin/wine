@@ -37,10 +37,15 @@ export async function initShopCartInfo({rootState, state, commit}) {
             })
             // 聚合商品详情mdse  和 count checked 状态
             .map(item => {
+                let checked = item.checked;
+                // 禁止选中已售罄商品
+                if (+map[item.id].status === 2) {
+                    checked = false;
+                }
                 return {
                     mdse: map[item.id],
                     count: item.count,
-                    checked: item.checked
+                    checked: checked
                 };
             }) : []
         );

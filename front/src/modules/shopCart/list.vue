@@ -11,7 +11,8 @@ export default {
     methods: {
         ...mapMutations({
             changeItem: 'CHANGE_SHOP_CART_INFO',
-            delItem: 'DEL_SHOP_CART_INFO'
+            delItem: 'DEL_SHOP_CART_INFO',
+            changeHint: 'CHANGE_ENV_HINT_INFO'
         }),
         del(item) {
             this.delItem(item);
@@ -25,9 +26,15 @@ export default {
             e.srcEvent.stopPropagation();
             e.preventDefault();
             if (item.count <= 1) {
-                try {
-                    await MessageBox.confirm('是否删除商品?');
-                } catch (err) {
+                const result = await MessageBox({
+                    title: '提示',
+                    message: '是否删除商品?',
+                    showCancelButton: true,
+                    showConfirmButton: true,
+                    confirmButtonClass: 'wine-confirm',
+                    cancelButtonClass: 'wine-cancel'
+                });
+                if (result === 'cancel') {
                     return;
                 }
                 this.del(item);
@@ -38,6 +45,10 @@ export default {
         check(e, item) {
             e.srcEvent.stopPropagation();
             e.preventDefault();
+            if (+item.mdse.status === 2) {
+                this.changeHint('该商品已售罄');
+                return;
+            }
             this.changeItem(Object.assign({}, item, {checked: !item.checked}));
         },
         goDetail(e, item) {
@@ -84,9 +95,10 @@ export default {
         >
             <v-touch tag="div" class="shop-cart-list-item" slot="title" @tap="goDetail($event, item)">
                 <v-touch tag="div" ref="check" class="checkbox-icon" @tap="check($event, item)">
-                    <i ref="checkIcon" class="icon" :class="{checked: item.checked}"></i>
+                    <i ref="checkIcon" class="icon" :class="{'checked': item.checked, 'checkbox-sell-out': +item.mdse.status === 2}"></i>
                 </v-touch>
                 <div class="shop-cart-list-item-img">
+                    <div v-if="+item.mdse.status === 2" class="sell-out">售罄</div>
                     <img :src="item.mdse.smallPic" :alt="item.mdse.name" width="100%" height="100%">
                 </div>
                 <div class="shop-cart-list-item-info">
@@ -123,6 +135,7 @@ h3, p
     display flex
     padding 15px 0
     &-img
+        position relative
         width 100px
         height 100px
         flex-basis 100px
@@ -141,6 +154,17 @@ h3, p
         font-size 12px
         color #999
         ellipsis()
+.sell-out
+    position absolute
+    top 0
+    bottom 0
+    left 0
+    right 0
+    text-align center
+    line-height 100px
+    font-weight normal
+    background rgba(0, 0, 0, .4)
+    color #f0f0f0
 .checkbox-icon
     padding 0 12px 0 8px
     line-height 100px
@@ -165,6 +189,17 @@ h3, p
             border-left 2px solid #fff
             border-bottom 2px solid #fff
             transform rotate(-45deg)
+    .checkbox-sell-out
+        background #c0c0c0
+        &:before
+            position absolute
+            top 7px
+            left 3px
+            content ''
+            margin 0 auto
+            width 10px
+            height 2px
+            background #fff
 .info-footer
     display flex
     flex row nowrap

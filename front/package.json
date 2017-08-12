@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "clipboard": "^1.7.1",
     "isomorphic-fetch": "^2.2.1",
     "mint-ui": "^2.2.7",
     "normalize.css": "^7.0.0",

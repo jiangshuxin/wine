@@ -40,6 +40,7 @@ export default {
             this.$refs.mdseCount.setMdseInfo(info);
         },
         addShopCart(info) {
+            this.changeHint('成功添加商品至购物车');
             this.setShopCart(info);
         }
     },

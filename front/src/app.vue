@@ -29,6 +29,7 @@ export default {
             isLogin: 'userIsLogin',
             selectedTab: 'envSelectedTab',
             selectedMap: 'envSelectedMap',
+            merchantInfo: 'merchantInfo',
             envHint: 'envHintMsg',
             envMerchantId: 'envMerchantId',
             envIsPC: 'envIsPC'
@@ -69,7 +70,8 @@ export default {
     },
     methods: {
         ...mapActions({
-            getUserInfo: 'getUserInfo'
+            getUserInfo: 'getUserInfo',
+            getMerchantInfo: 'getMerchantInfo'
         }),
         ...mapMutations({
             changeTab: 'CHANGE_ENV_SELECTED_TAB',
@@ -77,7 +79,7 @@ export default {
             setAgent: 'SET_ENV_AGENT',
             changeHint: 'CHANGE_ENV_HINT_INFO'
         }),
-        init() {
+        async init() {
             this.setMerchantId(this.$route.query.merchantId);
             this.setAgent(this.checkAgent());
             const matchId = this.selectedMap[this.$route.name];
@@ -89,10 +91,12 @@ export default {
             if (isValidName) {
                 this.tabShow = true;
                 this.changeTab(matchId);
-                return;
+            } else {
+                this.tabShow = false;
             }
-            this.tabShow = false;
-            this.getUser();
+            await this.getMerchant();
+            this.setTitle();
+            await this.getUser();
         },
         async getUser() {
             const userId = this.getStorageItem('wineUserId');
@@ -107,6 +111,24 @@ export default {
                 Indicator.close();
             }
         },
+        async getMerchant() {
+            if (!this.$route.query.merchantId) {
+                return;
+            }
+            if (!this.merchantInfo.name) {
+                Indicator.open();
+                try {
+                    await this.getMerchantInfo(this.$route.query.merchantId);
+                } catch (e) {
+                    Indicator.close();
+                    throw e;
+                }
+                Indicator.close();
+            }
+        },
+        setTitle() {
+            document.querySelector('title').innerHTML = this.merchantInfo.name;
+        },
         goBack() {
             const route = this.$route;
             if (route.name === 'gopay') {
@@ -120,6 +142,13 @@ export default {
                     });
                     return;
                 }
+            }
+            if (route.params.goBack) {
+                this.$router.replace({
+                    name: route.params.goBack,
+                    query: route.query
+                });
+                return;
             }
             this.$router.go(-1);
         },

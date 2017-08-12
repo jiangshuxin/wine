@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
-
+import home from './home';
 import user from './user';
 import env from './env';
 import mall from './mall';
@@ -12,6 +12,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
+        home,
         user,
         env,
         mall,

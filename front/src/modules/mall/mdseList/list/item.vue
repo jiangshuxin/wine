@@ -1,5 +1,6 @@
 <script>
 import { formatPrice } from 'common/util';
+import { mapMutations } from 'vuex';
 export default {
     props: {
         item: {
@@ -8,6 +9,9 @@ export default {
         }
     },
     methods: {
+        ...mapMutations({
+            changeHint: 'CHANGE_ENV_HINT_INFO'
+        }),
         goDetail(e) {
             if (e.target === this.$refs['add-cart'].$el) {
                 return;
@@ -20,6 +24,10 @@ export default {
         addShopCart(e) {
             e.srcEvent.stopPropagation();
             e.preventDefault();
+            if (+this.item.status === 2) {
+                this.changeHint('该商品已售罄，无法加入购物车');
+                return;
+            }
             this.$emit('addShopCart', this.item);
         },
         formatPrice
@@ -30,7 +38,8 @@ export default {
 <template>
     <v-touch tag="div" ref="list-item-wrapper" class="list-item-wrapper" @tap="goDetail">
         <div class="img">
-            <img :src="item.smallPic" alt="item.name">
+            <div v-if="+item.status === 2" class="sell-out">售罄</div>
+            <img :src="item.smallPic" :alt="item.name">
         </div>
         <div class="content">
             <div class="title">
@@ -44,6 +53,7 @@ export default {
                     tag="div"
                     ref='add-cart'
                     class="add-cart"
+                    :class="{'add-cart-sellout': +item.status === 2}"
                     :options="{domEvents: true}"
                     @tap="addShopCart"
                 >
@@ -63,12 +73,25 @@ p
     display flex
     padding 15px 0
 .img
+    position relative
     width 100px
     height 100px
     flex-basis 100px
+    background #f0f0f0
     img
         width 100%
         height 100%
+.sell-out
+    position absolute
+    top 0
+    bottom 0
+    left 0
+    right 0
+    text-align center
+    line-height 100px
+    font-weight normal
+    background rgba(0, 0, 0, .4)
+    color #f0f0f0
 .content
     flex 1
     padding 10px 15px 3px
@@ -115,4 +138,6 @@ p
     font-size 12px
     background #cf1f34
     color #fff
+.add-cart-sellout
+    background #ccc
 </style>

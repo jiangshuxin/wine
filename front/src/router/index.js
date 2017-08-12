@@ -31,6 +31,9 @@ router.beforeEach(async (to, from, next) => {
             return;
         }
     }
+    if (!from.name && from.path === '/') {
+        to.params.goBack = 'home';
+    }
     next();
 });
 

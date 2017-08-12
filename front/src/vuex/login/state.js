@@ -52,7 +52,7 @@ const tabs = [{
 
 const layout = {
     2: ['phone', 'verifyCode', 'parentId'],
-    1: ['phone', 'password', 'parentId']
+    1: ['phone', 'password']
 };
 
 function generatorOptions() {

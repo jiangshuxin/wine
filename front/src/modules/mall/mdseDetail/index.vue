@@ -55,9 +55,17 @@ export default {
             this.$router.go(-1);
         },
         showShopPopup() {
+            if (+this.mdse.status === 2) {
+                this.changeHint('该商品已售罄');
+                return;
+            }
             this.$refs.mdseCount.setMdseInfo(this.mdse);
         },
         showBuyPopup() {
+            if (+this.mdse.status === 2) {
+                this.changeHint('该商品已售罄');
+                return;
+            }
             this.$refs.mdseBuyCount.setMdseInfo(this.mdse);
         },
         addShopCart(info) {
@@ -89,6 +97,7 @@ export default {
             <i class="iconfont icon-left back-icon"></i>
         </v-touch>
         <div class="mdse-swipe-wrapper">
+            <div v-if="+mdse.status === 2" class="sell-out">售罄</div>
             <mint-swipe :auto="4000" :prevent="true" :stopPropagation="true">
                 <mint-swipe-item
                     class="swipe-item"
@@ -127,7 +136,7 @@ export default {
                 </li>
             </ul>
         </div>
-        <tabbar class="mdse-detai-tabbar" @showShopPopup="showShopPopup" @showBuyPopup="showBuyPopup"></tabbar>
+        <tabbar class="mdse-detai-tabbar" :status="+mdse.status" @showShopPopup="showShopPopup" @showBuyPopup="showBuyPopup"></tabbar>
         <popup-mdse-count class="mdse-detail-count" ref="mdseCount" @submit="addShopCart"></popup-mdse-count>
         <popup-mdse-count class="mdse-buy-count" ref="mdseBuyCount" @submit="goBills"></popup-mdse-count>
     </div>
@@ -163,11 +172,25 @@ ul
     font-size 20px
     color #fff
 .mdse-swipe-wrapper
+    position relative
     height 300px
 .swipe-item
     background #eee
     .img
         height 100%
+.sell-out
+    position absolute
+    top 22px
+    right 0
+    width 60px
+    text-align center
+    line-height 30px
+    border-radius 15px 0 0 15px
+    font-size 14px
+    background #000
+    opacity 0.7
+    color #fff
+    z-index 1
 .mdse-title
     padding 15px
     overflow hidden

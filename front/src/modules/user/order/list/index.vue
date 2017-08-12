@@ -161,6 +161,8 @@ ul, li, p
     margin 0
     padding 0
     list-style none
+.order-list-wrapper
+    background #eee
 .tab-bar
     margin-bottom 15px
     text-align center
@@ -196,7 +198,7 @@ ul, li, p
     .order-mdse
         padding 15px 0
         font-size 0
-        background #f2f2f2
+        background #f8f8f8
         white-space nowrap
         overflow auto
     .mdse-img

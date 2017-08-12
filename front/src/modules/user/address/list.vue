@@ -52,9 +52,17 @@ export default {
         async del(e, item) {
             e.preventDefault();
             e.srcEvent.stopPropagation();
-            try {
-                await MessageBox.confirm('是否删除地址?');
-            } catch (err) {
+            /* eslint-disable */
+            const result = await MessageBox({
+                title: '提示',
+                message: '是否删除地址?',
+                showCancelButton: true,
+                showConfirmButton: true,
+                confirmButtonClass: 'wine-confirm',
+                cancelButtonClass: 'wine-cancel'
+            });
+            /* eslint-enable */
+            if (result === 'cancel') {
                 return;
             }
             Indicator.open();

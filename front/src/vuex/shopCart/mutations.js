@@ -50,8 +50,13 @@ export function DEL_SHOP_CART_INFO(state, info) {
 
 export function CHANGE_SHOP_CART_CHECK_ALL(state, isCheck) {
     state.list.forEach(item => {
+        if (+item.mdse.status === 2) {
+            item.checked = false;
+            return;
+        }
         item.checked = isCheck;
     });
+    setStorage(state.list);
 }
 
 export function INIT_SHOP_CART_INFO(state, info) {

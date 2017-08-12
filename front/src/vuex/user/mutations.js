@@ -14,6 +14,7 @@ export function SET_USER_INFO(state, info) {
     userInfo.userName = data.userName;
     userInfo.realName = data.realName;
     userInfo.type = data.type;
+    userInfo.referralCode = data.referralCode;
     state.isLogin = true;
 }
 
