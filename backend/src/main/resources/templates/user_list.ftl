@@ -65,6 +65,9 @@
             }, {
                 label: "姓名:",
                 name: "realName"
+            }, {
+                label: "密码:",
+                name: "password"
             },{
                 label: "性别:",
                 name: "gender",
@@ -84,7 +87,11 @@
                 { data: "userName" },
                 { data: "statusName",searchType:"select",ddic:"userStatus",ddicRef:"status"},
                 { data: "typeName",searchType:"select",ddic:"userType",ddicRef:"type"},
-                { data: "balance"},
+                { data: "balance",render: function ( data, type, row ) {
+                    if(!isNaN(row.balance)){
+                        return new Number(row.balance)/100;
+                    }
+                }},
                 { data: "realName"},
                 { data: "type"},
                 { data: "status"}//不展示的枚举值，放列表最后，便于隐藏
@@ -104,7 +111,7 @@
                         }
                         var paramObj = {
                             userId: selData.id,
-                            amount: amount
+                            amount: amount*100
                         };
                         var jsonObj = Invoker.post('/backend/user/updateBalance',paramObj);
                         if(jsonObj.success && jsonObj.data > 0){
@@ -147,6 +154,16 @@
 
             editor.on( 'open', function ( e, json, data ) {
                 DataTable.Editor.readonly('balance');
+                DataTable.Editor.readonly('parentId');
+
+                var balance = new Number(editor.get('balance'));
+                editor.set('balance',balance/100);
+            } );
+            editor.on( 'preSubmit', function ( e, json, action ) {
+                var data = json.data;
+                for(var k in data){
+                    data[k].balance = data[k].balance*100;
+                }
             } );
         } );
 

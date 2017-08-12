@@ -32,9 +32,6 @@
             legend: {
                 data:['普通用户','销售']
             },
-            legend: {
-                data:[]
-            },
             toolbox: {
                 feature: {
                     saveAsImage: {}
@@ -84,9 +81,6 @@
             },
             legend: {
                 data:['未支付订单','已支付订单','已完成订单']
-            },
-            legend: {
-                data:[]
             },
             toolbox: {
                 feature: {

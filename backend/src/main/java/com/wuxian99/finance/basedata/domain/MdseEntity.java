@@ -51,7 +51,11 @@ public class MdseEntity implements Serializable {
   /**
    * 分类，1:红葡萄酒，2:白葡萄酒，3:起泡酒，4:冰酒，5:桃红葡萄酒
    */
+  @Ddic(name = "mdseCatagory",mapTo = "catagoryName")
   private String catagory;
+
+  @Transient
+  private String catagoryName;
 
   /**
    * 酒品类型
@@ -207,6 +211,14 @@ public class MdseEntity implements Serializable {
 
   public void setCatagory(String catagory) {
     this.catagory = catagory;
+  }
+
+  public String getCatagoryName() {
+    return catagoryName;
+  }
+
+  public void setCatagoryName(String catagoryName) {
+    this.catagoryName = catagoryName;
   }
 
   public String getWineType() {
