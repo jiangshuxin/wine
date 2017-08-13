@@ -2,6 +2,7 @@ package com.wuxian99.finance.basedata.domain;
 
 import com.google.gson.Gson;
 import com.wuxian99.finance.basedata.support.annotation.Ddic;
+import com.wuxian99.finance.basedata.support.annotation.UploadRef;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -114,11 +115,19 @@ public class MdseEntity implements Serializable {
   @Column(name = "smallpic")
   private String smallPic;
 
+  @Column(name = "smallpic_ref")
+  @UploadRef(ref = "smallPic")
+  private String smallPicRef;
+
   /**
    * 大图路径，用于商品详情页展示
    */
   @Column(name = "bigpic1")
   private String bigPic1;
+
+  @Column(name = "bigpic1_ref")
+  @UploadRef(ref = "bigPic1")
+  private String bigPic1Ref;
 
   /**
    * 大图路径，用于商品详情页展示
@@ -126,17 +135,29 @@ public class MdseEntity implements Serializable {
   @Column(name = "bigpic2")
   private String bigPic2;
 
+  @Column(name = "bigpic2_ref")
+  @UploadRef(ref = "bigPic2")
+  private String bigPic2Ref;
+
   /**
    * 大图路径，用于商品详情页展示
    */
   @Column(name = "bigpic3")
   private String bigPic3;
 
+  @Column(name = "bigpic3_ref")
+  @UploadRef(ref = "bigPic3")
+  private String bigPic3Ref;
+
   /**
    * 大图路径，用于商品详情页展示
    */
   @Column(name = "bigpic4")
   private String bigPic4;
+
+  @Column(name = "bigpic4_ref")
+  @UploadRef(ref = "bigPic4")
+  private String bigPic4Ref;
 
   /**
    * 推荐理由
@@ -148,6 +169,10 @@ public class MdseEntity implements Serializable {
    */
   @Column(name = "storypic")
   private String storyPic;
+
+  @Column(name = "storypic_ref")
+  @UploadRef(ref = "storyPic")
+  private String storyPicRef;
 
   public Long getId() {
     return id;
@@ -347,6 +372,54 @@ public class MdseEntity implements Serializable {
 
   public void setStoryPic(String storyPic) {
     this.storyPic = storyPic;
+  }
+
+  public String getSmallPicRef() {
+    return smallPicRef;
+  }
+
+  public void setSmallPicRef(String smallPicRef) {
+    this.smallPicRef = smallPicRef;
+  }
+
+  public String getBigPic1Ref() {
+    return bigPic1Ref;
+  }
+
+  public void setBigPic1Ref(String bigPic1Ref) {
+    this.bigPic1Ref = bigPic1Ref;
+  }
+
+  public String getBigPic2Ref() {
+    return bigPic2Ref;
+  }
+
+  public void setBigPic2Ref(String bigPic2Ref) {
+    this.bigPic2Ref = bigPic2Ref;
+  }
+
+  public String getBigPic3Ref() {
+    return bigPic3Ref;
+  }
+
+  public void setBigPic3Ref(String bigPic3Ref) {
+    this.bigPic3Ref = bigPic3Ref;
+  }
+
+  public String getBigPic4Ref() {
+    return bigPic4Ref;
+  }
+
+  public void setBigPic4Ref(String bigPic4Ref) {
+    this.bigPic4Ref = bigPic4Ref;
+  }
+
+  public String getStoryPicRef() {
+    return storyPicRef;
+  }
+
+  public void setStoryPicRef(String storyPicRef) {
+    this.storyPicRef = storyPicRef;
   }
 
   @Override

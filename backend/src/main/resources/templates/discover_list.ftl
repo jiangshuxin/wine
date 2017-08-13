@@ -6,7 +6,7 @@
         <tr>
             <th>编号</th>
             <th>酒庄编号</th>
-            <th>图片路径</th>
+            <th>图片上传编号</th>
             <th>标题</th>
             <th>标签</th>
             <th>类型</th>
@@ -18,7 +18,7 @@
         <tr>
             <th>编号</th>
             <th>酒庄编号</th>
-            <th>图片路径</th>
+            <th>图片上传编号</th>
             <th>标题</th>
             <th>标签</th>
             <th>类型</th>
@@ -47,8 +47,8 @@
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
                 },
-                clearText: "Clear",
-                noImageText: 'No image'
+                clearText: "清除",
+                noImageText: '请选择图片'
             }, {
                 label: "标题:",
                 name: "title"

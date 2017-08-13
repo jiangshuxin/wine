@@ -39,8 +39,8 @@
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
                 },
-                clearText: "Clear",
-                noImageText: 'No image'
+                clearText: "清除",
+                noImageText: '请选择图片'
             }, {
                 label: "排序号:",
                 name: "sortValue"

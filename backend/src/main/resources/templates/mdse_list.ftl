@@ -12,6 +12,12 @@
             <th>价格</th>
             <th>分类</th>
             <th>状态</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
         </tr>
         </thead>
 
@@ -25,6 +31,12 @@
             <th>价格</th>
             <th>分类</th>
             <th>状态</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
         </tr>
         </tfoot>
     </table>
@@ -92,40 +104,64 @@
                 name: "productArea"
             },{
                 label: "小图，用于列表和购物车展示:",
-                name: "smallPic",
+                name: "smallPicRef",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
                 },
-                clearText: "Clear",
-                noImageText: 'No image'
+                clearText: "清除",
+                noImageText: '请选择图片'
             },{
                 label: "大图1:",
-                name: "bigPic1",
+                name: "bigPic1Ref",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
                 },
-                clearText: "Clear",
-                noImageText: 'No image'
+                clearText: "清除",
+                noImageText: '请选择图片'
             },{
                 label: "大图2:",
-                name: "bigPic2"
+                name: "bigPic2Ref",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
             },{
                 label: "大图3:",
-                name: "bigPic3"
+                name: "bigPic3Ref",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
             },{
                 label: "大图4:",
-                name: "bigPic4"
+                name: "bigPic4Ref",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
             },{
                 label: "品鉴与酒庄故事:",
-                name: "storyPic"
+                name: "storyPicRef",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
             }, {
                 label: "推荐理由:",
                 name: "reason"
             }
             ],{
-
+                ajax:"${rc.contextPath}/api/upload/mdse"
             });
 
             table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[
@@ -140,7 +176,13 @@
                     }
                 }},
                 { data: "catagory"},
-                { data: "status"}
+                { data: "status"},
+                { data: "smallPicRef"},
+                { data: "bigPic1Ref"},
+                { data: "bigPic2Ref"},
+                { data: "bigPic3Ref"},
+                { data: "bigPic4Ref"},
+                { data: "storyPicRef"}
             ],[
                 { extend: "create", editor: editor },
                 { extend: "edit",   editor: editor },
