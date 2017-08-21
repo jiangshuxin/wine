@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<script type="text/javascript" language="javascript" src="${rc.contextPath}/js/echarts.min.js">
+<script type="text/javascript" language="javascript" src="${rc.contextPath}/js/echarts/echarts.min.js">
 </script>
 
 <script>

@@ -45,6 +45,11 @@ public class ForwardAction {
         return "userTree";
     }
 
+    @RequestMapping("/orderMap")
+    public String orderMap(ModelMap modelMap, HttpServletRequest request, HttpSession session){
+        return "orderMap";
+    }
+
     @RequestMapping("/menuRedirect/{menuKey}")
     public String menuRedirect(ModelMap modelMap, HttpServletRequest request, HttpSession session,@RequestParam(value="redirect") String redirect,@PathVariable(value="menuKey") String menuKey){
         Menu targetMenu = menuService.queryMenuByKey(menuKey,request.getContextPath());
