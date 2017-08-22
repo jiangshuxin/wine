@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="shortcut icon" type="image/ico" href="http://www.datatables.net/favicon.ico">
+    <link rel="shortcut icon" type="image/ico" href="${rc.contextPath}/wine.ico">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">
     <title>
         <#if signinUser??>

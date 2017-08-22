@@ -26,6 +26,7 @@
 			<mvc:exclude-mapping path="/**/*.css"/>
 			<mvc:exclude-mapping path="/**/*.gif"/>
 			<mvc:exclude-mapping path="/**/*.png"/>
+			<mvc:exclude-mapping path="/**/*.ico"/>
 			<bean class="com.wuxian99.finance.basedata.web.spring.SigninCheckInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
