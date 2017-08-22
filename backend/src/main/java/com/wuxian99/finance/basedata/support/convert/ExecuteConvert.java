@@ -15,6 +15,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.commons.beanutils.converters.SqlTimestampConverter;
 import org.apache.commons.lang3.ClassUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Example;
@@ -110,6 +111,7 @@ public class ExecuteConvert {
 						List<Integer> ids = new ArrayList<>();
 						for(String key : uploadRefMap.keySet()){
 							String property = BeanUtils.getProperty(entity, key);
+							if(!NumberUtils.isNumber(property)) continue;
 							ids.add(Integer.parseInt(property));
 						}
 						Map<String,UploadFileInfo> uploadFileInfoMap = uploadFileService.findByIds(ids);
@@ -118,6 +120,7 @@ public class ExecuteConvert {
 							if(PropertyUtils.isWriteable(entity,uploadRef.ref())){
 								String property = BeanUtils.getProperty(entity, key);
 								UploadFileInfo uploadFileInfo = uploadFileInfoMap.get(property);
+								if(uploadFileInfo == null)continue;
 								PropertyUtils.setProperty(entity,uploadRef.ref(),uploadFileInfo.getRelative_path());
 							}
 						}

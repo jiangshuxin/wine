@@ -191,7 +191,7 @@
             {
 
             },columnDefs: [
-                { "visible": false, "targets": [6,7] }
+                { "visible": false, "targets": [6,7,8,9,10,11,12,13] }
             ]
                 , order: [[ 0, 'desc' ]]}) );
 
