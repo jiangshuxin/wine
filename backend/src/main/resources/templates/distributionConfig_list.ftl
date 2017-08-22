@@ -26,11 +26,14 @@
     </table>
     <script type="text/javascript" language="javascript" class="init">
         var editor;
+        var merchantData = Select.init('/backend/merchant/queryAll');
 
         $(document).ready(function() {
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "酒庄编号:",
                 name: "merchantId",
+                type:  "select",
+                options:merchantData
             }, {
                 label: "商品编号，可不填，代表该酒庄的默认配置:",
                 name: "mdseId"
@@ -68,6 +71,32 @@
             }}) );
 
             DataTable.enableColumnSearch(table);
+
+            editor.on( 'preSubmit', function ( e, json, action ) {
+                var data = json.data;
+                for(var k in data){
+                    if(!data[k].merchantId){
+                        alert('请选择酒庄');
+                        return false;
+                    }
+                    if(!data[k].mdseId || isNaN(data[k].mdseId)){
+                        alert('商品编号必须是数字');
+                        return false;
+                    }
+                    if(!data[k].rebate1 || isNaN(data[k].rebate1)){
+                        alert('一级返佣比例必须是数字');
+                        return false;
+                    }
+                    if(!data[k].rebate2 || isNaN(data[k].rebate2)){
+                        alert('二级返佣比例必须是数字');
+                        return false;
+                    }
+                    if(!data[k].rebate3 || isNaN(data[k].rebate3)){
+                        alert('三级返佣比例必须是数字');
+                        return false;
+                    }
+                }
+            } );
         } );
 
 
