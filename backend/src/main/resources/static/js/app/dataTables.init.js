@@ -195,16 +195,15 @@ var DataTable = {
                 }
                 selectHtml.push('</select>');
                 $that.html(selectHtml.join('\n'));
-                DataTable._bindSearchEvent(table);
 
             }else{//text & date
                 var title = $(this).text();
                 $(this).html( '<input type="'+searchType+'" placeholder="搜索 '+title+'" />' );
 
-                DataTable._bindSearchEvent(table);
             }
 
         } );
+        DataTable._bindSearchEvent(table);
 
         $('tfoot').css('display', 'table-header-group');
     },
@@ -222,7 +221,7 @@ var DataTable = {
                     that.search( this.value ).draw();
                 }
             } );
-            $( 'select', this.footer() ).on( 'change', function (e) {
+            $( 'select.selectpicker', this.footer() ).on( 'change', function (e) {
                 that.search( this.value ).draw();
             } );
         } );
