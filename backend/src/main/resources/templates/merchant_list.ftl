@@ -29,7 +29,7 @@
 
         $(document).ready(function() {
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
-                label: "酒庄编号:",
+                label: "酒庄编号(建议M+4位数字):",
                 name: "merchantId",
             }, {
                 label: "后台登录密码:",
@@ -98,6 +98,19 @@
             }}) );
 
             DataTable.enableColumnSearch(table);
+
+            editor.on( 'open', function ( e, json, eventType ) {
+                if(eventType == 'edit'){
+                    DataTable.Editor.readonly('merchantId');
+                }
+            } );
+
+            editor.on( 'preSubmit', function ( e, json, eventType ) {
+                if(!editor.val('merchantId')){
+                    alert('编号不能为空');
+                    return false;
+                }
+            } );
         } );
 
 
