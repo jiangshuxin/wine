@@ -51,6 +51,7 @@
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "编号:",
                 name: "id",
+                type: "readonly"
             }, {
                 label: "酒庄编号:",
                 name: "merchantId",

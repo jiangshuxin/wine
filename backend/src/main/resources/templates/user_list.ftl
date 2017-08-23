@@ -41,12 +41,15 @@
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "编号:",
                 name: "id",
+                type: "readonly"
             }, {
                 label: "推荐人编号:",
-                name: "parentId"
+                name: "parentId",
+                type: "readonly"
             }, {
                 label: "用户名(手机号):",
-                name: "userName"
+                name: "userName",
+                type: "readonly"
             }, {
                 label: "状态:",
                 name: "status",
