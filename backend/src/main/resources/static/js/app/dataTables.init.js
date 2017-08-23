@@ -142,7 +142,7 @@ var DataTable = {
                     for(var k in orderArr){
                         if(!isNaN(orderArr[k].column)){
                             var fieldObj = columnArray[orderArr[k].column];
-                            if(fieldObj.ddic && fieldObj.ddicRef){
+                            if(fieldObj.ddic && fieldObj.ddicRef){//字段转换后的字段不能排序，需转到原字段
                                 orderArr[k].column = fieldObj.ddicRef;
                             }else{
                                 orderArr[k].column = fieldObj.data;
