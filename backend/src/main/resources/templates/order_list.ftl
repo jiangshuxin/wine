@@ -4,7 +4,7 @@
     <table id="dataTable" class="display" cellspacing="0" width="100%">
         <thead>
         <tr>
-            <th>编号</th>
+            <th>订单号</th>
             <th>订单时间</th>
             <th>用户ID</th>
             <th>酒庄编号</th>
@@ -19,7 +19,7 @@
 
         <tfoot>
         <tr>
-            <th>编号</th>
+            <th>订单号</th>
             <th>订单时间</th>
             <th>用户ID</th>
             <th>酒庄编号</th>
@@ -38,26 +38,33 @@
 
         $(document).ready(function() {
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
-                label: "编号:",
+                label: "订单号:",
                 name: "id",
+                type: "readonly"
             }, {
                 label: "订单时间:",
-                name: "time"
+                name: "time",
+                type: "readonly"
             }, {
                 label: "买家用户ID:",
-                name: "userId"
+                name: "userId",
+                type: "readonly"
             }, {
                 label: "酒庄编号:",
-                name: "merchantId"
+                name: "merchantId",
+                type: "readonly"
             }, {
                 label: "订单金额:",
-                name: "amount"
+                name: "amount",
+                type: "readonly"
             }, {
                 label: "商品数量:",
-                name: "mdseCount"
+                name: "mdseCount",
+                type: "readonly"
             }, {
                 label: "支付金额:",
-                name: "payAmount"
+                name: "payAmount",
+                type: "readonly"
             },{
                 label: "订单状态:",
                 name: "status",
@@ -65,16 +72,20 @@
                 options:orderStatusDdic
             },{
                 label: "支付时间:",
-                name: "payTime"
+                name: "payTime",
+                type: "readonly"
             },{
                 label: "支付流水号:",
-                name: "paySeqs"
+                name: "paySeqs",
+                type: "readonly"
             },{
                 label: "支付二维码图片:",
-                name: "payPic"
+                name: "payPic",
+                type: "readonly"
             },{
                 label: "买家备注:",
-                name: "comment"
+                name: "comment",
+                type: "readonly"
             },{
                 label: "快递公司名称:",
                 name: "logisticsCompany"
@@ -83,19 +94,24 @@
                 name: "logisticsSeqs"
             },{
                 label: "发票信息:",
-                name: "invoiceInfo"
+                name: "invoiceInfo",
+                type: "readonly"
             },{
                 label: "收货人:",
-                name: "receiver"
+                name: "receiver",
+                type: "readonly"
             },{
                 label: "收货人电话:",
-                name: "phone"
+                name: "phone",
+                type: "readonly"
             },{
                 label: "省市区:",
-                name: "province"
+                name: "province",
+                type: "readonly"
             }, {
                 label: "详细地址:",
-                name: "address"
+                name: "address",
+                type: "readonly"
             }
             ],{
 

@@ -90,7 +90,7 @@ public class ServiceImpl implements IService {
                     for(String key : uploadRefMap.keySet()){
                         try {
                             Object property = PropertyUtils.getProperty(element, key);
-                            if(property != null){
+                            if(property != null && !"".equals(property.toString())){
                                 ids.add(Integer.parseInt(property.toString()));
                             }
                         } catch (Exception e) {

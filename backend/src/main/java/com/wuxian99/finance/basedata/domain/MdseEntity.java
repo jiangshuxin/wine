@@ -25,6 +25,18 @@ public class MdseEntity implements Serializable {
   private String merchantId;
 
   /**
+   * 酒庄名称
+   */
+  @Column(name = "merchantname")
+  private String merchantName;
+
+  /**
+   * 产区
+   */
+  @Column(name = "productarea")
+  private String productArea;
+
+  /**
    * 中文名称
    */
   private String name;
@@ -71,7 +83,7 @@ public class MdseEntity implements Serializable {
   private String grapeType;
 
   /**
-   * 年份
+   * 生产年份
    */
   private String year;
 
@@ -98,18 +110,6 @@ public class MdseEntity implements Serializable {
   private String wineMaker;
 
   /**
-   * 酒庄名称
-   */
-  @Column(name = "merchantname")
-  private String merchantName;
-
-  /**
-   * 产区
-   */
-  @Column(name = "productarea")
-  private String productArea;
-
-  /**
    * 小图路径，用于列表和购物车展示
    */
   @Column(name = "smallpic")
@@ -120,7 +120,7 @@ public class MdseEntity implements Serializable {
   private String smallPicRef;
 
   /**
-   * 大图路径，用于商品详情页展示
+   * 大图1路径，用于商品详情页展示
    */
   @Column(name = "bigpic1")
   private String bigPic1;
@@ -130,7 +130,7 @@ public class MdseEntity implements Serializable {
   private String bigPic1Ref;
 
   /**
-   * 大图路径，用于商品详情页展示
+   * 大图2路径，用于商品详情页展示
    */
   @Column(name = "bigpic2")
   private String bigPic2;
@@ -140,7 +140,7 @@ public class MdseEntity implements Serializable {
   private String bigPic2Ref;
 
   /**
-   * 大图路径，用于商品详情页展示
+   * 大图3路径，用于商品详情页展示
    */
   @Column(name = "bigpic3")
   private String bigPic3;
@@ -150,7 +150,7 @@ public class MdseEntity implements Serializable {
   private String bigPic3Ref;
 
   /**
-   * 大图路径，用于商品详情页展示
+   * 大图4路径，用于商品详情页展示
    */
   @Column(name = "bigpic4")
   private String bigPic4;
@@ -162,16 +162,19 @@ public class MdseEntity implements Serializable {
   /**
    * 推荐理由
    */
+  @Deprecated
   private String reason;
 
   /**
-   * 品鉴与酒庄故事，长图
+   * 品鉴与酒庄故事，长图，
    */
   @Column(name = "storypic")
+  @Deprecated
   private String storyPic;
 
   @Column(name = "storypic_ref")
   @UploadRef(ref = "storyPic")
+  @Deprecated
   private String storyPicRef;
 
   public Long getId() {
