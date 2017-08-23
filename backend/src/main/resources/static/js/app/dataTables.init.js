@@ -141,7 +141,12 @@ var DataTable = {
                     var orderArr = d.order;
                     for(var k in orderArr){
                         if(!isNaN(orderArr[k].column)){
-                            orderArr[k].column = columnArray[orderArr[k].column].data;
+                            var fieldObj = columnArray[orderArr[k].column];
+                            if(fieldObj.ddic && fieldObj.ddicRef){
+                                orderArr[k].column = fieldObj.ddicRef;
+                            }else{
+                                orderArr[k].column = fieldObj.data;
+                            }
                         }
                     }
                     //将searchValue初始化到请求参数中
