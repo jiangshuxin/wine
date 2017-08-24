@@ -162,13 +162,13 @@ public class MdseEntity implements Serializable {
 
   //=======================================废弃的属性Start==========================================
   /**
-   * 推荐理由（酒评）
+   * 推荐理由
    */
   @Deprecated
   private String reason;
 
   /**
-   * 照片简介（酒庄或葡萄园照片）
+   * 故事和品鉴
    */
   @Column(name = "storypic")
   @Deprecated

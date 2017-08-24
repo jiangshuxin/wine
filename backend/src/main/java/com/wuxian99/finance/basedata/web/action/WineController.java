@@ -220,13 +220,65 @@ public class WineController {
             view.setWineMaker(mdse.getWineMaker());
             view.setMerchantName(mdse.getMerchantName());
             view.setProductArea(mdse.getProductArea());
-            view.setReason(mdse.getReason());
             view.setSmallPic(picPath + mdse.getSmallPic());
-            view.setBigPic1(picPath + mdse.getBigPic1());
-            view.setBigPic2(picPath + mdse.getBigPic2());
-            view.setBigPic3(picPath + mdse.getBigPic3());
-            view.setBigPic4(picPath + mdse.getBigPic4());
-            view.setStoryPic(picPath + mdse.getStoryPic());
+
+            List<String> bigPics = new ArrayList<>();
+            if(StringUtils.isNotBlank(mdse.getBigPic1())){
+                bigPics.add(picPath + mdse.getBigPic1());
+            }
+            if(StringUtils.isNotBlank(mdse.getBigPic2())){
+                bigPics.add(picPath + mdse.getBigPic2());
+            }
+            if(StringUtils.isNotBlank(mdse.getBigPic3())){
+                bigPics.add(picPath + mdse.getBigPic3());
+            }
+            if(StringUtils.isNotBlank(mdse.getBigPic4())){
+                bigPics.add(picPath + mdse.getBigPic4());
+            }
+            view.setBigPics(bigPics.toArray(new String[0]));
+
+            view.setTechnology(mdse.getTechnology());
+            view.setBarrel(mdse.getBarrel());
+            view.setFillingTime(mdse.getFillingTime());
+            view.setExpiryDate(mdse.getExpiryDate());
+            view.setDrinkTemperature(mdse.getDrinkTemperature());
+            view.setSoberTime(mdse.getSoberTime());
+            view.setCollocation(mdse.getCollocation());
+            view.setYield(mdse.getYield());
+            view.setInventory(mdse.getInventory());
+
+            List<String> prizePics = new ArrayList<>();
+            if(StringUtils.isNotBlank(mdse.getPrizePic1())){
+                prizePics.add(picPath + mdse.getPrizePic1());
+            }
+            if(StringUtils.isNotBlank(mdse.getPrizePic2())){
+                prizePics.add(picPath + mdse.getPrizePic2());
+            }
+            if(StringUtils.isNotBlank(mdse.getPrizePic3())){
+                prizePics.add(picPath + mdse.getPrizePic3());
+            }
+            if(StringUtils.isNotBlank(mdse.getPrizePic4())){
+                prizePics.add(picPath + mdse.getPrizePic4());
+            }
+            view.setPrizePics(prizePics.toArray(new String[0]));
+
+
+            List<String> inspectionReportPics = new ArrayList<>();
+            if(StringUtils.isNotBlank(mdse.getInspectionReportPic1())){
+                inspectionReportPics.add(picPath + mdse.getInspectionReportPic1());
+            }
+            if(StringUtils.isNotBlank(mdse.getInspectionReportPic2())){
+                inspectionReportPics.add(picPath + mdse.getInspectionReportPic2());
+            }
+            if(StringUtils.isNotBlank(mdse.getInspectionReportPic3())){
+                inspectionReportPics.add(picPath + mdse.getInspectionReportPic3());
+            }
+            if(StringUtils.isNotBlank(mdse.getInspectionReportPic4())){
+                inspectionReportPics.add(picPath + mdse.getInspectionReportPic4());
+            }
+            view.setInspectionReportPics(inspectionReportPics.toArray(new String[0]));
+
+
             logger.info("getMdseDetail response: {}", view);
             return Result.buildSuccess(view);
         }

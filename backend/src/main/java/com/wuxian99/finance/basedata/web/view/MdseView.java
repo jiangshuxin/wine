@@ -25,12 +25,18 @@ public class MdseView implements Serializable {
   private String merchantName;
   private String productArea;
   private String smallPic;
-  private String bigPic1;
-  private String bigPic2;
-  private String bigPic3;
-  private String bigPic4;
-  private String reason;
-  private String storyPic;
+  private String[] bigPics;
+  private String technology;
+  private String barrel;
+  private String fillingTime;
+  private String expiryDate;
+  private String drinkTemperature;
+  private String soberTime;
+  private String collocation;
+  private String yield;
+  private String inventory;
+  private String[] prizePics;
+  private String[] inspectionReportPics;
 
   public Long getMdseId() {
     return mdseId;
@@ -160,52 +166,100 @@ public class MdseView implements Serializable {
     this.smallPic = smallPic;
   }
 
-  public String getBigPic1() {
-    return bigPic1;
+  public String[] getBigPics() {
+    return bigPics;
   }
 
-  public void setBigPic1(String bigPic1) {
-    this.bigPic1 = bigPic1;
+  public void setBigPics(String[] bigPics) {
+    this.bigPics = bigPics;
   }
 
-  public String getBigPic2() {
-    return bigPic2;
+  public String getTechnology() {
+    return technology;
   }
 
-  public void setBigPic2(String bigPic2) {
-    this.bigPic2 = bigPic2;
+  public void setTechnology(String technology) {
+    this.technology = technology;
   }
 
-  public String getBigPic3() {
-    return bigPic3;
+  public String getBarrel() {
+    return barrel;
   }
 
-  public void setBigPic3(String bigPic3) {
-    this.bigPic3 = bigPic3;
+  public void setBarrel(String barrel) {
+    this.barrel = barrel;
   }
 
-  public String getBigPic4() {
-    return bigPic4;
+  public String getFillingTime() {
+    return fillingTime;
   }
 
-  public void setBigPic4(String bigPic4) {
-    this.bigPic4 = bigPic4;
+  public void setFillingTime(String fillingTime) {
+    this.fillingTime = fillingTime;
   }
 
-  public String getReason() {
-    return reason;
+  public String getExpiryDate() {
+    return expiryDate;
   }
 
-  public void setReason(String reason) {
-    this.reason = reason;
+  public void setExpiryDate(String expiryDate) {
+    this.expiryDate = expiryDate;
   }
 
-  public String getStoryPic() {
-    return storyPic;
+  public String getDrinkTemperature() {
+    return drinkTemperature;
   }
 
-  public void setStoryPic(String storyPic) {
-    this.storyPic = storyPic;
+  public void setDrinkTemperature(String drinkTemperature) {
+    this.drinkTemperature = drinkTemperature;
+  }
+
+  public String getSoberTime() {
+    return soberTime;
+  }
+
+  public void setSoberTime(String soberTime) {
+    this.soberTime = soberTime;
+  }
+
+  public String getCollocation() {
+    return collocation;
+  }
+
+  public void setCollocation(String collocation) {
+    this.collocation = collocation;
+  }
+
+  public String getYield() {
+    return yield;
+  }
+
+  public void setYield(String yield) {
+    this.yield = yield;
+  }
+
+  public String getInventory() {
+    return inventory;
+  }
+
+  public void setInventory(String inventory) {
+    this.inventory = inventory;
+  }
+
+  public String[] getPrizePics() {
+    return prizePics;
+  }
+
+  public void setPrizePics(String[] prizePics) {
+    this.prizePics = prizePics;
+  }
+
+  public String[] getInspectionReportPics() {
+    return inspectionReportPics;
+  }
+
+  public void setInspectionReportPics(String[] inspectionReportPics) {
+    this.inspectionReportPics = inspectionReportPics;
   }
 
   @Override
