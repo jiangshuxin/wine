@@ -37,6 +37,13 @@
             <th>图片上传编号</th>
             <th>图片上传编号</th>
             <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
+            <th>图片上传编号</th>
         </tr>
         </tfoot>
     </table>
@@ -103,6 +110,33 @@
             },{
                 label: "产区:",
                 name: "productArea"
+            }, {
+                label: "酿造工艺:",
+                name: "technology"
+            }, {
+                label: "橡木桶:",
+                name: "barrel"
+            }, {
+                label: "罐装时间:",
+                name: "fillingTime"
+            }, {
+                label: "保质期:",
+                name: "expiryDate"
+            }, {
+                label: "适饮温度:",
+                name: "drinkTemperature"
+            }, {
+                label: "醒酒时间:",
+                name: "soberTime"
+            }, {
+                label: "搭配推荐:",
+                name: "collocation"
+            }, {
+                label: "产量:",
+                name: "yield"
+            }, {
+                label: "库存量:",
+                name: "inventory"
             },{
                 label: "小图，用于列表和购物车展示:",
                 name: "smallPicRef",
@@ -149,17 +183,77 @@
                 clearText: "清除",
                 noImageText: '请选择图片'
             },{
-                label: "品鉴与酒庄故事:",
-                name: "storyPicRef",
+                label: "得奖照片1:",
+                name: "prizePic1",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
                 },
                 clearText: "清除",
                 noImageText: '请选择图片'
-            }, {
-                label: "推荐理由:",
-                name: "reason"
+            },{
+                label: "得奖照片2:",
+                name: "prizePic2",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
+            },{
+                label: "得奖照片3:",
+                name: "prizePic3",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
+            },{
+                label: "得奖照片4:",
+                name: "prizePic4",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
+            },{
+                label: "检验报告1:",
+                name: "inspectionReportPic1",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
+            },{
+                label: "检验报告2:",
+                name: "inspectionReportPic2",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
+            },{
+                label: "检验报告3:",
+                name: "inspectionReportPic3",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
+            },{
+                label: "检验报告4:",
+                name: "inspectionReportPic4",
+                type: "upload",
+                display: function ( file_id ) {
+                    return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
+                },
+                clearText: "清除",
+                noImageText: '请选择图片'
             }
             ],{
                 ajax:"${rc.contextPath}/api/upload/mdse"
@@ -183,7 +277,14 @@
                 { data: "bigPic2Ref"},
                 { data: "bigPic3Ref"},
                 { data: "bigPic4Ref"},
-                { data: "storyPicRef"}
+                { data: "prizePic1"},
+                { data: "prizePic2"},
+                { data: "prizePic3"},
+                { data: "prizePic4"},
+                { data: "inspectionReportPic1"},
+                { data: "inspectionReportPic2"},
+                { data: "inspectionReportPic3"},
+                { data: "inspectionReportPic4"}
             ],[
                 { extend: "create", editor: editor },
                 { extend: "edit",   editor: editor },
@@ -192,7 +293,7 @@
             {
 
             },columnDefs: [
-                { "visible": false, "targets": [6,7,8,9,10,11,12,13] }
+                { "visible": false, "targets": [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20] }
             ]
                 , order: [[ 0, 'desc' ]]}) );
 
