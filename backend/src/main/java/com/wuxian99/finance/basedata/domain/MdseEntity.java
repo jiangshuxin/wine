@@ -104,13 +104,13 @@ public class MdseEntity implements Serializable {
   private String treeAge;
 
   /**
-   * 酿酒师
+   * 酿酒师介绍
    */
   @Column(name = "winemaker")
   private String wineMaker;
 
   /**
-   * 小图路径，用于列表和购物车展示
+   * 商品小图，用于列表和购物车展示
    */
   @Column(name = "smallpic")
   private String smallPic;
@@ -120,7 +120,7 @@ public class MdseEntity implements Serializable {
   private String smallPicRef;
 
   /**
-   * 大图1路径，用于商品详情页展示
+   * 商品大图1，用于商品详情页展示
    */
   @Column(name = "bigpic1")
   private String bigPic1;
@@ -130,7 +130,7 @@ public class MdseEntity implements Serializable {
   private String bigPic1Ref;
 
   /**
-   * 大图2路径，用于商品详情页展示
+   * 商品大图2，用于商品详情页展示
    */
   @Column(name = "bigpic2")
   private String bigPic2;
@@ -140,7 +140,7 @@ public class MdseEntity implements Serializable {
   private String bigPic2Ref;
 
   /**
-   * 大图3路径，用于商品详情页展示
+   * 商品大图3，用于商品详情页展示
    */
   @Column(name = "bigpic3")
   private String bigPic3;
@@ -150,7 +150,7 @@ public class MdseEntity implements Serializable {
   private String bigPic3Ref;
 
   /**
-   * 大图4路径，用于商品详情页展示
+   * 商品大图4，用于商品详情页展示
    */
   @Column(name = "bigpic4")
   private String bigPic4;
@@ -159,14 +159,16 @@ public class MdseEntity implements Serializable {
   @UploadRef(ref = "bigPic4")
   private String bigPic4Ref;
 
+
+  //=======================================废弃的属性Start==========================================
   /**
-   * 推荐理由
+   * 推荐理由（酒评）
    */
   @Deprecated
   private String reason;
 
   /**
-   * 品鉴与酒庄故事，长图，
+   * 照片简介（酒庄或葡萄园照片）
    */
   @Column(name = "storypic")
   @Deprecated
@@ -176,6 +178,142 @@ public class MdseEntity implements Serializable {
   @UploadRef(ref = "storyPic")
   @Deprecated
   private String storyPicRef;
+  //=======================================废弃的属性End==========================================
+
+
+
+  //=======================================新增的属性Start==========================================
+  /**
+   * 酿造工艺
+   */
+  private String technology;
+
+  /**
+   * 橡木桶
+   */
+  private String barrel;
+
+  /**
+   * 罐装时间
+   */
+  @Column(name = "fillingtime")
+  private String fillingTime;
+
+  /**
+   * 保质期
+   */
+  @Column(name = "expirydate")
+  private String expiryDate;
+
+  /**
+   * 适饮温度
+   */
+  @Column(name = "drinktemperature")
+  private String drinkTemperature;
+
+  /**
+   * 醒酒时间
+   */
+  @Column(name = "sobertime")
+  private String soberTime;
+
+  /**
+   * 搭配推荐
+   */
+  @Column(name = "collocation")
+  private String collocation;
+
+  /**
+   * 产量
+   */
+  private String yield;
+
+  /**
+   * 库存量
+   */
+  private String inventory;
+
+  /**
+   * 得奖照片1
+   */
+  @Column(name = "prizepic1")
+  private String prizePic1;
+
+  @Column(name = "prizepic1_ref")
+  @UploadRef(ref = "prizePic1")
+  private String prizePic1Ref;
+
+  /**
+   * 得奖照片2
+   */
+  @Column(name = "prizepic2")
+  private String prizePic2;
+
+  @Column(name = "prizepic2_ref")
+  @UploadRef(ref = "prizePic2")
+  private String prizePic2Ref;
+
+  /**
+   * 得奖照片3
+   */
+  @Column(name = "prizepic3")
+  private String prizePic3;
+
+  @Column(name = "prizepic3_ref")
+  @UploadRef(ref = "prizePic3")
+  private String prizePic3Ref;
+
+  /**
+   * 得奖照片4
+   */
+  @Column(name = "prizepic4")
+  private String prizePic4;
+
+  @Column(name = "prizepic4_ref")
+  @UploadRef(ref = "prizePic4")
+  private String prizePic4Ref;
+
+  /**
+   * 检验报告1
+   */
+  @Column(name = "inspectionreportpic1")
+  private String inspectionReportPic1;
+
+  @Column(name = "inspectionreportpic1_ref")
+  @UploadRef(ref = "inspectionReportPic1")
+  private String inspectionReportPic1Ref;
+
+  /**
+   * 检验报告2
+   */
+  @Column(name = "inspectionreportpic2")
+  private String inspectionReportPic2;
+
+  @Column(name = "inspectionreportpic2_ref")
+  @UploadRef(ref = "inspectionReportPic2")
+  private String inspectionReportPic2Ref;
+
+  /**
+   * 检验报告3
+   */
+  @Column(name = "inspectionreportpic3")
+  private String inspectionReportPic3;
+
+  @Column(name = "inspectionreportpic3_ref")
+  @UploadRef(ref = "inspectionReportPic3")
+  private String inspectionReportPic3Ref;
+
+  /**
+   * 检验报告4
+   */
+  @Column(name = "inspectionreportpic4")
+  private String inspectionReportPic4;
+
+  @Column(name = "inspectionreportpic4_ref")
+  @UploadRef(ref = "inspectionReportPic4")
+  private String inspectionReportPic4Ref;
+  //=======================================新增的属性End==========================================
+
 
   public Long getId() {
     return id;
@@ -423,6 +561,206 @@ public class MdseEntity implements Serializable {
 
   public void setStoryPicRef(String storyPicRef) {
     this.storyPicRef = storyPicRef;
+  }
+
+  public String getTechnology() {
+    return technology;
+  }
+
+  public void setTechnology(String technology) {
+    this.technology = technology;
+  }
+
+  public String getBarrel() {
+    return barrel;
+  }
+
+  public void setBarrel(String barrel) {
+    this.barrel = barrel;
+  }
+
+  public String getFillingTime() {
+    return fillingTime;
+  }
+
+  public void setFillingTime(String fillingTime) {
+    this.fillingTime = fillingTime;
+  }
+
+  public String getExpiryDate() {
+    return expiryDate;
+  }
+
+  public void setExpiryDate(String expiryDate) {
+    this.expiryDate = expiryDate;
+  }
+
+  public String getDrinkTemperature() {
+    return drinkTemperature;
+  }
+
+  public void setDrinkTemperature(String drinkTemperature) {
+    this.drinkTemperature = drinkTemperature;
+  }
+
+  public String getSoberTime() {
+    return soberTime;
+  }
+
+  public void setSoberTime(String soberTime) {
+    this.soberTime = soberTime;
+  }
+
+  public String getCollocation() {
+    return collocation;
+  }
+
+  public void setCollocation(String collocation) {
+    this.collocation = collocation;
+  }
+
+  public String getYield() {
+    return yield;
+  }
+
+  public void setYield(String yield) {
+    this.yield = yield;
+  }
+
+  public String getInventory() {
+    return inventory;
+  }
+
+  public void setInventory(String inventory) {
+    this.inventory = inventory;
+  }
+
+  public String getPrizePic1() {
+    return prizePic1;
+  }
+
+  public void setPrizePic1(String prizePic1) {
+    this.prizePic1 = prizePic1;
+  }
+
+  public String getPrizePic1Ref() {
+    return prizePic1Ref;
+  }
+
+  public void setPrizePic1Ref(String prizePic1Ref) {
+    this.prizePic1Ref = prizePic1Ref;
+  }
+
+  public String getPrizePic2() {
+    return prizePic2;
+  }
+
+  public void setPrizePic2(String prizePic2) {
+    this.prizePic2 = prizePic2;
+  }
+
+  public String getPrizePic2Ref() {
+    return prizePic2Ref;
+  }
+
+  public void setPrizePic2Ref(String prizePic2Ref) {
+    this.prizePic2Ref = prizePic2Ref;
+  }
+
+  public String getPrizePic3() {
+    return prizePic3;
+  }
+
+  public void setPrizePic3(String prizePic3) {
+    this.prizePic3 = prizePic3;
+  }
+
+  public String getPrizePic3Ref() {
+    return prizePic3Ref;
+  }
+
+  public void setPrizePic3Ref(String prizePic3Ref) {
+    this.prizePic3Ref = prizePic3Ref;
+  }
+
+  public String getPrizePic4() {
+    return prizePic4;
+  }
+
+  public void setPrizePic4(String prizePic4) {
+    this.prizePic4 = prizePic4;
+  }
+
+  public String getPrizePic4Ref() {
+    return prizePic4Ref;
+  }
+
+  public void setPrizePic4Ref(String prizePic4Ref) {
+    this.prizePic4Ref = prizePic4Ref;
+  }
+
+  public String getInspectionReportPic1() {
+    return inspectionReportPic1;
+  }
+
+  public void setInspectionReportPic1(String inspectionReportPic1) {
+    this.inspectionReportPic1 = inspectionReportPic1;
+  }
+
+  public String getInspectionReportPic1Ref() {
+    return inspectionReportPic1Ref;
+  }
+
+  public void setInspectionReportPic1Ref(String inspectionReportPic1Ref) {
+    this.inspectionReportPic1Ref = inspectionReportPic1Ref;
+  }
+
+  public String getInspectionReportPic2() {
+    return inspectionReportPic2;
+  }
+
+  public void setInspectionReportPic2(String inspectionReportPic2) {
+    this.inspectionReportPic2 = inspectionReportPic2;
+  }
+
+  public String getInspectionReportPic2Ref() {
+    return inspectionReportPic2Ref;
+  }
+
+  public void setInspectionReportPic2Ref(String inspectionReportPic2Ref) {
+    this.inspectionReportPic2Ref = inspectionReportPic2Ref;
+  }
+
+  public String getInspectionReportPic3() {
+    return inspectionReportPic3;
+  }
+
+  public void setInspectionReportPic3(String inspectionReportPic3) {
+    this.inspectionReportPic3 = inspectionReportPic3;
+  }
+
+  public String getInspectionReportPic3Ref() {
+    return inspectionReportPic3Ref;
+  }
+
+  public void setInspectionReportPic3Ref(String inspectionReportPic3Ref) {
+    this.inspectionReportPic3Ref = inspectionReportPic3Ref;
+  }
+
+  public String getInspectionReportPic4() {
+    return inspectionReportPic4;
+  }
+
+  public void setInspectionReportPic4(String inspectionReportPic4) {
+    this.inspectionReportPic4 = inspectionReportPic4;
+  }
+
+  public String getInspectionReportPic4Ref() {
+    return inspectionReportPic4Ref;
+  }
+
+  public void setInspectionReportPic4Ref(String inspectionReportPic4Ref) {
+    this.inspectionReportPic4Ref = inspectionReportPic4Ref;
   }
 
   @Override
