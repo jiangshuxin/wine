@@ -21,6 +21,7 @@ public class MerchantView implements Serializable {
   private String description;
   private String soilAndClimate;
   private String tourismLink;
+  private String[] chateauPics;
   private String[] landPics;
   private String[] certPics;
   private String[] prizePics;
@@ -159,5 +160,13 @@ public class MerchantView implements Serializable {
 
   public void setPrizePics(String[] prizePics) {
     this.prizePics = prizePics;
+  }
+
+  public String[] getChateauPics() {
+    return chateauPics;
+  }
+
+  public void setChateauPics(String[] chateauPics) {
+    this.chateauPics = chateauPics;
   }
 }

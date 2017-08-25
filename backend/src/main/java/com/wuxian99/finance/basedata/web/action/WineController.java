@@ -93,6 +93,22 @@ public class WineController {
                 e.printStackTrace();
             }
 
+            List<String> chateauPics = new ArrayList<>();
+            if(StringUtils.isNotBlank(merchant.getChateauPic1())){
+                chateauPics.add(picPath + merchant.getChateauPic1());
+            }
+            if(StringUtils.isNotBlank(merchant.getChateauPic2())){
+                chateauPics.add(picPath + merchant.getChateauPic2());
+            }
+            if(StringUtils.isNotBlank(merchant.getChateauPic3())){
+                chateauPics.add(picPath + merchant.getChateauPic3());
+            }
+            if(StringUtils.isNotBlank(merchant.getChateauPic4())){
+                chateauPics.add(picPath + merchant.getChateauPic4());
+            }
+            view.setChateauPics(chateauPics.toArray(new String[0]));
+
+
             List<String> landPics = new ArrayList<>();
             if(StringUtils.isNotBlank(merchant.getLandPic1())){
                 landPics.add(picPath + merchant.getLandPic1());
