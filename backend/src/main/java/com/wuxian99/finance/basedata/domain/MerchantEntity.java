@@ -1,6 +1,7 @@
 package com.wuxian99.finance.basedata.domain;
 
 import com.google.gson.Gson;
+import com.wuxian99.finance.basedata.support.annotation.UploadRef;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,34 +34,34 @@ public class MerchantEntity implements Serializable {
   private String name;
 
   /**
+   * 酒庄英文名称
+   */
+  @Column(name = "nameen")
+  private String nameEn;
+
+  /**
    * 状态，1:正常，0:停用
    */
   private Long status;
 
   /**
-   * 庄主
+   * 庄主（法人）
    */
   private String master;
 
   /**
-   * 创建时间
+   * 注册时间
    */
   @Column(name = "createyear")
   private String createYear;
 
   /**
-   * 葡萄园面积
+   * 种植面积
    */
   private String acreage;
 
   /**
-   * 土壤类型
-   */
-  @Column(name = "agrotype")
-  private String agroType;
-
-  /**
-   * 葡萄品种
+   * 葡萄种植种类，多个逗号隔开
    */
   @Column(name = "grapetype")
   private String grapeType;
@@ -72,15 +73,10 @@ public class MerchantEntity implements Serializable {
   private String treeAge;
 
   /**
-   * 酿酒师
+   * 酿酒师及介绍
    */
   @Column(name = "winemaker")
   private String wineMaker;
-
-  /**
-   * 酿造工艺
-   */
-  private String technology;
 
   /**
    * 年产量
@@ -88,24 +84,146 @@ public class MerchantEntity implements Serializable {
   private String output;
 
   /**
-   * 橡木桶
+   * 酒庄级别和级别介绍
    */
-  private String barrel;
+  private String level;
 
   /**
-   * 酒庄地址
-   */
-  private String address;
-
-  /**
-   * 接待能力
-   */
-  private String capacity;
-
-  /**
-   * 详细描述
+   * 酒庄文字简介
    */
   private String description;
+
+  /**
+   * 实时土壤和气候信息
+   */
+  @Column(name = "soilandclimate")
+  private String soilAndClimate;
+
+  /**
+   * 参观预约链接
+   */
+  @Column(name = "tourismlink")
+  private String tourismLink;
+
+  /**
+   * 种植地照片1
+   */
+  @Column(name = "landpic1")
+  private String landPic1;
+
+  @Column(name = "landpic1_ref")
+  @UploadRef(ref = "landPic1")
+  private String landPic1Ref;
+
+  /**
+   * 种植地照片2
+   */
+  @Column(name = "landpic2")
+  private String landPic2;
+
+  @Column(name = "landpic2_ref")
+  @UploadRef(ref = "landPic2")
+  private String landPic2Ref;
+
+  /**
+   * 种植地照片3
+   */
+  @Column(name = "landpic3")
+  private String landPic3;
+
+  @Column(name = "landpic3_ref")
+  @UploadRef(ref = "landPic3")
+  private String landPic3Ref;
+
+  /**
+   * 种植地照片4
+   */
+  @Column(name = "landpic4")
+  private String landPic4;
+
+  @Column(name = "landpic4_ref")
+  @UploadRef(ref = "landPic4")
+  private String landPic4Ref;
+
+  /**
+   * 部分证照1
+   */
+  @Column(name = "certpic1")
+  private String certPic1;
+
+  @Column(name = "certpic1_ref")
+  @UploadRef(ref = "certPic1")
+  private String certPic1Ref;
+
+  /**
+   * 部分证照2
+   */
+  @Column(name = "certpic2")
+  private String certPic2;
+
+  @Column(name = "certpic2_ref")
+  @UploadRef(ref = "certPic2")
+  private String certPic2Ref;
+
+  /**
+   * 部分证照3
+   */
+  @Column(name = "certpic3")
+  private String certPic3;
+
+  @Column(name = "certpic3_ref")
+  @UploadRef(ref = "certPic3")
+  private String certPic3Ref;
+
+  /**
+   * 部分证照4
+   */
+  @Column(name = "certpic4")
+  private String certPic4;
+
+  @Column(name = "certpic4_ref")
+  @UploadRef(ref = "certPic4")
+  private String certPic4Ref;
+
+  /**
+   * 得奖照片1
+   */
+  @Column(name = "prizepic1")
+  private String prizePic1;
+
+  @Column(name = "prizepic1_ref")
+  @UploadRef(ref = "prizePic1")
+  private String prizePic1Ref;
+
+  /**
+   * 得奖照片2
+   */
+  @Column(name = "prizepic2")
+  private String prizePic2;
+
+  @Column(name = "prizepic2_ref")
+  @UploadRef(ref = "prizePic2")
+  private String prizePic2Ref;
+
+  /**
+   * 得奖照片3
+   */
+  @Column(name = "prizepic3")
+  private String prizePic3;
+
+  @Column(name = "prizepic3_ref")
+  @UploadRef(ref = "prizePic3")
+  private String prizePic3Ref;
+
+  /**
+   * 得奖照片4
+   */
+  @Column(name = "prizepic4")
+  private String prizePic4;
+
+  @Column(name = "prizepic4_ref")
+  @UploadRef(ref = "prizePic4")
+  private String prizePic4Ref;
 
   public Long getId() {
     return id;
@@ -137,6 +255,14 @@ public class MerchantEntity implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getNameEn() {
+    return nameEn;
+  }
+
+  public void setNameEn(String nameEn) {
+    this.nameEn = nameEn;
   }
 
   public Long getStatus() {
@@ -171,14 +297,6 @@ public class MerchantEntity implements Serializable {
     this.acreage = acreage;
   }
 
-  public String getAgroType() {
-    return agroType;
-  }
-
-  public void setAgroType(String agroType) {
-    this.agroType = agroType;
-  }
-
   public String getGrapeType() {
     return grapeType;
   }
@@ -203,14 +321,6 @@ public class MerchantEntity implements Serializable {
     this.wineMaker = wineMaker;
   }
 
-  public String getTechnology() {
-    return technology;
-  }
-
-  public void setTechnology(String technology) {
-    this.technology = technology;
-  }
-
   public String getOutput() {
     return output;
   }
@@ -219,28 +329,12 @@ public class MerchantEntity implements Serializable {
     this.output = output;
   }
 
-  public String getBarrel() {
-    return barrel;
+  public String getLevel() {
+    return level;
   }
 
-  public void setBarrel(String barrel) {
-    this.barrel = barrel;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getCapacity() {
-    return capacity;
-  }
-
-  public void setCapacity(String capacity) {
-    this.capacity = capacity;
+  public void setLevel(String level) {
+    this.level = level;
   }
 
   public String getDescription() {
@@ -249,6 +343,214 @@ public class MerchantEntity implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public String getSoilAndClimate() {
+    return soilAndClimate;
+  }
+
+  public void setSoilAndClimate(String soilAndClimate) {
+    this.soilAndClimate = soilAndClimate;
+  }
+
+  public String getTourismLink() {
+    return tourismLink;
+  }
+
+  public void setTourismLink(String tourismLink) {
+    this.tourismLink = tourismLink;
+  }
+
+  public String getLandPic1() {
+    return landPic1;
+  }
+
+  public void setLandPic1(String landPic1) {
+    this.landPic1 = landPic1;
+  }
+
+  public String getLandPic1Ref() {
+    return landPic1Ref;
+  }
+
+  public void setLandPic1Ref(String landPic1Ref) {
+    this.landPic1Ref = landPic1Ref;
+  }
+
+  public String getLandPic2() {
+    return landPic2;
+  }
+
+  public void setLandPic2(String landPic2) {
+    this.landPic2 = landPic2;
+  }
+
+  public String getLandPic2Ref() {
+    return landPic2Ref;
+  }
+
+  public void setLandPic2Ref(String landPic2Ref) {
+    this.landPic2Ref = landPic2Ref;
+  }
+
+  public String getLandPic3() {
+    return landPic3;
+  }
+
+  public void setLandPic3(String landPic3) {
+    this.landPic3 = landPic3;
+  }
+
+  public String getLandPic3Ref() {
+    return landPic3Ref;
+  }
+
+  public void setLandPic3Ref(String landPic3Ref) {
+    this.landPic3Ref = landPic3Ref;
+  }
+
+  public String getLandPic4() {
+    return landPic4;
+  }
+
+  public void setLandPic4(String landPic4) {
+    this.landPic4 = landPic4;
+  }
+
+  public String getLandPic4Ref() {
+    return landPic4Ref;
+  }
+
+  public void setLandPic4Ref(String landPic4Ref) {
+    this.landPic4Ref = landPic4Ref;
+  }
+
+  public String getCertPic1() {
+    return certPic1;
+  }
+
+  public void setCertPic1(String certPic1) {
+    this.certPic1 = certPic1;
+  }
+
+  public String getCertPic1Ref() {
+    return certPic1Ref;
+  }
+
+  public void setCertPic1Ref(String certPic1Ref) {
+    this.certPic1Ref = certPic1Ref;
+  }
+
+  public String getCertPic2() {
+    return certPic2;
+  }
+
+  public void setCertPic2(String certPic2) {
+    this.certPic2 = certPic2;
+  }
+
+  public String getCertPic2Ref() {
+    return certPic2Ref;
+  }
+
+  public void setCertPic2Ref(String certPic2Ref) {
+    this.certPic2Ref = certPic2Ref;
+  }
+
+  public String getCertPic3() {
+    return certPic3;
+  }
+
+  public void setCertPic3(String certPic3) {
+    this.certPic3 = certPic3;
+  }
+
+  public String getCertPic3Ref() {
+    return certPic3Ref;
+  }
+
+  public void setCertPic3Ref(String certPic3Ref) {
+    this.certPic3Ref = certPic3Ref;
+  }
+
+  public String getCertPic4() {
+    return certPic4;
+  }
+
+  public void setCertPic4(String certPic4) {
+    this.certPic4 = certPic4;
+  }
+
+  public String getCertPic4Ref() {
+    return certPic4Ref;
+  }
+
+  public void setCertPic4Ref(String certPic4Ref) {
+    this.certPic4Ref = certPic4Ref;
+  }
+
+  public String getPrizePic1() {
+    return prizePic1;
+  }
+
+  public void setPrizePic1(String prizePic1) {
+    this.prizePic1 = prizePic1;
+  }
+
+  public String getPrizePic1Ref() {
+    return prizePic1Ref;
+  }
+
+  public void setPrizePic1Ref(String prizePic1Ref) {
+    this.prizePic1Ref = prizePic1Ref;
+  }
+
+  public String getPrizePic2() {
+    return prizePic2;
+  }
+
+  public void setPrizePic2(String prizePic2) {
+    this.prizePic2 = prizePic2;
+  }
+
+  public String getPrizePic2Ref() {
+    return prizePic2Ref;
+  }
+
+  public void setPrizePic2Ref(String prizePic2Ref) {
+    this.prizePic2Ref = prizePic2Ref;
+  }
+
+  public String getPrizePic3() {
+    return prizePic3;
+  }
+
+  public void setPrizePic3(String prizePic3) {
+    this.prizePic3 = prizePic3;
+  }
+
+  public String getPrizePic3Ref() {
+    return prizePic3Ref;
+  }
+
+  public void setPrizePic3Ref(String prizePic3Ref) {
+    this.prizePic3Ref = prizePic3Ref;
+  }
+
+  public String getPrizePic4() {
+    return prizePic4;
+  }
+
+  public void setPrizePic4(String prizePic4) {
+    this.prizePic4 = prizePic4;
+  }
+
+  public String getPrizePic4Ref() {
+    return prizePic4Ref;
+  }
+
+  public void setPrizePic4Ref(String prizePic4Ref) {
+    this.prizePic4Ref = prizePic4Ref;
   }
 
   @Override

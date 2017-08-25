@@ -9,19 +9,21 @@ public class MerchantView implements Serializable {
 
   private String merchantId;
   private String name;
+  private String nameEn;
   private String master;
   private String createYear;
   private String acreage;
-  private String agroType;
   private String grapeType;
   private String treeAge;
   private String wineMaker;
-  private String technology;
   private String output;
-  private String barrel;
-  private String address;
-  private String capacity;
+  private String level;
   private String description;
+  private String soilAndClimate;
+  private String tourismLink;
+  private String[] landPics;
+  private String[] certPics;
+  private String[] prizePics;
 
   public String getMerchantId() {
     return merchantId;
@@ -37,6 +39,14 @@ public class MerchantView implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getNameEn() {
+    return nameEn;
+  }
+
+  public void setNameEn(String nameEn) {
+    this.nameEn = nameEn;
   }
 
   public String getMaster() {
@@ -63,14 +73,6 @@ public class MerchantView implements Serializable {
     this.acreage = acreage;
   }
 
-  public String getAgroType() {
-    return agroType;
-  }
-
-  public void setAgroType(String agroType) {
-    this.agroType = agroType;
-  }
-
   public String getGrapeType() {
     return grapeType;
   }
@@ -95,14 +97,6 @@ public class MerchantView implements Serializable {
     this.wineMaker = wineMaker;
   }
 
-  public String getTechnology() {
-    return technology;
-  }
-
-  public void setTechnology(String technology) {
-    this.technology = technology;
-  }
-
   public String getOutput() {
     return output;
   }
@@ -111,28 +105,12 @@ public class MerchantView implements Serializable {
     this.output = output;
   }
 
-  public String getBarrel() {
-    return barrel;
+  public String getLevel() {
+    return level;
   }
 
-  public void setBarrel(String barrel) {
-    this.barrel = barrel;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getCapacity() {
-    return capacity;
-  }
-
-  public void setCapacity(String capacity) {
-    this.capacity = capacity;
+  public void setLevel(String level) {
+    this.level = level;
   }
 
   public String getDescription() {
@@ -141,5 +119,45 @@ public class MerchantView implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public String getSoilAndClimate() {
+    return soilAndClimate;
+  }
+
+  public void setSoilAndClimate(String soilAndClimate) {
+    this.soilAndClimate = soilAndClimate;
+  }
+
+  public String getTourismLink() {
+    return tourismLink;
+  }
+
+  public void setTourismLink(String tourismLink) {
+    this.tourismLink = tourismLink;
+  }
+
+  public String[] getLandPics() {
+    return landPics;
+  }
+
+  public void setLandPics(String[] landPics) {
+    this.landPics = landPics;
+  }
+
+  public String[] getCertPics() {
+    return certPics;
+  }
+
+  public void setCertPics(String[] certPics) {
+    this.certPics = certPics;
+  }
+
+  public String[] getPrizePics() {
+    return prizePics;
+  }
+
+  public void setPrizePics(String[] prizePics) {
+    this.prizePics = prizePics;
   }
 }

@@ -92,6 +92,54 @@ public class WineController {
             }catch (Exception e){
                 e.printStackTrace();
             }
+
+            List<String> landPics = new ArrayList<>();
+            if(StringUtils.isNotBlank(merchant.getLandPic1())){
+                landPics.add(picPath + merchant.getLandPic1());
+            }
+            if(StringUtils.isNotBlank(merchant.getLandPic2())){
+                landPics.add(picPath + merchant.getLandPic2());
+            }
+            if(StringUtils.isNotBlank(merchant.getLandPic3())){
+                landPics.add(picPath + merchant.getLandPic3());
+            }
+            if(StringUtils.isNotBlank(merchant.getLandPic4())){
+                landPics.add(picPath + merchant.getLandPic4());
+            }
+            view.setLandPics(landPics.toArray(new String[0]));
+
+
+            List<String> certPics = new ArrayList<>();
+            if(StringUtils.isNotBlank(merchant.getCertPic1())){
+                certPics.add(picPath + merchant.getCertPic1());
+            }
+            if(StringUtils.isNotBlank(merchant.getCertPic2())){
+                certPics.add(picPath + merchant.getCertPic2());
+            }
+            if(StringUtils.isNotBlank(merchant.getCertPic3())){
+                certPics.add(picPath + merchant.getCertPic3());
+            }
+            if(StringUtils.isNotBlank(merchant.getCertPic4())){
+                certPics.add(picPath + merchant.getCertPic4());
+            }
+            view.setCertPics(certPics.toArray(new String[0]));
+
+
+            List<String> prizePics = new ArrayList<>();
+            if(StringUtils.isNotBlank(merchant.getPrizePic1())){
+                prizePics.add(picPath + merchant.getPrizePic1());
+            }
+            if(StringUtils.isNotBlank(merchant.getPrizePic2())){
+                prizePics.add(picPath + merchant.getPrizePic2());
+            }
+            if(StringUtils.isNotBlank(merchant.getPrizePic3())){
+                prizePics.add(picPath + merchant.getPrizePic3());
+            }
+            if(StringUtils.isNotBlank(merchant.getPrizePic4())){
+                prizePics.add(picPath + merchant.getPrizePic4());
+            }
+            view.setPrizePics(prizePics.toArray(new String[0]));
+
         }
         logger.info("getMerchantInfo response: {}", new Gson().toJson(view));
         return Result.buildSuccess(view);
