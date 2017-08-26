@@ -15,7 +15,6 @@ public class MdseView implements Serializable {
   private Long price;
   private Long status;
   private String catagory;
-  private String wineType;
   private String grapeType;
   private String year;
   private String degree;
@@ -84,14 +83,6 @@ public class MdseView implements Serializable {
 
   public void setCatagory(String catagory) {
     this.catagory = catagory;
-  }
-
-  public String getWineType() {
-    return wineType;
-  }
-
-  public void setWineType(String wineType) {
-    this.wineType = wineType;
   }
 
   public String getGrapeType() {

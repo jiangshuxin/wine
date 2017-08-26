@@ -275,7 +275,6 @@ public class WineController {
             view.setNameEn(mdse.getNameEn());
             view.setPrice(mdse.getPrice());
             view.setStatus(mdse.getStatus());
-            view.setWineType(mdse.getWineType());
             view.setGrapeType(mdse.getGrapeType());
             view.setYear(mdse.getYear());
             view.setDegree(mdse.getDegree());
