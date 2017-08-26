@@ -281,7 +281,7 @@ public class WineController {
             view.setMl(mdse.getMl());
             view.setTreeAge(mdse.getTreeAge());
             view.setWineMaker(mdse.getWineMaker());
-            view.setMerchantName(mdse.getMerchantName());
+            view.setMerchantName(merchantService.findByMerchantId(mdse.getMerchantId()).getName());
             view.setProductArea(mdse.getProductArea());
             view.setSmallPic(picPath + mdse.getSmallPic());
 

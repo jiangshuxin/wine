@@ -25,12 +25,6 @@ public class MdseEntity implements Serializable {
   private String merchantId;
 
   /**
-   * 酒庄名称
-   */
-  @Column(name = "merchantname")
-  private String merchantName;
-
-  /**
    * 产区
    */
   @Column(name = "productarea")
@@ -427,14 +421,6 @@ public class MdseEntity implements Serializable {
 
   public void setWineMaker(String wineMaker) {
     this.wineMaker = wineMaker;
-  }
-
-  public String getMerchantName() {
-    return merchantName;
-  }
-
-  public void setMerchantName(String merchantName) {
-    this.merchantName = merchantName;
   }
 
   public String getProductArea() {
