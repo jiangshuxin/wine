@@ -1,6 +1,7 @@
 package com.wuxian99.finance.basedata.domain;
 
 import com.google.gson.Gson;
+import com.wuxian99.finance.basedata.support.annotation.Ddic;
 import com.wuxian99.finance.basedata.support.annotation.UploadRef;
 
 import javax.persistence.*;
@@ -42,7 +43,11 @@ public class MerchantEntity implements Serializable {
     /**
      * 状态，1:正常，0:停用
      */
+    @Ddic(name = "merchantStatus",mapTo = "statusName")
     private Long status;
+
+    @Transient
+    private String statusName;
 
     /**
      * 庄主（法人）
@@ -318,6 +323,14 @@ public class MerchantEntity implements Serializable {
 
     public void setStatus(Long status) {
         this.status = status;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 
     public String getMaster() {

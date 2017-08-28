@@ -334,7 +334,7 @@ div.DTE_Body {
 div.DTE_Body div.DTE_Body_Content {
   position: relative;
   overflow: auto;
-  height: 600px;
+  /*height: 600px;*/
 }
 div.DTE_Body div.DTE_Body_Content div.DTE_Form_Info {
   padding: 1em 1em 0 1em;
