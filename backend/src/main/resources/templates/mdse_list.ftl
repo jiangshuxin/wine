@@ -71,7 +71,7 @@
                 label: "英文名称:",
                 name: "nameEn"
             }, {
-                label: "价格:",
+                label: "价格(元):",
                 name: "price"
             }, {
                 label: "状态:",
@@ -83,9 +83,6 @@
                 name: "catagory",
                 type:  "select",
                 options:mdseCatagoryDdic
-            },{
-                label: "酒品类型:",
-                name: "wineType"
             },{
                 label: "葡萄品种:",
                 name: "grapeType"
@@ -104,9 +101,6 @@
             },{
                 label: "酿酒师:",
                 name: "wineMaker"
-            },{
-                label: "酒庄名称:",
-                name: "merchantName"
             },{
                 label: "产区:",
                 name: "productArea"
@@ -184,7 +178,7 @@
                 noImageText: '请选择图片'
             },{
                 label: "得奖照片1:",
-                name: "prizePic1",
+                name: "prizePic1Ref",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
@@ -193,7 +187,7 @@
                 noImageText: '请选择图片'
             },{
                 label: "得奖照片2:",
-                name: "prizePic2",
+                name: "prizePic2Ref",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
@@ -202,7 +196,7 @@
                 noImageText: '请选择图片'
             },{
                 label: "得奖照片3:",
-                name: "prizePic3",
+                name: "prizePic3Ref",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
@@ -211,7 +205,7 @@
                 noImageText: '请选择图片'
             },{
                 label: "得奖照片4:",
-                name: "prizePic4",
+                name: "prizePic4Ref",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
@@ -220,7 +214,7 @@
                 noImageText: '请选择图片'
             },{
                 label: "检验报告1:",
-                name: "inspectionReportPic1",
+                name: "inspectionReportPic1Ref",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
@@ -229,7 +223,7 @@
                 noImageText: '请选择图片'
             },{
                 label: "检验报告2:",
-                name: "inspectionReportPic2",
+                name: "inspectionReportPic2Ref",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
@@ -238,7 +232,7 @@
                 noImageText: '请选择图片'
             },{
                 label: "检验报告3:",
-                name: "inspectionReportPic3",
+                name: "inspectionReportPic3Ref",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
@@ -247,7 +241,7 @@
                 noImageText: '请选择图片'
             },{
                 label: "检验报告4:",
-                name: "inspectionReportPic4",
+                name: "inspectionReportPic4Ref",
                 type: "upload",
                 display: function ( file_id ) {
                     return '<img src="'+editor.file( 'files', file_id ).web_path+'"/>';
@@ -256,7 +250,7 @@
                 noImageText: '请选择图片'
             }
             ],{
-                ajax:"${rc.contextPath}/api/upload/mdse"
+                ajax:"${rc.contextPath}/api/upload/${moduleName}"
             });
 
             table = $('#dataTable').DataTable( DataTable.dataTableConfig('${moduleName}',[

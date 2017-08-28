@@ -248,6 +248,9 @@ var DataTable = {
         readonly : function(fieldId){
             $('#DTE_Field_'+fieldId).attr('readonly',true);
         },
+        removeReadonly : function(fieldId){
+            $('#DTE_Field_'+fieldId).removeAttr('readonly');
+        },
         showMsgOnError : function(editor){
             editor.on( 'submitError', function ( event, response, type, message, data) {
                 editor.error(response.responseJSON.message);
