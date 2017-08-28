@@ -105,6 +105,13 @@ public class MerchantEntity implements Serializable {
     @Column(name = "tourismlink")
     private String tourismLink;
 
+
+    /**
+     * 酒庄视频链接
+     */
+    @Column(name = "videolink")
+    private String videoLink;
+
     /**
      * 酒庄照片1
      */
@@ -655,6 +662,14 @@ public class MerchantEntity implements Serializable {
 
     public void setChateauPic4Ref(String chateauPic4Ref) {
         this.chateauPic4Ref = chateauPic4Ref;
+    }
+
+    public String getVideoLink() {
+        return videoLink;
+    }
+
+    public void setVideoLink(String videoLink) {
+        this.videoLink = videoLink;
     }
 
     @Override
