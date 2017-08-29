@@ -295,11 +295,7 @@
                 { data: "prizePic3"},
                 { data: "prizePic4"},
                 { data: "status" }
-            ],[
-                { extend: "create", editor: editor },
-                { extend: "edit",   editor: editor },
-                { extend: "remove", editor: editor }
-            ],{initComplete: function ()
+            ],DataTable.buttonGroupDef(editor),{initComplete: function ()
             {
 
             },columnDefs: [

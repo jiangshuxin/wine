@@ -280,11 +280,7 @@
                 { data: "inspectionReportPic2"},
                 { data: "inspectionReportPic3"},
                 { data: "inspectionReportPic4"}
-            ],[
-                { extend: "create", editor: editor },
-                { extend: "edit",   editor: editor },
-                { extend: "remove", editor: editor }
-            ],{initComplete: function ()
+            ],DataTable.buttonGroupDef(editor),{initComplete: function ()
             {
 
             },columnDefs: [

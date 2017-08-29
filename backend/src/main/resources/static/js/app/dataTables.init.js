@@ -244,6 +244,19 @@ var DataTable = {
         $('#dataTable tfoot th').eq(index).find('input').val(value);
         column.search(value).draw();
     },
+    buttonGroupDef : function(editor){
+        return [
+            { extend: "create", editor: editor,formButtons: [
+                '保存',
+                { label: '取消', fn: function () { this.close(); } }
+            ] },
+            { extend: "edit",   editor: editor,formButtons: [
+                '保存',
+                { label: '取消', fn: function () { this.close(); } }
+            ] },
+            { extend: "remove", editor: editor }
+        ];
+    },
     Editor : {
         readonly : function(fieldId){
             //editor.field('merchantId').s.opts.id
