@@ -246,19 +246,30 @@ var DataTable = {
     },
     Editor : {
         readonly : function(fieldId){
+            //editor.field('merchantId').s.opts.id
             $('#DTE_Field_'+fieldId).attr('readonly',true);
         },
         removeReadonly : function(fieldId){
             $('#DTE_Field_'+fieldId).removeAttr('readonly');
         },
-        showMsgOnError : function(editor){
+        bindEvents : function(editor){
             editor.on( 'submitError', function ( event, response, type, message, data) {
-                editor.error(response.responseJSON.message);
-            } );
+                    editor.error(response.responseJSON.message);
+                } )
+                .on( 'open', function ( e, json, eventType ) {
+                    // Store the values of the fields on open
+                    openVals = JSON.stringify( editor.get() );
+                } )
+                .on( 'preBlur', function ( e ) {
+                    // On close, check if the values have changed and ask for closing confirmation if they have
+                    if ( openVals !== JSON.stringify( editor.get() ) ) {
+                        return confirm( '你有未保存的修改，确认离开吗?' );
+                    }
+                } );
         },
         newInstance : function(moduleName,fields,otherConfig){
             var editor = new $.fn.dataTable.Editor( DataTable.editorConfig(moduleName,fields,otherConfig));
-            DataTable.Editor.showMsgOnError(editor);
+            DataTable.Editor.bindEvents(editor);
             return editor;
         }
     }

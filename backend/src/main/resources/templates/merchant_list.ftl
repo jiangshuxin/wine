@@ -58,6 +58,7 @@
     </table>
     <script type="text/javascript" language="javascript" class="init">
         var editor;
+        var merchantStatusDdic = Ddic.show('merchantStatus');
 
         $(document).ready(function() {
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
@@ -76,7 +77,9 @@
                 name: "name"
             }, {
                 label: "状态:",
-                name: "status"
+                name: "status",
+                type:'select',
+                options:merchantStatusDdic
             }, {
                 label: "庄主:",
                 name: "master"
@@ -107,6 +110,9 @@
             },{
                 label: "实时土壤和气候信息:",
                 name: "soilAndClimate"
+            },{
+                label: "酒庄视频链接:",
+                name: "videoLink"
             },{
                 label: "参观预约链接:",
                 name: "tourismLink"
@@ -263,7 +269,7 @@
                 { data: "id"},
                 { data: "merchantId"},
                 { data: "name" },
-                { data: "status" },
+                { data: "statusName" ,searchType:"select",ddic:"merchantStatus",ddicRef:"status"},
                 { data: "master"},
                 { data: "createYear"},
                 { data: "chateauPic1"},
@@ -281,7 +287,8 @@
                 { data: "prizePic1"},
                 { data: "prizePic2"},
                 { data: "prizePic3"},
-                { data: "prizePic4"}
+                { data: "prizePic4"},
+                { data: "status" }
             ],[
                 { extend: "create", editor: editor },
                 { extend: "edit",   editor: editor },
@@ -290,7 +297,7 @@
             {
 
             },columnDefs: [
-                { "visible": false, "targets": [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] }
+                { "visible": false, "targets": [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22] }
             ]}) );
 
             DataTable.enableColumnSearch(table);
@@ -310,6 +317,7 @@
                     return false;
                 }
             } );
+
         } );
 
 
