@@ -64,8 +64,7 @@
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "编号:",
                 name: "id",
-                type: "readonly",
-                placeholder:"系统自动生成"
+                type: "hidden"
             },{
                 label: "酒庄编码(建议M+4位数字):",
                 name: "merchantId",
@@ -76,6 +75,9 @@
                 label: "酒庄名称:",
                 name: "name"
             }, {
+                label: "酒庄英文名称:",
+                name: "nameEn"
+            }, {
                 label: "状态:",
                 name: "status",
                 type:'select',
@@ -85,7 +87,8 @@
                 name: "master"
             }, {
                 label: "创建时间:",
-                name: "createYear"
+                name: "createYear",
+                type: "datetime"
             }, {
                 label: "种植面积:",
                 name: "acreage"
@@ -97,16 +100,19 @@
                 name: "treeAge"
             },{
                 label: "酿酒师及介绍:",
-                name: "wineMaker"
+                name: "wineMaker",
+                type: "textarea"
             },{
                 label: "年产量:",
                 name: "output"
             },{
                 label: "酒庄级别和级别介绍:",
-                name: "level"
+                name: "level",
+                type: "textarea"
             },{
                 label: "酒庄文字简介:",
-                name: "description"
+                name: "description",
+                type: "textarea"
             },{
                 label: "实时土壤和气候信息:",
                 name: "soilAndClimate"

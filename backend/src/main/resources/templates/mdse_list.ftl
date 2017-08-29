@@ -58,7 +58,7 @@
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
                 label: "编号:",
                 name: "id",
-                type: "readonly"
+                type: "hidden"
             }, {
                 label: "酒庄编号:",
                 name: "merchantId",
@@ -100,7 +100,8 @@
                 name: "treeAge"
             },{
                 label: "酿酒师:",
-                name: "wineMaker"
+                name: "wineMaker",
+                type: "textarea"
             },{
                 label: "产区:",
                 name: "productArea"
@@ -120,7 +121,7 @@
                 label: "适饮温度:",
                 name: "drinkTemperature"
             }, {
-                label: "醒酒时间:",
+                label: "醒酒时间(单位：分钟):",
                 name: "soberTime"
             }, {
                 label: "搭配推荐:",
