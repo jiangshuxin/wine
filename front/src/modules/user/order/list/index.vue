@@ -40,18 +40,18 @@ export default {
             }
             Indicator.close();
         },
-        loadTop() {
+        async loadTop() {
             this.initPageInfo();
             this.initList();
-            this.getList();
+            await this.getList();
             this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
             this.$refs.loadmore.onTopLoaded();
         },
-        loadMore() {
+        async loadMore() {
             const {pageNumber, totalPage} = this.pageInfo;
             if (+pageNumber < +totalPage) {
                 this.setPage(pageNumber + 1);
-                this.getList();
+                await this.getList();
                 this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
                 return;
             }

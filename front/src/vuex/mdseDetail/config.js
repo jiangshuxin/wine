@@ -4,8 +4,8 @@ export const propertyLayout = [{
     type: 'text'
 }, {
     id: 'grapeType',
-    label: '葡萄品种',
-    type: 'text'
+    label: '葡萄品种及介绍',
+    type: 'btn-group-text'
 }, {
     id: 'year',
     label: '年份',
@@ -24,8 +24,8 @@ export const propertyLayout = [{
     type: 'text'
 }, {
     id: 'wineMaker',
-    label: '酿酒师',
-    type: 'text'
+    label: '酿酒师及介绍',
+    type: 'btn-group-text'
 }, {
     id: 'merchantName',
     label: '酒庄',
@@ -35,11 +35,47 @@ export const propertyLayout = [{
     label: '产区',
     type: 'text'
 }, {
-    id: 'reason',
-    label: '推荐理由',
-    type: 'description'
+    id: 'technology',
+    label: '酿造工艺',
+    type: 'text'
 }, {
-    id: 'storyPic',
-    label: '',
-    type: 'images'
+    id: 'barrel',
+    label: '橡木桶',
+    type: 'text'
+}, {
+    id: 'fillingTime',
+    label: '罐装时间',
+    type: 'text'
+}, {
+    id: 'expiryDate',
+    label: '保质期',
+    type: 'text'
+}, {
+    id: 'drinkTemperature',
+    label: '适饮温度',
+    type: 'text'
+}, {
+    id: 'soberTime',
+    label: '醒酒时间',
+    type: 'text'
+}, {
+    id: 'collocation',
+    label: '搭配推荐',
+    type: 'text'
+}, {
+    id: 'yield',
+    label: '产量',
+    type: 'text'
+}, {
+    id: 'inventory',
+    label: '库存量',
+    type: 'text'
+}, {
+    id: 'prizePics',
+    label: '获奖照片',
+    type: 'btn-group-img'
+}, {
+    id: 'inspectionReportPics',
+    label: '检验报告',
+    type: 'btn-group-img'
 }];

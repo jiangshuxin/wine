@@ -2,6 +2,9 @@
 import { formatPrice } from 'common/util';
 import { Swipe, SwipeItem, Indicator } from 'mint-ui';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+import imgModal from '../../manor/imgModal';
+import textModal from '../../manor/textModal';
+import cell from 'components/cell';
 import popupMdseCount from 'components/popupMdseCount';
 import tabbar from './tabbar';
 export default {
@@ -54,6 +57,13 @@ export default {
         goBack() {
             this.$router.go(-1);
         },
+        showModal(item) {
+            if (item.type === 'btn-group-text') {
+                this.$refs.textModal.set(item, item.value);
+                return;
+            }
+            this.$refs.imgModal.set(item, item.value);
+        },
         showShopPopup() {
             if (+this.mdse.status === 2) {
                 this.changeHint('该商品已售罄');
@@ -70,6 +80,7 @@ export default {
         },
         addShopCart(info) {
             this.setShopCart(info);
+            this.changeHint('成功添加商品至购物车');
         },
         goBills(info) {
             this.$router.push({
@@ -85,6 +96,9 @@ export default {
     components: {
         mintSwipe: Swipe,
         mintSwipeItem: SwipeItem,
+        imgModal,
+        textModal,
+        cell,
         popupMdseCount,
         tabbar
     }
@@ -101,7 +115,7 @@ export default {
             <mint-swipe :auto="4000" :prevent="true" :stopPropagation="true">
                 <mint-swipe-item
                     class="swipe-item"
-                    v-for="(item, index) in mdse.bigPic"
+                    v-for="(item, index) in mdse.bigPics"
                     :key="index"
                 >
                     <div class="img" :style="{'background': `url(${item}) center/cover no-repeat`}"></div>
@@ -109,36 +123,37 @@ export default {
             </mint-swipe>
         </div>
         <div class="mdse-title">
-            <h3 class="name">{{mdse.name}}</h3>
-            <p class="name-en">{{mdse.nameEn}}</p>
-            <p class="price">￥{{formatPrice(mdse.price / 100)}}</p>
+            <h3 class="name" v-if="mdse.name">{{mdse.name}}</h3>
+            <p class="name-en" v-if="mdse.nameEn">{{mdse.nameEn}}</p>
+            <p class="price" v-if="mdse.price">￥{{formatPrice(mdse.price / 100)}}</p>
         </div>
         <div class="mdse-property">
             <h4>酒品属性</h4>
             <ul class="mdse-property-list">
-                <li v-for="item in layoutPolymer"
-                    :style="{
-                        'display': item.type !== 'text' ? 'block' : 'flex',
-                        'margin-top': item.type !== 'text' ? '5px' : 0
-                    }"
+                <li
+                    v-if="item.value"
+                    v-for="item in layoutPolymer.filter(item => item.type === 'text')"
                 >
-                    <template v-if="item.type === 'text'">
-                        <span class="label">{{item.label}}</span>
-                        <span class="text">{{item.value}}</span>
-                    </template>
-                    <template v-if="item.type === 'description'">
-                        <h4>{{item.label}}</h4>
-                        <p>{{item.value}}</p>
-                    </template>
-                    <template v-if="item.type === 'images'">
-                        <img :src="item.value" alt="" width="100%">
-                    </template>
+                    <span class="label">{{item.label}}:</span>
+                    <span class="text">{{item.value}}</span>
                 </li>
             </ul>
+        </div>
+        <div class="mdse-group">
+            <cell
+                v-if="item.value && item.value.length"
+                v-for="item in layoutPolymer.filter(item => item.type.search('btn-group') !== -1)"
+                :label="item.label"
+                is-link
+                @click-cell="showModal(item)"
+            >
+            </cell>
         </div>
         <tabbar class="mdse-detai-tabbar" :status="+mdse.status" @showShopPopup="showShopPopup" @showBuyPopup="showBuyPopup"></tabbar>
         <popup-mdse-count class="mdse-detail-count" ref="mdseCount" @submit="addShopCart"></popup-mdse-count>
         <popup-mdse-count class="mdse-buy-count" ref="mdseBuyCount" @submit="goBills"></popup-mdse-count>
+        <img-modal ref="imgModal"></img-modal>
+        <text-modal ref="textModal"></text-modal>
     </div>
 </template>
 
@@ -169,7 +184,7 @@ ul
     opacity 0.7
     z-index 1
 .back-icon
-    font-size 20px
+    font-size 16px
     color #fff
 .mdse-swipe-wrapper
     position relative
@@ -210,27 +225,30 @@ ul
         color #cf1f34
 .mdse-property
     margin-top 15px
-    padding 15px
+    padding 0 15px 15px
     background #fff
     h4
-        line-height 26px
+        margin-bottom 10px
+        border-bottom 1px solid #eee
+        line-height 40px
         font-size 15px
         color #181818
 .mdse-property-list
     font-size 14px
-    color #999
+    color #444
     li
         display flex
         line-height 25px
     .label
-        flex 1
-    .text
-        flex 1
+        margin-right 10px
+        white-space nowrap
 .mdse-detai-tabbar
     position fixed
     bottom 0
     right 0
     left 0
+.mdse-group
+    margin-top 15px
 .mdse-detail-count,
 .mdse-buy-count
     width 100%

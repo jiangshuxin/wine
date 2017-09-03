@@ -17,9 +17,13 @@ export default {
         }
         this.init();
     },
+    beforeDestroy() {
+        clearInterval(this.counter);
+    },
     data() {
         return {
-            from: ''
+            from: '',
+            counter: 0
         };
     },
     computed: {
@@ -47,6 +51,7 @@ export default {
         }),
         init() {
             this.initLogin();
+            this.intervalCounter();
         },
         changeType(type) {
             this.setType(type);
@@ -59,6 +64,17 @@ export default {
             const phoneInfo = this.layout.filter(item => item.id === 'phone')[0];
             if (id === 'phone' && phoneInfo.state === 'success') {
                 this.checkPhone(value);
+            }
+        },
+        intervalCounter() {
+            if (+this.delay > 0 && !this.counter) {
+                this.counter = setInterval(() => {
+                    if (+this.delay > 0) {
+                        this.setDelay(+this.delay - 1);
+                    } else {
+                        clearInterval(this.counter);
+                    }
+                }, 1000);
             }
         },
         async getVerify() {
@@ -80,6 +96,7 @@ export default {
             }
             Indicator.close();
             this.setDelay(60);
+            this.intervalCounter();
         },
         async login() {
             this.checkForm();
@@ -107,15 +124,6 @@ export default {
                     name: 'home',
                     query: this.$route.query
                 });
-            }
-        }
-    },
-    watch: {
-        delay() {
-            if (+this.delay > 0) {
-                setTimeout(() => {
-                    this.setDelay(+this.delay - 1);
-                }, 1000);
             }
         }
     },

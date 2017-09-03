@@ -11,8 +11,8 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { checkAgent, getStorageItem } from 'common/util';
 import errorEventBus from 'common/error';
 export default {
-    created() {
-        this.init();
+    async created() {
+        await this.init();
         errorEventBus.$on('requestError', data => {
             console.log(data);
         });
@@ -48,8 +48,8 @@ export default {
         }
     },
     watch: {
-        $route() {
-            this.init();
+        async $route() {
+            await this.init();
         },
         selectedTab() {
             this.$router.push({
@@ -231,4 +231,13 @@ export default {
     color #333
     .tabbar-icon
         color #333
+    .icon-format
+        color #cf1f34
+.icon-format
+    position relative
+    font-size 32px
+    &:before
+        position absolute
+        top -3px
+        left -4px
 </style>

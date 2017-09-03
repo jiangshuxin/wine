@@ -1,8 +1,12 @@
 <script>
-import { Cell } from 'mint-ui';
-import { mapGetters, mapMutations } from 'vuex';
+import { Cell, Indicator } from 'mint-ui';
+import cell from 'components/cell';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import Clipboard from 'clipboard';
 export default {
+    async created() {
+        await this.getUser();
+    },
     mounted() {
         this.clip = new Clipboard('.copy-referralcode');
         this.clip.on('success', () => {
@@ -12,13 +16,30 @@ export default {
     computed: {
         ...mapGetters({
             layout: 'userLayout',
-            userInfo: 'userInfo'
+            userInfo: 'userInfo',
+            isLogin: 'userIsLogin'
         })
     },
     methods: {
+        ...mapActions({
+            getUserInfo: 'getUserInfo'
+        }),
         ...mapMutations({
             changeHint: 'CHANGE_ENV_HINT_INFO'
         }),
+        async getUser() {
+            if (this.isLogin) {
+                return;
+            }
+            Indicator.open();
+            try {
+                await this.getUserInfo();
+            } catch (e) {
+                Indicator.close();
+                throw e;
+            }
+            Indicator.close();
+        },
         routeHandler(info) {
             this.$router.push({
                 name: info.routeName,
@@ -29,7 +50,8 @@ export default {
         }
     },
     components: {
-        mintCell: Cell
+        mintCell: Cell,
+        cell
     },
     beforeDestroy() {
         this.clip.destroy();
@@ -46,28 +68,48 @@ export default {
             <h3 class="user-name">{{userInfo.userName}}</h3>
         </div>
         <div class="list">
-            <v-touch
-                tag="div"
+            <cell
+                class="cell"
                 v-for="item in layout"
-                :key="item.routeName"
-                @tap="routeHandler(item)"
+                :is-link="item.id !== 'referralCode'"
+                @click-cell="routeHandler(item)"
             >
-                <mint-cell
-                    :title="item.text"
-                    :is-link="item.id !== 'referralCode'"
-                    style="fontSize: 12px;"
+                <span slot="label">{{item.text}}</span>
+                <span slot="value" v-if="item.id === 'referralCode'">{{userInfo[item.id]}}</span>
+                <button
+                    class="copy-referralcode"
+                    slot="button"
+                    v-if="item.id === 'referralCode'"
+                    :data-clipboard-text="userInfo[item.id]"
+                    data-clipboard-action="copy"
                 >
-                <span v-if="item.id === 'referralCode'">{{userInfo[item.id]}}</span>
-                    <button
-                        class="copy-referralcode"
-                        v-if="item.id === 'referralCode'"
-                        :data-clipboard-text="userInfo[item.id]"
-                        data-clipboard-action="copy"
-                    >
-                        复制
-                    </button>
-                </mint-cell>
-            </v-touch>
+                    复制
+                </button>
+            </cell>
+            <!--
+               -<v-touch
+               -    tag="div"
+               -    v-for="item in layout"
+               -    :key="item.routeName"
+               -    @tap="routeHandler(item)"
+               ->
+               -    <mint-cell
+               -        :title="item.text"
+               -        :is-link="item.id !== 'referralCode'"
+               -        style="fontSize: 12px;"
+               -    >
+               -    <span v-if="item.id === 'referralCode'">{{userInfo[item.id]}}</span>
+               -        <button
+               -            class="copy-referralcode"
+               -            v-if="item.id === 'referralCode'"
+               -            :data-clipboard-text="userInfo[item.id]"
+               -            data-clipboard-action="copy"
+               -        >
+               -            复制
+               -        </button>
+               -    </mint-cell>
+               -</v-touch>
+               -->
         </div>
     </div>
 </template>
@@ -95,6 +137,9 @@ button
     .mint-cell-wrapper
         font-size 14px
     .copy-referralcode
+        position absolute
+        top 9px
+        right 15px
         margin-left 5px
         width 40px
         text-align center
@@ -104,4 +149,7 @@ button
         background #181818
         color #fff
         outline none
+        z-index 1
+.cell
+    position relative
 </style>

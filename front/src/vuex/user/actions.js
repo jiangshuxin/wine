@@ -10,11 +10,12 @@ import {
     pay
 } from './api';
 
+import { getStorageItem } from 'common/util';
 import { getList } from '../mall/api';
 
 // 我的
 export async function getUserInfo({state, commit}, id) {
-    const userId = id || state.userInfo.userId;
+    const userId = id || state.userInfo.userId || getStorageItem('wineUserId');
     const result = await getUser(userId);
     commit('SET_USER_INFO', result);
 }

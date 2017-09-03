@@ -3,6 +3,7 @@ import Vue from 'vue';
 import home from './home';
 import mall from './mall';
 import shopCart from './shopCart';
+import manor from './manor';
 import user from './user';
 import login from './login';
 import { getUserAuth } from 'modules/common/auth';
@@ -15,7 +16,7 @@ const notFound = {
 };
 
 const router = new VueRouter({
-    routes: [home, mall, shopCart, user, login, notFound]
+    routes: [home, mall, manor, shopCart, user, login, notFound]
 });
 
 router.beforeEach(async (to, from, next) => {

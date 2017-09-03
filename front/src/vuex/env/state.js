@@ -15,6 +15,10 @@ export default {
         text: '商城',
         iconClass: 'icon-gouwu'
     }, {
+        id: 'manor',
+        text: '酒庄',
+        iconClass: ['icon-wodezhuangyuan', 'icon-format']
+    }, {
         id: 'shopCart',
         text: '购物车',
         iconClass: 'icon-gouwuche'
@@ -30,6 +34,7 @@ export default {
         home: 'home',
         mall: 'mall',
         mdseList: 'mall',
+        manor: 'manor',
         shopCart: 'shopCart',
         user: 'user',
         userList: 'user'
@@ -46,6 +51,9 @@ export default {
         mdseShopCart: {
             text: '购物车',
             goBack: true
+        },
+        manor: {
+            text: '酒庄'
         },
         personalList: {
             text: '个人中心',

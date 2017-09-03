@@ -3,7 +3,10 @@ export function shopCartList(state) {
 }
 
 export function shopCartTotalCount(state) {
-    return state.list.length;
+    return state.list.reduce((num, item) => {
+        num += item.count;
+        return num;
+    }, 0);
 }
 
 export function shopCartIsCheckAll(state) {

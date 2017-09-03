@@ -25,10 +25,11 @@ module.exports = {
                 name: '维德尊贵干红',
                 nameEn: 'Valdelosfrailes Prestigio',
                 smallPic: 'http://img5.imgtn.bdimg.com/it/u=1568156851,1614184660&fm=26&gp=0.jpg',
-                bigPic: [
-                    'http://onefunnyjoke.com/wp-content/uploads/2011/09/%E9%96%8B%E8%86%9B%E6%89%8B.gif',
-                    'http://img1.imgtn.bdimg.com/it/u=2158572121,184430064&fm=26&gp=0.jpg',
-                    'http://img1.imgtn.bdimg.com/it/u=3617220880,3026076505&fm=26&gp=0.jpg'
+                bigPics: [
+                    'http://img5.imgtn.bdimg.com/it/u=1289450689,1979040778&fm=27&gp=0.jpg',
+                    'http://img3.imgtn.bdimg.com/it/u=3437921661,2217376258&fm=27&gp=0.jpg',
+                    'http://img5.imgtn.bdimg.com/it/u=1815109083,527747720&fm=27&gp=0.jpg',
+                    'http://img3.imgtn.bdimg.com/it/u=4112213050,985164891&fm=27&gp=0.jpg'
                 ],
                 price: 3800,
                 wineType: '红葡萄酒',
@@ -40,8 +41,39 @@ module.exports = {
                 wineMaker: '蒋树新',
                 merchantName: '潘家园酒庄',
                 productArea: '北京',
-                reason: '没有理由！就是好喝！',
-                storyPic: 'http://img.zcool.cn/community/01cbf555c863b232f8755e66ec06f5.jpg'
+                status: 1,
+                // 酿造工艺
+                technology: '工艺特别牛逼',
+                // 橡木桶
+                barrel: '啊啊啊啊啊啊啊啊啊啊',
+                // 罐装时间
+                fillingTime: '2017-10-10 16:40:32',
+                // 保质期
+                expiryDate: '2017-12-30',
+                // 试饮温度
+                drinkTemperature: '27摄氏度',
+                // 醒酒时间
+                soberTime: '30分钟',
+                // 搭配推荐
+                collocation: '馒头片',
+                // 产量
+                yield: '1000ml/年',
+                // 库存量
+                inventory: '1000ml',
+                // 获奖照片
+                prizePics: [
+                    'http://img5.imgtn.bdimg.com/it/u=1289450689,1979040778&fm=27&gp=0.jpg',
+                    'http://img3.imgtn.bdimg.com/it/u=3437921661,2217376258&fm=27&gp=0.jpg',
+                    'http://img5.imgtn.bdimg.com/it/u=1815109083,527747720&fm=27&gp=0.jpg',
+                    'http://img3.imgtn.bdimg.com/it/u=4112213050,985164891&fm=27&gp=0.jpg'
+                ],
+                // 检验报告
+                inspectionReportPics: [
+                    'http://img5.imgtn.bdimg.com/it/u=1289450689,1979040778&fm=27&gp=0.jpg',
+                    'http://img3.imgtn.bdimg.com/it/u=3437921661,2217376258&fm=27&gp=0.jpg',
+                    'http://img5.imgtn.bdimg.com/it/u=1815109083,527747720&fm=27&gp=0.jpg',
+                    'http://img3.imgtn.bdimg.com/it/u=4112213050,985164891&fm=27&gp=0.jpg'
+                ]
             },
             totalCount: -1
         };
