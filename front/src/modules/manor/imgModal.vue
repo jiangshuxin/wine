@@ -24,6 +24,9 @@ export default {
         show() {
             if (!this.show) {
                 this.images = [];
+                document.body.style.overflow = 'auto';
+            } else {
+                document.body.style.overflow = 'hidden';
             }
         }
     }
@@ -38,11 +41,15 @@ export default {
     >
         <mint-swipe :auto="0" :prevent="true" :stopPropagation="true">
             <mint-swipe-item
-                class="swipe-item"
                 v-for="(item, index) in images"
                 :key="index"
             >
-                <div class="img" :style="{'background': `url(${item}) center/cover no-repeat`}"></div>
+                <!--
+                   -<div class="img" :style="{'background': `url(${item}) center/cover no-repeat`}"></div>
+                   -->
+                <div class="swipe-item">
+                    <img class="img" :src="item">
+                </div>
             </mint-swipe-item>
         </mint-swipe>
     </mint-popup>
@@ -54,6 +61,13 @@ export default {
     left 0
     right 0
     background #000
-.img
+.swipe-item
+    display flex
     height 100%
+    align-items center
+    justify-content center
+    text-align center
+.img
+    max-width 100%
+    max-height 100%
 </style>

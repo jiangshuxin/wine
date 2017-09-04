@@ -38,6 +38,9 @@ export default {
             if (!this.popupVisible) {
                 this.mdseInfo = null;
                 this.count = 1;
+                document.body.style.overflow = 'auto';
+            } else {
+                document.body.style.overflow = 'hidden';
             }
         }
     },

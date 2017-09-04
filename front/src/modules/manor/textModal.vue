@@ -30,6 +30,9 @@ export default {
                     this.text = '';
                     this.info = {};
                 }, 200);
+                document.body.style.overflow = 'auto';
+            } else {
+                document.body.style.overflow = 'hidden';
             }
         }
     }
@@ -62,15 +65,16 @@ h4, p
     padding 15px
     max-height 70%
     border-radius 6px
-    overflow-y scroll
 h4
     margin-bottom 15px
     padding-bottom 15px
     line-height 24px
     border-bottom 1px solid #eee
 p
+    height 300px
     font-size 14px
     color #333
+    overflow-y scroll
 .close
     position relative
     float right
