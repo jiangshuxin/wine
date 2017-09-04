@@ -11,7 +11,7 @@ const merchantInfo = {
     // 种植面积
     acreage: '',
     // 葡萄种植种类
-    agroType: '',
+    grapeType: '',
     // 平均树龄
     treeAge: '',
     // 酿酒师及介绍, 长篇文字
@@ -58,7 +58,7 @@ const merchantLayout = [{
     label: '种植面积',
     type: 'text'
 }, {
-    id: 'agroType',
+    id: 'grapeType',
     label: '葡萄种植种类',
     type: 'text'
 }, {
