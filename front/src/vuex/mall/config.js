@@ -31,7 +31,7 @@ export const catagory = [{
 export const year = [{
     value: '',
     text: '全部'
-}, ...num2Array(2011, 2016, 1).map(item => {
+}, ...num2Array(2011, 2017, 1).map(item => {
     return {value: item, text: addAfterWord(item, '年')};
 })];
 

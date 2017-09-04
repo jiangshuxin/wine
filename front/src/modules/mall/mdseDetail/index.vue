@@ -25,7 +25,10 @@ export default {
             mdse: 'mdseDetailInfo',
             layoutPolymer: 'mdseLayoutPolymer',
             shopCartList: 'shopCartList'
-        })
+        }),
+        clientWidth() {
+            return document.documentElement.clientWidth;
+        }
     },
     methods: {
         ...mapActions({
@@ -110,7 +113,7 @@ export default {
         <v-touch class="go-back" @tap="goBack">
             <i class="iconfont icon-left back-icon"></i>
         </v-touch>
-        <div class="mdse-swipe-wrapper">
+        <div class="mdse-swipe-wrapper" :style="{'height': `${clientWidth}px`}">
             <div v-if="+mdse.status === 2" class="sell-out">售罄</div>
             <mint-swipe :auto="4000" :prevent="true" :stopPropagation="true">
                 <mint-swipe-item
