@@ -22,10 +22,7 @@ export default {
         }),
         banner() {
             if (this.info.videoLink) {
-                return this.info.chateauPics.reduce((arr, item) => {
-                    arr.push(item);
-                    return arr;
-                }, [this.info.videoLink]);
+                return [this.info.videoLink];
             }
             return this.info.chateauPics;
         },
@@ -82,7 +79,7 @@ export default {
 <template>
     <div class="manor" v-if="info.merchantId">
         <div class="manor-image">
-            <mint-swipe :auto="info.videoLink ? 0 : 4000" :prevent="true" :stopPropagation="true">
+            <mint-swipe :auto="info.videoLink ? 0 : 4000" :prevent="true" :stopPropagation="true" :showIndicators="info.videoLink ? false : true">
                 <mint-swipe-item
                     class="swipe-item"
                     v-for="(item, index) in banner"
