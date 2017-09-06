@@ -2,8 +2,8 @@
 import { Field, Switch, Indicator } from 'mint-ui';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
-    created() {
-        this.init();
+    async created() {
+        await this.init();
     },
     computed: {
         ...mapGetters({
@@ -22,7 +22,8 @@ export default {
         ...mapMutations({
             initAddressDetail: 'INIT_ADDRESS_DETAIL_INFO',
             setAddressFormInfo: 'SET_ADDRESS_FORM_INFO',
-            checkAddressDetail: 'CHECK_ADDRESS_DETAIL'
+            checkAddressDetail: 'CHECK_ADDRESS_DETAIL',
+            changeHint: 'CHANGE_ENV_HINT_INFO'
         }),
         async init() {
             if (!this.isModify) {
@@ -47,7 +48,9 @@ export default {
                 await this.saveAddress(this.isModify);
             } catch (e) {
                 Indicator.close();
-                throw e;
+                this.changeHint(e.message);
+                console.error(e);
+                return;
             }
             Indicator.close();
             this.$router.go(-1);

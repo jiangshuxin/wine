@@ -15,47 +15,49 @@ export const layout = [{
     text: '我的推荐码'
 }];
 
-export const addressDetailLayout = [{
-    id: 'receiver',
-    label: '姓名',
-    type: 'text',
-    placeholder: '请输入收货人姓名',
-    state: '',
-    rule: [{
-        value: /^.*(\S+).*$/
-    }]
-}, {
-    id: 'phone',
-    label: '手机号',
-    type: 'number',
-    placeholder: '请输入收货人手机号',
-    state: '',
-    rule: [{
-        value: /^.*(\S+).*$/
-    }]
-}, {
-    id: 'province',
-    label: '省市区',
-    type: 'text',
-    placeholder: '请输入收货所属省市区',
-    state: '',
-    rule: [{
-        value: /^.*(\S+).*$/
-    }]
-}, {
-    id: 'address',
-    label: '详细地址',
-    type: 'textarea',
-    placeholder: '请输入收货详细地址',
-    rows: '4',
-    state: '',
-    rule: [{
-        value: /^.*(\S+).*$/
-    }]
-}, {
-    id: 'isDefault',
-    label: '设为默认地址'
-}];
+export const generatorAddressDetailLayout = () => {
+    return [{
+        id: 'receiver',
+        label: '姓名',
+        type: 'text',
+        placeholder: '请输入收货人姓名',
+        state: '',
+        rule: [{
+            value: /^.*(\S+).*$/
+        }]
+    }, {
+        id: 'phone',
+        label: '手机号',
+        type: 'number',
+        placeholder: '请输入收货人手机号',
+        state: '',
+        rule: [{
+            value: /^.*(\S+).*$/
+        }]
+    }, {
+        id: 'province',
+        label: '省市区',
+        type: 'text',
+        placeholder: '请输入收货所属省市区',
+        state: '',
+        rule: [{
+            value: /^.*(\S+).*$/
+        }]
+    }, {
+        id: 'address',
+        label: '详细地址',
+        type: 'textarea',
+        placeholder: '请输入收货详细地址',
+        rows: '4',
+        state: '',
+        rule: [{
+            value: /^.*(\S+).*$/
+        }]
+    }, {
+        id: 'isDefault',
+        label: '设为默认地址'
+    }];
+};
 
 export const orderTab = [{
     id: 0,

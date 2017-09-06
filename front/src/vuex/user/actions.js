@@ -53,7 +53,7 @@ export async function saveAddressDetail({state, commit}, isModify) {
     commit('CHECK_ADDRESS_DETAIL');
     const layout = state.addressDetailLayout;
     if (!layout.every(item => item.state ? item.state === 'success' : true)) {
-        return;
+        throw new Error('请填写完整的地址信息');
     }
     const {addressId, isDefault, receiver, phone, province, address} = state.addressDetail;
     const userId = state.userInfo.userId;

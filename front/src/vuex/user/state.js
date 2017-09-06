@@ -1,6 +1,6 @@
 import {
     layout,
-    addressDetailLayout,
+    generatorAddressDetailLayout,
     orderTab
 } from './config';
 
@@ -134,7 +134,7 @@ export default {
     isLogin: false,
     userInfo,
     layout,
-    addressDetailLayout,
+    addressDetailLayout: generatorAddressDetailLayout(),
     addressList: generatorAddressList(),
     addressDetail: generatorAddressDetail(),
     billsMdseList: [],
@@ -146,6 +146,7 @@ export default {
     orderTab,
     payInfo: generatorPayInfo(),
     personalLayout,
+    generatorAddressDetailLayout,
     generatorAddressDetail,
     generatorAddressList,
     generatorOrderList,

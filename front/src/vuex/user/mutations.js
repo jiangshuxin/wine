@@ -47,6 +47,7 @@ export function SET_ADDRESS_DETAIL_INFO(state, id) {
 
 export function INIT_ADDRESS_DETAIL_INFO(state) {
     state.addressDetail = state.generatorAddressDetail();
+    state.addressDetailLayout = state.generatorAddressDetailLayout();
 }
 
 export function INIT_ADDRESS_INFO(state) {
