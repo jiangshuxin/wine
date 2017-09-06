@@ -30,29 +30,32 @@ export default {
 };
 </script>
 <template>
-    <v-touch
-        class="cell-wrapper"
-        @tap="click"
-        :options="{domEvent: true, threshold: 100}"
-    >
-        <div class="cell">
-            <div class="mask" :class="{'press': onPress}" ref="mask"></div>
-            <div class="label">
-                <slot name="label">
-                    {{label}}
-                </slot>
+    <div class="cell-wrapper">
+        <v-touch
+            @tap="click"
+            :options="{domEvent: true, threshold: 100}"
+        >
+            <div class="cell">
+                <div class="mask" :class="{'press': onPress}" ref="mask"></div>
+                <div class="label">
+                    <slot name="label">
+                        {{label}}
+                    </slot>
+                </div>
+                <i class="iconfont icon-left arrow" v-if="isLink"></i>
             </div>
-            <i class="iconfont icon-left arrow" v-if="isLink"></i>
+        </v-touch>
+        <div class="cell-right">
             <span class="button">
                 <slot name="button"></slot>
             </span>
-            <span class="value" v-if="value">
+            <span class="value">
                 <slot name="value">
                     {{value}}
                 </slot>
             </span>
         </div>
-    </v-touch>
+    </div>
 </template>
 <style lang="stylus" scoped>
 .cell-wrapper
@@ -79,11 +82,17 @@ export default {
 .cell-wrapper:first-child .cell
         background-image none
         /* background-origin border-box */
+.cell-right
+    position absolute
+    right 15px
+    top 0px
+    padding 9px 0
 .label
     float left
 .value
     float right
     margin-right 6px
+    line-height 26px
     color #999
 .button
     float right

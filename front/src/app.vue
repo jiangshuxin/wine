@@ -13,8 +13,11 @@ import errorEventBus from 'common/error';
 export default {
     async created() {
         await this.init();
-        errorEventBus.$on('requestError', data => {
-            console.log(data);
+        errorEventBus.$on('requestError', e => {
+            this.changeHint(e);
+        });
+        errorEventBus.$on('loginError', e => {
+            this.changeHint(e);
         });
     },
     data() {

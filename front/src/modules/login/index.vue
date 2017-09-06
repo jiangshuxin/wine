@@ -1,6 +1,7 @@
 <script>
 import { Field, Indicator } from 'mint-ui';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import errorEventBus from 'common/error';
 export default {
     beforeRouteEnter(to, from, next) {
         next(vm => {
@@ -112,7 +113,8 @@ export default {
                     await this.loginWine();
                 } catch (e) {
                     Indicator.close();
-                    throw e;
+                    errorEventBus.$emit('loginError', e.message);
+                    return;
                 }
                 Indicator.close();
                 this.setDelay(0);

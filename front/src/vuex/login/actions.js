@@ -24,6 +24,10 @@ export async function loginWine({state, commit}) {
         type,
         parentId
     });
+    if (!result.success) {
+        commit('CHANGE_LOGIN_FORM_STATE', {id: 'password', status: 'error'});
+        throw new Error(result.errorMsg);
+    }
     commit('SET_USER_INFO', result);
 }
 

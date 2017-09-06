@@ -18,6 +18,10 @@ export function SET_LOGIN_DELAY(state, delay) {
     setStorageItem('wineVerifyDelay', delay);
 }
 
+export function CHANGE_LOGIN_FORM_STATE(state, {id, status}) {
+    state.layoutMap[id].state = status;
+}
+
 export function INIT_LOGIN(state) {
     state.layoutMap = state.generatorLayoutMap();
     state.options = state.generatorOptions();

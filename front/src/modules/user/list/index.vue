@@ -41,6 +41,9 @@ export default {
             Indicator.close();
         },
         routeHandler(info) {
+            if (info.id === 'referralCode') {
+                return;
+            }
             this.$router.push({
                 name: info.routeName,
                 query: {
@@ -77,6 +80,7 @@ export default {
                 <span slot="label">{{item.text}}</span>
                 <span slot="value" v-if="item.id === 'referralCode'">{{userInfo[item.id]}}</span>
                 <button
+                    ref="copy"
                     class="copy-referralcode"
                     slot="button"
                     v-if="item.id === 'referralCode'"
@@ -86,30 +90,6 @@ export default {
                     复制
                 </button>
             </cell>
-            <!--
-               -<v-touch
-               -    tag="div"
-               -    v-for="item in layout"
-               -    :key="item.routeName"
-               -    @tap="routeHandler(item)"
-               ->
-               -    <mint-cell
-               -        :title="item.text"
-               -        :is-link="item.id !== 'referralCode'"
-               -        style="fontSize: 12px;"
-               -    >
-               -    <span v-if="item.id === 'referralCode'">{{userInfo[item.id]}}</span>
-               -        <button
-               -            class="copy-referralcode"
-               -            v-if="item.id === 'referralCode'"
-               -            :data-clipboard-text="userInfo[item.id]"
-               -            data-clipboard-action="copy"
-               -        >
-               -            复制
-               -        </button>
-               -    </mint-cell>
-               -</v-touch>
-               -->
         </div>
     </div>
 </template>
@@ -137,9 +117,6 @@ button
     .mint-cell-wrapper
         font-size 14px
     .copy-referralcode
-        position absolute
-        top 9px
-        right 15px
         margin-left 5px
         width 40px
         text-align center
@@ -150,6 +127,4 @@ button
         color #fff
         outline none
         z-index 1
-.cell
-    position relative
 </style>
