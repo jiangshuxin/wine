@@ -6,7 +6,10 @@ export default {
     computed: {
         ...mapGetters({
             list: 'shopCartList'
-        })
+        }),
+        width() {
+            return document.documentElement.clientWidth - 20;
+        }
     },
     methods: {
         ...mapMutations({
@@ -93,7 +96,7 @@ export default {
                 handler: () => del(item)
              }]"
         >
-            <v-touch tag="div" class="shop-cart-list-item" slot="title" @tap="goDetail($event, item)">
+            <v-touch tag="div" class="shop-cart-list-item" slot="title" :style="{width: `${width}px`}" @tap="goDetail($event, item)">
                 <v-touch tag="div" ref="check" class="checkbox-icon" @tap="check($event, item)">
                     <i ref="checkIcon" class="icon" :class="{'checked': item.checked, 'checkbox-sell-out': +item.mdse.status === 2}"></i>
                 </v-touch>
