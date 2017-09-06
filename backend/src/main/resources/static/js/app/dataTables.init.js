@@ -219,14 +219,14 @@ var DataTable = {
                 that = table.column(table.init().columns[i].ddicRef+':name');
             }
 
-            $( 'input', this.footer() ).on( 'blur keyup', function (e) {
+            $(this.footer()).find('input').on( 'blur keyup', function (e) {
                 if(e.keyCode){
                     if(e.keyCode == 13) that.search( this.value ).draw();
                 }else if (that.search() !== this.value ) {
                     that.search( this.value ).draw();
                 }
             } );
-            $( 'select.selectpicker', this.footer() ).on( 'change', function (e) {
+            $(this.footer()).find('select.selectpicker').on( 'change', function (e) {
                 that.search( this.value ).draw();
             } );
         } );

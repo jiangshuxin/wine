@@ -314,9 +314,11 @@
             } );
 
             editor.on( 'preSubmit', function ( e, json, eventType ) {
-                if(!editor.val('merchantId')){
-                    alert('编号不能为空');
-                    return false;
+                if(eventType == 'create' || eventType == 'edit'){
+                    if(!editor.val('merchantId')){
+                        alert('编号不能为空');
+                        return false;
+                    }
                 }
             } );
 
