@@ -6,18 +6,21 @@ export default {
     // 全局提示
     hintMsg: '',
     // tab统一配置管理
-    tabList: [{
+    /*
+    {
         id: 'home',
         text: '首页',
         iconClass: 'icon-home-copy'
+    },
+    */
+    tabList: [{
+        id: 'manor',
+        text: '酒庄',
+        iconClass: ['icon-wodezhuangyuan', 'icon-format']
     }, {
         id: 'mall',
         text: '商城',
         iconClass: 'icon-gouwu'
-    }, {
-        id: 'manor',
-        text: '酒庄',
-        iconClass: ['icon-wodezhuangyuan', 'icon-format']
     }, {
         id: 'shopCart',
         text: '购物车',

@@ -1,5 +1,6 @@
 export default {
     path: '/',
+    redirect: {name: 'manor'},
     name: 'home',
     meta: {
         requiresQuery: ['merchantId']

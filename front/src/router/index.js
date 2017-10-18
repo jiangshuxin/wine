@@ -33,7 +33,7 @@ router.beforeEach(async (to, from, next) => {
         }
     }
     if (!from.name && from.path === '/') {
-        to.params.goBack = 'home';
+        to.params.goBack = 'manor';
     }
     next();
 });
