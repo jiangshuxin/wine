@@ -224,11 +224,12 @@ export default {
     bottom 0
     border-top 1px solid #d0d0d0
     background #f9f9f9
+    z-index 999
     &-item
-        color #c0c0c0
+        color #666
     &-icon
         font-size 24px
-        color #c0c0c0
+        color #666
 .tabbar > .is-selected
     background #f9f9f9
     color #333

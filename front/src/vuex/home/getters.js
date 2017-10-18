@@ -3,5 +3,5 @@ export function merchantInfo(state) {
 }
 
 export function merchantLayout(state) {
-    return state.merchantLayout;
+    return state.layout;
 }
