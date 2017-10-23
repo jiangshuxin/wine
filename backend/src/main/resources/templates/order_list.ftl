@@ -9,8 +9,8 @@
             <th>用户ID</th>
             <th>酒庄编号</th>
             <th>商品数量</th>
-            <th>订单金额</th>
-            <th>支付金额</th>
+            <th>订单金额（元）</th>
+            <th>支付金额（元）</th>
             <th>订单状态</th>
             <th>支付时间</th>
             <th>快递公司名称</th>
@@ -24,8 +24,8 @@
             <th>用户ID</th>
             <th>酒庄编号</th>
             <th>商品数量</th>
-            <th>订单金额</th>
-            <th>支付金额</th>
+            <th>订单金额（元）</th>
+            <th>支付金额（元）</th>
             <th>订单状态</th>
             <th>支付时间</th>
             <th>快递公司名称</th>
@@ -143,12 +143,26 @@
                 {
                     extend: 'collection',
                     text: '导出',
+                    autoClose: true,
                     buttons: [
-                        'copy',
-                        'excel',
-                        'csv',
-                        'pdf',
-                        'print'
+                        {
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        }
                     ]
                 }
             ],{initComplete: function ()

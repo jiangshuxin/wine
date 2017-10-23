@@ -9,7 +9,7 @@
             <th>用户名(手机号)</th>
             <th>状态名称</th>
             <th>类型</th>
-            <th>余额</th>
+            <th>余额（元）</th>
             <th>姓名</th>
             <th>状态</th>
             <th>类型</th>
@@ -23,7 +23,7 @@
             <th>用户名(手机号)</th>
             <th>状态名称</th>
             <th>类型</th>
-            <th>余额</th>
+            <th>余额（元）</th>
             <th>姓名</th>
             <th>状态</th>
             <th>类型</th>
@@ -110,6 +110,10 @@
                         var amount = window.prompt('请输入打款金额',0);
 
                         if(!amount){
+                            return;
+                        }
+                        if(isNaN(amount)){
+                            alert('请输入正确的打款金额！');
                             return;
                         }
                         var paramObj = {
