@@ -37,73 +37,124 @@ const merchantInfo = {
     tourismLink: ''
 };
 
-const merchantLayout = [{
-    id: 'name',
-    label: '酒庄',
-    type: 'text'
-}, {
-    id: 'nameEn',
-    label: '英文名',
-    type: 'text'
-}, {
-    id: 'master',
-    label: '庄主',
-    type: 'text'
-}, {
-    id: 'createYear',
-    label: '注册时间',
-    type: 'text'
-}, {
-    id: 'acreage',
-    label: '种植面积',
-    type: 'text'
-}, {
-    id: 'grapeType',
-    label: '葡萄种植种类',
-    type: 'text'
-}, {
-    id: 'treeAge',
-    label: '平均树龄',
-    type: 'text'
-}, {
-    id: 'output',
-    label: '年产量',
-    type: 'text'
-}, {
-    id: 'soilAndClimate',
-    label: '实时土壤和气候',
-    type: 'text'
-}, {
-    id: 'wineMaker',
-    label: '酿酒师介绍',
-    type: 'btn-group-text'
-}, {
-    id: 'level',
-    label: '酒庄级别介绍',
-    type: 'btn-group-text'
-}, {
-    id: 'description',
-    label: '酒庄介绍',
-    type: 'btn-group-text'
-}, {
-    id: 'chateauPics',
-    label: '酒庄照片',
-    type: 'btn-group-img'
-}, {
-    id: 'landPics',
-    label: '种植地照片',
-    type: 'btn-group-img'
-}, {
-    id: 'certPics',
-    label: '证书照片',
-    type: 'btn-group-img'
-}, {
-    id: 'prizePics',
-    label: '获奖照片',
-    type: 'btn-group-img'
-}];
+const nodeMap = {
+    name: {
+        id: 'name',
+        label: '酒庄',
+        type: 'text'
+    },
+    nameEn: {
+        id: 'nameEn',
+        label: '英文名',
+        type: 'text'
+    },
+    master: {
+        id: 'master',
+        label: '庄主',
+        type: 'text'
+    },
+    createYear: {
+        id: 'createYear',
+        label: '注册时间',
+        type: 'text'
+    },
+    acreage: {
+        id: 'acreage',
+        label: '种植面积',
+        type: 'text'
+    },
+    grapeType: {
+        id: 'grapeType',
+        label: '葡萄种植种类',
+        type: 'text'
+    },
+    treeAge: {
+        id: 'treeAge',
+        label: '平均树龄',
+        type: 'text'
+    },
+    output: {
+        id: 'output',
+        label: '年产量',
+        type: 'text'
+    },
+    soilAndClimate: {
+        id: 'soilAndClimate',
+        label: '实时土壤和气候',
+        type: 'text'
+    },
+    wineMaker: {
+        id: 'wineMaker',
+        label: '酿酒师介绍',
+        type: 'btn-group-text'
+    },
+    level: {
+        id: 'level',
+        label: '酒庄级别介绍',
+        type: 'btn-group-text'
+    },
+    description: {
+        id: 'description',
+        label: '酒庄介绍',
+        type: 'btn-group-text'
+    },
+    chateauPics: {
+        id: 'chateauPics',
+        label: '酒庄照片',
+        type: 'btn-group-img'
+    },
+    landPics: {
+        id: 'landPics',
+        label: '种植地照片',
+        type: 'btn-group-img'
+    },
+    certPics: {
+        id: 'certPics',
+        label: '证书照片',
+        type: 'btn-group-img'
+    },
+    prizePics: {
+        id: 'prizePics',
+        label: '获奖照片',
+        type: 'btn-group-img'
+    }
+};
+
+const layout = {
+    title: ['name', 'nameEn'].map(id => nodeMap[id]),
+    info: {
+        title: '酒庄信息',
+        node: [
+            'master',
+            'createYear',
+            'acreage',
+            'grapeType',
+            'treeAge',
+            'output',
+            'soilAndClimate'
+        ].map(id => nodeMap[id])
+    },
+    introduce: {
+        title: '酒庄介绍',
+        node: [
+            'wineMaker',
+            'level',
+            'description',
+            'chateauPics',
+            'landPics'
+        ].map(id => nodeMap[id])
+    },
+    certificate: {
+        title: '荣誉证书',
+        node: [
+            'certPics',
+            'prizePics'
+        ].map(id => nodeMap[id])
+    }
+};
 
 export default {
     merchantInfo,
-    merchantLayout
+    layout,
+    nodeMap
 };

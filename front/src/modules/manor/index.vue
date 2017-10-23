@@ -18,7 +18,7 @@ export default {
     computed: {
         ...mapGetters({
             info: 'merchantInfo',
-            layoutInfo: 'merchantLayout'
+            layout: 'merchantLayout'
         }),
         banner() {
             if (this.info.videoLink) {
@@ -27,21 +27,11 @@ export default {
             return this.info.chateauPics;
         },
         title() {
-            return this.layoutInfo
-                .filter(item => item.id === 'name' || item.id === 'nameEn')
+            return this.layout.title
                 .reduce((obj, item) => {
-                    obj[item.id] = this.info[item.id];
+                    obj[item.id] = item;
                     return obj;
                 }, {});
-        },
-        layout() {
-            return this.layoutInfo.filter(item => item.id !== 'name' && item.id !== 'nameEn');
-        },
-        text() {
-            return this.layout.filter(item => item.type === 'text');
-        },
-        group() {
-            return this.layout.filter(item => item.type.search('btn-group') !== -1);
         }
     },
     methods: {
@@ -101,22 +91,37 @@ export default {
             <div class="manor-description">
                 <div class="manor-title">
                     <div class="title">
-                        <h3 v-if="title.name">{{title.name}}</h3>
-                        <p v-if="title.nameEn">{{title.nameEn}}</p>
+                        <h3>{{info[title.name.id]}}</h3>
+                        <p>{{info[title.nameEn.id]}}</p>
                     </div>
                     <v-touch class="appointment-btn" @tap="appointment">马上预约</v-touch>
                 </div>
-                <ul class="manor-property">
-                    <li v-for="item in text" v-if="info[item.id]">
-                        <span class="label">{{item.label}}:</span>
-                        <span class="text">{{info[item.id]}}</span>
-                    </li>
-                </ul>
             </div>
-            <div>
+            <div class="manor-property">
+                <h4>{{layout.info.title}}</h4>
+                <dl v-for="item in layout.info.node" v-if="info[item.id]">
+                    <dt class="label">{{item.label}}:</dt>
+                    <dd class="text">{{info[item.id]}}</dd>
+                </dl>
+            </div>
+            <div class="manor-pics">
+                <h4>{{layout.introduce.title}}</h4>
                 <cell
+                    class="manor-pics-cell"
                     v-if="info[item.id] && info[item.id].length"
-                    v-for="item in group"
+                    v-for="item in layout.introduce.node"
+                    :label="item.label"
+                    is-link
+                    @click-cell="showModal(item)"
+                >
+                </cell>
+            </div>
+            <div class="manor-pics">
+                <h4>{{layout.certificate.title}}</h4>
+                <cell
+                    class="manor-pics-cell"
+                    v-if="info[item.id] && info[item.id].length"
+                    v-for="item in layout.certificate.node"
                     :label="item.label"
                     is-link
                     @click-cell="showModal(item)"
@@ -143,18 +148,19 @@ p, h3
         .img
             height 100%
     &-description
-        padding 15px 0 15px 15px
         margin-bottom 15px
+        padding 15px 0 15px 15px
         background #fff
     &-title
         display flex
-        padding 0 15px 15px 0
+        padding 0 15px 0 0
         text-align left
         align-items center
         h3
             font-size 18px
             color #333
         p
+            font-size 14px
             color #666
         .title
             flex 1
@@ -168,16 +174,66 @@ p, h3
             font-size 14px
             color #cf1f34
     &-property
-        padding 15px 15px 0 0
-        border-top 1px solid #eee
         font-size 14px
-        color #444
-        li
+        color #333
+        background #fff
+        h4
+            position relative
+            margin 0
+            padding-left 10px
+            line-height 50px
+            font-weight bold
+            &:before
+                content ''
+                position absolute
+                top 50%
+                left 0
+                margin-top -10px
+                width 6px
+                height 20px
+                background #cf1f34
+        dl
             display flex
-            line-height 25px
-        .label
-            margin-right 10px
+            margin 0
+        dt
+            flex 1
+            border-top 1px solid #d9d9d9
+            border-right 1px solid #d9d9d9
+            padding 0 10px
+            line-height 35px
             white-space nowrap
+            text-align left
+        dd
+            flex 2
+            margin 0
+            border-top 1px solid #d9d9d9
+            padding 0 10px
+            line-height 35px
+            text-align left
+    &-pics
+        margin-top 15px
+        font-size 14px
+        color #333
+        background #fff
+        h4
+            position relative
+            margin 0
+            border-bottom 1px solid #d9d9d9
+            padding-left 10px
+            line-height 50px
+            font-weight bold
+            z-index 1
+            &:before
+                content ''
+                position absolute
+                top 50%
+                left 0
+                margin-top -10px
+                width 6px
+                height 20px
+                background #cf1f34
+        &-cell
+            margin-top -1px
 .group-label
     font-size 14px
     color #333

@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 
 const app = new Express();
 const compiler = webpack(webpackDevConfig);
-const port = process.env.port || 80;
+const port = process.env.port || 8080;
 // const router = require('../mock');
 
 app.use(webpackDevMiddleware(compiler, {
