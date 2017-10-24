@@ -232,9 +232,9 @@ export default {
         color #666
 .tabbar > .is-selected
     background #f9f9f9
-    color #333
+    color #cf1f34
     .tabbar-icon
-        color #333
+        color #cf1f34
     .icon-format
         color #cf1f34
 .icon-format

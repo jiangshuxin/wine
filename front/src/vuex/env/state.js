@@ -20,15 +20,15 @@ export default {
     }, {
         id: 'mall',
         text: '商城',
-        iconClass: 'icon-gouwu'
+        iconClass: 'icon-103'
     }, {
         id: 'shopCart',
         text: '购物车',
-        iconClass: 'icon-gouwuche'
+        iconClass: 'icon-gouwuche1'
     }, {
         id: 'user',
         text: '我的',
-        iconClass: 'icon-wode'
+        iconClass: 'icon-wode-copy'
     }],
     // 路由name和tabId映射关系
     // 存在映射关系的将展示tab, 并选中tab
@@ -45,9 +45,11 @@ export default {
     // head信息统一配置管理
     // key 为路由名称
     headMap: {
-        home: {
-            text: '首页'
-        },
+        /*
+         *home: {
+         *    text: '首页'
+         *},
+         */
         shopCart: {
             text: '购物车'
         },
@@ -55,9 +57,11 @@ export default {
             text: '购物车',
             goBack: true
         },
-        manor: {
-            text: '酒庄'
-        },
+        /*
+         *manor: {
+         *    text: '酒庄'
+         *},
+         */
         personalList: {
             text: '个人中心',
             goBack: true

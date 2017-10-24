@@ -100,7 +100,7 @@ export default {
             <div class="manor-property">
                 <h4>{{layout.info.title}}</h4>
                 <dl v-for="item in layout.info.node" v-if="info[item.id]">
-                    <dt class="label">{{item.label}}:</dt>
+                    <dt class="label">{{item.label}}</dt>
                     <dd class="text">{{info[item.id]}}</dd>
                 </dl>
             </div>
