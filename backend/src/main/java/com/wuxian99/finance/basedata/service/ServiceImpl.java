@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.service;
 
+import com.google.gson.Gson;
+import com.wuxian99.finance.basedata.domain.*;
 import com.wuxian99.finance.basedata.domain.entity.system.DdicItemEntity;
 import com.wuxian99.finance.basedata.domain.model.ExecuteInfo;
 import com.wuxian99.finance.basedata.domain.model.MetadataInfo;
@@ -15,6 +17,7 @@ import com.wuxian99.finance.common.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -60,6 +63,44 @@ public class ServiceImpl implements IService {
 	@Override
 	public Result<?> executeFind(QueryCommand command, SigninUser signinUser) {
 		ExecuteInfo info = convert.convert(command,signinUser);
+
+//		System.out.println("SigninUser:" + signinUser);
+//		System.out.println("ExecuteInfoAction:" + info.getAction());
+//		System.out.println("ExecuteInfoRepository:" + info.getRepository());
+//		System.out.println("ExecuteInfoArgs:" + new Gson().toJson(info.getArgs()));
+//		if(signinUser != null && !"admin".equals(signinUser.getAccount())) {
+//			if (info.getArgs() != null && info.getArgs().length > 1 && info.getArgs()[0] instanceof Example) {
+//				Example example = (Example) info.getArgs()[0];
+//				System.out.println("Probe:" + new Gson().toJson(example.getProbe()));
+//				System.out.println("ProbeType:" + example.getProbe().getClass());
+//				if (example.getProbe() instanceof MerchantEntity) {
+//					MerchantEntity entity = (MerchantEntity) example.getProbe();
+//					entity.setMerchantId(signinUser.getAccount());
+//				}
+//				if (example.getProbe() instanceof MdseEntity) {
+//					MdseEntity entity = (MdseEntity) example.getProbe();
+//					entity.setMerchantId(signinUser.getAccount());
+//				}
+//				if (example.getProbe() instanceof OrderEntity) {
+//					OrderEntity entity = (OrderEntity) example.getProbe();
+//					entity.setMerchantId(signinUser.getAccount());
+//				}
+//				if (example.getProbe() instanceof DiscoverEntity) {
+//					DiscoverEntity entity = (DiscoverEntity) example.getProbe();
+//					entity.setMerchantId(signinUser.getAccount());
+//				}
+//				if (example.getProbe() instanceof DistributionConfigEntity) {
+//					DistributionConfigEntity entity = (DistributionConfigEntity) example.getProbe();
+//					entity.setMerchantId(signinUser.getAccount());
+//				}
+//				if (example.getProbe() instanceof BannerEntity) {
+//					BannerEntity entity = (BannerEntity) example.getProbe();
+//					entity.setMerchantId(signinUser.getAccount());
+//				}
+//				System.out.println("--Probe:" + new Gson().toJson(example.getProbe()));
+//			}
+//		}
+//		System.out.println("--ExecuteInfoArgs:" + new Gson().toJson(info.getArgs()));
 
 		// 方法执行
 		Object obj = execute(info);

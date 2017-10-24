@@ -251,6 +251,15 @@ public class ExecuteConvert {
 				ingorePaths.add("department");//没有所属部门的用户  department不作为where条件
 			}
 		}
+
+		//数据过滤，只有管理员能看到所有数据，酒庄管理员能看到该酒庄的数据
+		if(signinUser != null && !"admin".equals(signinUser.getAccount())){
+			if(PropertyUtils.isWriteable(entity, "merchantId")){
+				PropertyUtils.setProperty(entity, "merchantId", signinUser.getAccount());
+				ingorePaths.remove("merchantId");
+			}
+		}
+
 		String[] ingorePathArr = ingorePaths.toArray(new String[ingorePaths.size()]);
 		ExampleMatcher matcher = ExampleMatcher.matching().withIncludeNullValues().withIgnorePaths(ingorePathArr);
 		matcher = matcher.withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains());

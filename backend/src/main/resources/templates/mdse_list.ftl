@@ -9,7 +9,7 @@
             <th>酒庄编号</th>
             <th>状态</th>
             <th>分类</th>
-            <th>价格</th>
+            <th>价格（元）</th>
             <th>分类</th>
             <th>状态</th>
             <th>图片上传编号</th>
@@ -28,7 +28,7 @@
             <th>酒庄编号</th>
             <th>状态</th>
             <th>分类</th>
-            <th>价格</th>
+            <th>价格（元）</th>
             <th>分类</th>
             <th>状态</th>
             <th>图片上传编号</th>
@@ -71,7 +71,7 @@
                 label: "英文名称:",
                 name: "nameEn"
             }, {
-                label: "价格(元):",
+                label: "价格（元）:",
                 name: "price"
             }, {
                 label: "状态:",
@@ -260,9 +260,9 @@
                 { data: "merchantId"},
                 { data: "statusName",searchType:"select",ddic:"mdseStatus",ddicRef:"status"},
                 { data: "catagoryName",searchType:"select",ddic:"mdseCatagory",ddicRef:"catagory"},
-                { data: "price",render: function ( data, type, row ) {
+                { data: "price", isYuan:"true",render: function ( data, type, row ) {
                     if(!isNaN(row.price)){
-                        return new Number(row.price)/100;
+                        return "￥" + (new Number(row.price)/100);
                     }
                 }},
                 { data: "catagory"},
