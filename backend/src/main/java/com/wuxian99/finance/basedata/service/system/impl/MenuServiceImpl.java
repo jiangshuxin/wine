@@ -84,16 +84,22 @@ public class MenuServiceImpl implements MenuService {
         }
 
         String attribute1 = entity.getAttribute1();//用于控制权限
-        if(StringUtils.isNotEmpty(attribute1) && signinUser != null && PropertyUtils.isReadable(signinUser,attribute1)){
-            Object result = null;
-            try {
-                result = PropertyUtils.getProperty(signinUser,attribute1);//auth
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if(result instanceof Boolean){
-                menu.setHidden(!(Boolean)result);
-            }
+//        if(StringUtils.isNotEmpty(attribute1) && signinUser != null && PropertyUtils.isReadable(signinUser,attribute1)){
+//            Object result = null;
+//            try {
+//                result = PropertyUtils.getProperty(signinUser,attribute1);//auth
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            if(result instanceof Boolean){
+//                menu.setHidden(!(Boolean)result);
+//            }
+//        }
+
+        if("admin".equals(attribute1) && signinUser != null && !"admin".equals(signinUser.getAccount())){
+            menu.setHidden(true);
+        }else{
+            menu.setHidden(false);
         }
 
         int length = entity.getSortNo().length();

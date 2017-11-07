@@ -1,5 +1,7 @@
 package com.wuxian99.finance.basedata.domain.model;
 
+import com.google.gson.Gson;
+
 /**
  * @author fczheng
  * 封装通用service执行所需要的信息

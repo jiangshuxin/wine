@@ -3,6 +3,7 @@ package com.wuxian99.finance.basedata.web.action;
 import com.wuxian99.finance.basedata.domain.MerchantEntity;
 import com.wuxian99.finance.basedata.domain.UserEntity;
 import com.wuxian99.finance.basedata.domain.model.Select;
+import com.wuxian99.finance.basedata.domain.model.SigninUser;
 import com.wuxian99.finance.basedata.service.wine.MerchantService;
 import com.wuxian99.finance.basedata.service.wine.OrderService;
 import com.wuxian99.finance.basedata.service.wine.UserService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,17 +40,24 @@ public class BackendController {
     private UserService userService;
 
     @RequestMapping(value="/merchant/queryAll", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<List<Select>> getAllMerchant(){
+    public Result<List<Select>> getAllMerchant(HttpSession session){
         List<Select> selectList = new ArrayList<>();
-        Select all = new Select("------请选择-----","");
-        selectList.add(all);
-        List<MerchantEntity> merchantEntities = merchantService.queryAll();
-        if(CollectionUtils.isNotEmpty(merchantEntities)){
-            merchantEntities.forEach(merchantEntity -> {
-                Select select = new Select(merchantEntity.getName(),merchantEntity.getMerchantId());
-                selectList.add(select);
-            });
+        SigninUser user = (SigninUser)session.getAttribute("signinUser");
+        if("admin".equals(user.getAccount())){
+            Select all = new Select("------请选择-----","");
+            selectList.add(all);
+            List<MerchantEntity> merchantEntities = merchantService.queryAll();
+            if(CollectionUtils.isNotEmpty(merchantEntities)){
+                merchantEntities.forEach(merchantEntity -> {
+                    Select select = new Select(merchantEntity.getName(),merchantEntity.getMerchantId());
+                    selectList.add(select);
+                });
+            }
+        }else{
+            Select select = new Select(user.getName(),user.getAccount());
+            selectList.add(select);
         }
+
         return Result.buildSuccess(selectList);
     }
 

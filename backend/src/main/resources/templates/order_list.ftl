@@ -4,7 +4,7 @@
     <table id="dataTable" class="display" cellspacing="0" width="100%">
         <thead>
         <tr>
-            <th>订单号</th>
+            <th>订单编号</th>
             <th>订单时间</th>
             <th>用户ID</th>
             <th>酒庄编号</th>
@@ -19,7 +19,7 @@
 
         <tfoot>
         <tr>
-            <th>订单号</th>
+            <th>订单编号</th>
             <th>订单时间</th>
             <th>用户ID</th>
             <th>酒庄编号</th>
@@ -38,60 +38,51 @@
 
         $(document).ready(function() {
             editor = DataTable.Editor.newInstance('${moduleName}',[ {
-                label: "订单号:",
+                label: "订单编号:",
                 name: "id",
                 type: "readonly"
             }, {
                 label: "订单时间:",
                 name: "time",
                 type: "readonly"
-            }, {
-                label: "买家用户ID:",
-                name: "userId",
-                type: "readonly"
+            //}, {
+            //    label: "买家用户ID:",
+            //    name: "userId",
+            //    type: "readonly"
             }, {
                 label: "酒庄编号:",
                 name: "merchantId",
                 type: "readonly"
             }, {
-                label: "订单金额:",
+                label: "订单金额（元）:",
                 name: "amount",
                 type: "readonly"
-            }, {
-                label: "商品数量:",
-                name: "mdseCount",
-                type: "readonly"
-            }, {
-                label: "支付金额:",
-                name: "payAmount",
-                type: "readonly"
-            },{
-                label: "订单状态:",
-                name: "status",
-                type:'select',
-                options:orderStatusDdic
-            },{
-                label: "支付时间:",
-                name: "payTime",
-                type: "readonly"
-            },{
-                label: "支付流水号:",
-                name: "paySeqs",
-                type: "readonly"
-            },{
-                label: "支付二维码图片:",
-                name: "payPic",
-                type: "readonly"
-            },{
-                label: "买家备注:",
-                name: "comment",
-                type: "readonly"
-            },{
-                label: "快递公司名称:",
-                name: "logisticsCompany"
-            },{
-                label: "快递单号:",
-                name: "logisticsSeqs"
+            //}, {
+            //    label: "商品数量:",
+            //    name: "mdseCount",
+            //    type: "readonly"
+            //}, {
+            //    label: "支付金额:",
+            //    name: "payAmount",
+            //    type: "readonly"
+            //},{
+            //    label: "订单状态:",
+            //    name: "status",
+            //    type:'select',
+            //    options:orderStatusDdic
+            //},{
+            //    label: "支付时间:",
+            //    name: "payTime",
+            //    type: "readonly"
+            //},{
+            //    label: "支付流水号:",
+            //    name: "paySeqs",
+            //    type: "readonly"
+            //},{
+            //    label: "支付二维码图片:",
+            //    name: "payPic",
+            //    type: "readonly"
+
             },{
                 label: "发票信息:",
                 name: "invoiceInfo",
@@ -112,7 +103,18 @@
                 label: "详细地址:",
                 name: "address",
                 type: "readonly"
+            },{
+                label: "买家备注:",
+                name: "comment",
+                type: "readonly"
+            },{
+                label: "快递公司名称:",
+                name: "logisticsCompany"
+            }, {
+                label: "快递单号:",
+                name: "logisticsSeqs"
             }
+
             ],{
 
             });
@@ -123,14 +125,14 @@
                 { data: "userId" },
                 { data: "merchantId"},
                 { data: "mdseCount"},
-                { data: "amount",render: function ( data, type, row ) {
+                { data: "amount", isYuan:"true",render: function ( data, type, row ) {
                     if(!isNaN(row.amount)){
-                        return new Number(row.amount)/100;
+                        return "￥" + (new Number(row.amount)/100);
                     }
                 }},
-                { data: "payAmount",render: function ( data, type, row ) {
+                { data: "payAmount", isYuan:"true",render: function ( data, type, row ) {
                     if(!isNaN(row.payAmount)){
-                        return new Number(row.payAmount)/100;
+                        return "￥" + (new Number(row.payAmount)/100);
                     }
                 }},
                 { data: "statusName",searchType:"select",ddic:"orderStatus",ddicRef:"status"},
@@ -138,8 +140,8 @@
                 { data: "logisticsCompany"},
                 { data: "status"}
             ],[
-                { extend: "edit",   editor: editor },
-                { extend: "remove", editor: editor },
+                { extend: "edit", editor: editor, text: "录入发货信息"},
+                //{ extend: "remove", editor: editor },
                 {
                     extend: 'collection',
                     text: '导出',
@@ -169,7 +171,8 @@
             {
 
             },"columnDefs": [
-                { "visible": false, "targets": [10] }
+                { "visible": false, "targets": [10] },
+                { "searchable": false, "targets": [6,7] }
             ]
                 , order: [[ 0, 'desc' ]]}) );
 
@@ -197,7 +200,7 @@
                     };
                     var jsonObj = Invoker.post('/backend/order/updateStatus',paramObj);
                     if(jsonObj.success && jsonObj.data > 0){
-                        alert('更新成功，订单已完成！');
+                        alert('录入发货信息成功，订单已完成！');
                         DataTable.reload(table);
                     }else{
                         alert(jsonObj.errorMsg);

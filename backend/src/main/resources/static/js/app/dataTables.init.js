@@ -188,7 +188,10 @@ var DataTable = {
             var $that = $(this);
             var searchType = table.init().columns[i].searchType || 'text';
             var category = table.init().columns[i].ddic || '';
-
+            var title = $(this).text();
+            //if(title.indexOf("（元）")> 0 || title.indexOf("时间")> 0){
+            //    return true;
+            //}
             if(searchType == 'select'){
                 var data = Ddic.get(category);
                 if(!data || data.length == 0)return true;
@@ -202,7 +205,7 @@ var DataTable = {
                 $that.html(selectHtml.join('\n'));
 
             }else{//text & date
-                var title = $(this).text();
+
                 $(this).html( '<input type="'+searchType+'" placeholder="搜索 '+title+'" />' );
 
             }
@@ -218,16 +221,29 @@ var DataTable = {
             if(table.init().columns[i] && table.init().columns[i].ddicRef){
                 that = table.column(table.init().columns[i].ddicRef+':name');
             }
-
             $(this.footer()).find('input').on( 'blur keyup', function (e) {
-                if(e.keyCode){
-                    if(e.keyCode == 13) that.search( this.value ).draw();
-                }else if (that.search() !== this.value ) {
-                    that.search( this.value ).draw();
+                if(e.keyCode) {
+                    if (e.keyCode == 13){
+                        if ((table.init().columns[i].isYuan == "true") && !isNaN(this.value)) {
+                            that.search(new Number(this.value) * 100 + "").draw();
+                        }else {
+                            that.search(this.value).draw();
+                        }
+                    }
+                }else if (that.search() !== this.value) {
+                    if ((table.init().columns[i].isYuan == "true") && !isNaN(this.value)) {
+                        that.search(new Number(this.value) * 100 + "").draw();
+                    }else {
+                        that.search(this.value).draw();
+                    }
                 }
             } );
             $(this.footer()).find('select.selectpicker').on( 'change', function (e) {
-                that.search( this.value ).draw();
+                if ((table.init().columns[i].isYuan == "true") && !isNaN(this.value)) {
+                    that.search(new Number(this.value) * 100 + "").draw();
+                }else {
+                    that.search(this.value).draw();
+                }
             } );
         } );
     },

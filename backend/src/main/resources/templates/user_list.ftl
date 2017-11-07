@@ -6,7 +6,7 @@
         <tr>
             <th>编号</th>
             <th>推荐人编号</th>
-            <th>用户名(手机号)</th>
+            <th>用户名（手机号）</th>
             <th>状态名称</th>
             <th>类型</th>
             <th>余额（元）</th>
@@ -20,7 +20,7 @@
         <tr>
             <th>编号</th>
             <th>推荐人编号</th>
-            <th>用户名(手机号)</th>
+            <th>用户名（手机号）</th>
             <th>状态名称</th>
             <th>类型</th>
             <th>余额（元）</th>
@@ -47,7 +47,7 @@
                 name: "parentId",
                 type: "readonly"
             }, {
-                label: "用户名(手机号):",
+                label: "用户名（手机号）:",
                 name: "userName",
                 type: "readonly"
             }, {
@@ -63,7 +63,7 @@
                 options: userTypeDdic
                 //def: 0
             }, {
-                label: "余额:",
+                label: "余额(元):",
                 name: "balance"
             }, {
                 label: "姓名:",
@@ -90,9 +90,9 @@
                 { data: "userName" },
                 { data: "statusName",searchType:"select",ddic:"userStatus",ddicRef:"status"},
                 { data: "typeName",searchType:"select",ddic:"userType",ddicRef:"type"},
-                { data: "balance",render: function ( data, type, row ) {
+                { data: "balance", isYuan:"true", render: function ( data, type, row ) {
                     if(!isNaN(row.balance)){
-                        return new Number(row.balance)/100;
+                        return "￥" + (new Number(row.balance)/100);
                     }
                 }},
                 { data: "realName"},
@@ -101,7 +101,7 @@
             ],[
                 { extend: "create", editor: editor },
                 { extend: "edit",   editor: editor },
-                { extend: "remove", editor: editor },
+                //{ extend: "remove", editor: editor },
                 {
                     extend: "selectedSingle",
                     text: "分销佣金打款",
@@ -140,12 +140,26 @@
                 {
                     extend: 'collection',
                     text: '导出',
+                    autoClose: true,
                     buttons: [
-                        'copy',
-                        'excel',
-                        'csv',
-                        'pdf',
-                        'print'
+                        {
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        }
                     ]
                 }
             ],{initComplete: function ()

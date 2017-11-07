@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setName(merchantEntity.getName());
-        user.setDepartment(merchantEntity.getNameEn());
+        user.setDepartment(merchantEntity.getName());
         user.setAccount(merchantEntity.getMerchantId());
         return Result.buildSuccess(user);
     }
