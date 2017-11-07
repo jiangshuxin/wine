@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="/wine/charts/index.css">
-    <link rel="stylesheet" href="/wine/charts/addUser/index.css">
-    <link rel="stylesheet" href="/wine/charts/totalSale/index.css">
-    <link rel="stylesheet" href="/wine/charts/buyingPower/index.css">
-    <link rel="stylesheet" href="/wine/charts/singleGoods/index.css">
-    <link rel="stylesheet" href="/wine/charts/todayOrder/index.css">
-    <script src="/wine/charts/src/echarts.min.js"></script>
-    <script src="/wine/charts/index.js"></script>
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./addUser/index.css">
+    <link rel="stylesheet" href="./totalSale/index.css">
+    <link rel="stylesheet" href="./buyingPower/index.css">
+    <link rel="stylesheet" href="./singleGoods/index.css">
+    <link rel="stylesheet" href="./todayOrder/index.css">
+    <script src="./src/echarts.min.js"></script>
+    <script src="./index.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -56,11 +56,11 @@
             </div>
         </div>
     </div>
-    <script src="/wine/charts/todayOrder/index.js"></script>
-    <script src="/wine/charts/addUser/index.js"></script>
-    <script src="/wine/charts/totalSale/index.js"></script>
-    <script src="/wine/charts/buyingPower/index.js"></script>
-    <script src="/wine/charts/singleGoods/index.js"></script>
+    <script src="./todayOrder/index.js"></script>
+    <script src="./addUser/index.js"></script>
+    <script src="./totalSale/index.js"></script>
+    <script src="./buyingPower/index.js"></script>
+    <script src="./singleGoods/index.js"></script>
 </body>
 </html>
 </@dt.init>

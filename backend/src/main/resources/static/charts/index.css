@@ -1,0 +1,63 @@
+html,
+body,
+h4,
+p {
+    margin: 0;
+    padding: 0;
+}
+.wrapper {
+    padding: 0 10px;
+    background: #272c34
+}
+
+.header {
+    height: 80px;
+    line-height: 80px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.top-charts {
+    display: flex
+}
+
+.top-charts-item {
+    flex: 1;
+    height: 275px;
+}
+.top-charts-item + .top-charts-item {
+    margin-left: 20px;
+}
+
+.top-charts-item-top {
+    padding: 20px 10px;
+    height: 130px;
+    box-sizing: border-box;
+}
+
+.top-charts-item-top h4 {
+    font-size: 18px;
+    font-weight: normal;
+    color: #fff;
+}
+
+.top-charts-item-top p {
+    font-size: 40px;
+    font-weight: normal;
+    color: #fff;
+}
+
+.top-charts-item-top p span {
+    font-size: 18px;
+    font-weight: normal;
+    color: #fff;
+}
+
+.today-order,
+.add-user,
+.total-sale,
+.buying-power,
+.single-goods {
+    height: 145px;
+}
