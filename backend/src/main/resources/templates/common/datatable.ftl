@@ -86,7 +86,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${rc.contextPath}/menuRedirect/workbenchIndex?redirect=/index">财富酒庄后台管理系统</a>
+            <a class="navbar-brand" target="_blank" href="${rc.contextPath}/menuRedirect/workbenchIndex?redirect=/charts/index.html">财富酒庄后台管理系统</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <#list menuList as menu>
@@ -125,34 +125,45 @@
 </#if>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12 col-md-12 main">
-            <#if mode=='normal'>
-            <ol class="breadcrumb">
-                <#if signinUser??>
-                    <#if signinUser.department??>
-                        <li>${signinUser.department}</li>
-                    </#if>
-                </#if>
 
-                <#if targetMenu??>
-                    <li>${targetMenu.parent.name}</li>
-                    <li>${targetMenu.name}</li>
-                </#if>
-
-                <#if titles??>
-                    <#list titles as title>
-                        <li>${title}</li>
-                    </#list>
-                </#if>
-            </ol>
+        <div class="row">
+            <#if moduleName?? && moduleName=='index'>
+                <div class="col-sm-12 col-md-12 main" style="padding-right:0px;padding-left:0px;">
+            <#else>
+                <div class="col-sm-12 col-md-12 main">
             </#if>
+                <#if mode=='normal'>
+                <ol class="breadcrumb">
+                    <#if signinUser??>
+                        <#if signinUser.department??>
+                            <li>${signinUser.department}</li>
+                        </#if>
+                    </#if>
 
-            <div class="col-lg-12">
-                <#nested>
+                    <#if targetMenu??>
+                        <li>${targetMenu.parent.name}</li>
+                        <li>${targetMenu.name}</li>
+                    </#if>
+
+                    <#if titles??>
+                        <#list titles as title>
+                            <li>${title}</li>
+                        </#list>
+                    </#if>
+                </ol>
+                </#if>
+
+                <#if moduleName?? && moduleName=='index'>
+                    <div class="col-lg-12" style="padding-right:0px;padding-left:0px;">
+                <#else>
+                    <div class="col-lg-12">
+                </#if>
+                    <#nested>
+                </div>
             </div>
         </div>
-    </div>
+
+
 </div>
 </body>
 </html>

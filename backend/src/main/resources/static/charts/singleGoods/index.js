@@ -1,12 +1,11 @@
 (function (e) {
-    var singleGoods = e.init(document.getElementById('single-goods'));
-    var data = new Array(10).fill(1).map(function () {return (Math.random() * 10000 + 10).toFixed()});
-    var data1 = new Array(10).fill(1).map(function () {return (Math.random() * 1000 + 10).toFixed()});
-    var datacopy = [...data];
-    var sortData = datacopy.sort();
+    var buyingPower = e.init(document.getElementById('single-goods'));
+    var buyingPowerData = new Array(10).fill(1).map(function () {return (Math.random() * 100000 + 10).toFixed()});
+    var buyingPowerDatacopy = [...buyingPowerData];
+    var buyingPowerSortData = buyingPowerDatacopy.sort();
     var options = {
         backgroundColor: '#2d323b',
-        tooltip: {
+        tooltip : {
             trigger: 'axis'
         },
         grid: {
@@ -16,41 +15,57 @@
             bottom: '10%',
             containLabel: true
         },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: data.sort(),
-            axisLabel: {
-              formatter: '{value} 人',  
-            },
-             axisLine: {
-                    lineStyle: {
-                        color: '#eee'
-                    }
-                }
-        },
-        yAxis: {
-            type: 'value',
-            axisLabel: {
-              formatter: '{value} 元',  
-            },
-             axisLine: {
-                    lineStyle: {
-                        color: '#eee'
-                    }
-                }
-        },
-        series: [
+        calculable : true,
+        xAxis : [
             {
-                name:'价格',
-                type:'line',
-                stack: '总量',
-                data: data1.sort()
+                type : 'category',
+                data : ['千红裕·钻石级','贝娜尼','千红裕·东一区','陇尚红','贝乐丝','千红裕·东二区','千红裕·东二区','泽风','千红裕·黄金级','千红裕·铂金级'],
+                axisLine: {
+                    lineStyle: {
+                        color: '#eee'
+                    }
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: '#eee'
+                    }
+                }
+            }
+        ],
+        grid: {
+            top: '12%',
+            left: '4%',
+            right: '10%',
+            bottom: '10%',
+            containLabel: true
+        },
+        series : [
+            {
+                name:'新增用户数',
+                type:'bar',
+                barWidth: 15,
+                data: buyingPowerData,
+                markPoint : {
+                    data : [
+                        {name : '年最高', value : 9201, xAxis: buyingPowerData.findIndex(function (item) {return item === buyingPowerSortData[buyingPowerData.length - 1]}), yAxis: buyingPowerSortData[buyingPowerData.length - 1] },
+                        {name : '年最低', value : 1030, xAxis: buyingPowerData.findIndex(function (item) {return item === buyingPowerSortData[0]}), yAxis: buyingPowerSortData[0]}
+                    ]
+                },
+                markLine : {
+                    data : [
+                        {type : 'average', name : '平均值'}
+                    ]
+                }
             }
         ],
         itemStyle: {
             normal: {
-                color: '#f7d66c',
+                color: '#7dd899',
                 // 阴影的大小
                 shadowBlur: 10,
                 // 阴影水平方向上的偏移
@@ -62,5 +77,5 @@
             }
         }
     };
-    singleGoods.setOption(options);
+    buyingPower.setOption(options);
 })(echarts);

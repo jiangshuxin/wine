@@ -1,0 +1,5 @@
+<@dt.init>
+    <iframe name="myframe" src="http://123.57.234.184:7080/wine/charts/index.html"
+            frameborder="0" scrolling="auto" width="100%" height="100%"
+            onload="document.all['myframe'].style.width=myframe.document.body.scrollWidth"></iframe>
+</@dt.init>

@@ -1,66 +1,137 @@
 <@dt.init>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="/wine/charts/index.css">
-    <link rel="stylesheet" href="/wine/charts/addUser/index.css">
-    <link rel="stylesheet" href="/wine/charts/totalSale/index.css">
-    <link rel="stylesheet" href="/wine/charts/buyingPower/index.css">
-    <link rel="stylesheet" href="/wine/charts/singleGoods/index.css">
-    <link rel="stylesheet" href="/wine/charts/todayOrder/index.css">
-    <script src="/wine/charts/src/echarts.min.js"></script>
-    <script src="/wine/charts/index.js"></script>
-</head>
-<body>
-    <div class="wrapper">
-        <div class="header">鹏胜酒庄</div>
-        <div class="top-charts">
-            <div class="top-charts-item">
-                <div class="top-charts-item-top today-order-top">
-                    <h4>今日订单数</h4>
-                    <p>928,128<span>/日</span></p>
-                </div>
-                <div class="today-order"></div>
-            </div>
-            <div class="top-charts-item">
-                <div class="top-charts-item-top add-user-top">
-                    <h4>今日订单数</h4>
-                    <p>928,128<span>/日</span></p>
-                </div>
-                <div id="add-user" class="add-user"></div>
-            </div>
-            <div class="top-charts-item">
-                <div class="top-charts-item-top total-sale-top">
-                    <h4>今日订单数</h4>
-                    <p>928,128<span>/日</span></p>
-                </div>
-                <div id="total-sale" class="total-sale"></div>
-            </div>
-            <div class="top-charts-item">
-                <div class="top-charts-item-top buying-power-top">
-                    <h4>今日订单数</h4>
-                    <p>928,128<span>/日</span></p>
-                </div>
-                <div id="buying-power" class="buying-power"></div>
-            </div>
-            <div class="top-charts-item">
-                <div class="top-charts-item-top single-goods-top">
-                    <h4>今日订单数</h4>
-                    <p>928,128<span>/日</span></p>
-                </div>
-                <div id="single-goods" class="single-goods" style="height: 145px;"></div>
-            </div>
-        </div>
+
+<div class="row">
+    <div class="col-lg-6 col-md-6">
+        <div id="main1" style="height:700px"></div>
     </div>
-    <script src="/wine/charts/todayOrder/index.js"></script>
-    <script src="/wine/charts/addUser/index.js"></script>
-    <script src="/wine/charts/totalSale/index.js"></script>
-    <script src="/wine/charts/buyingPower/index.js"></script>
-    <script src="/wine/charts/singleGoods/index.js"></script>
-</body>
-</html>
+    <div class="col-lg-6 col-md-6">
+        <div id="main2" style="height:700px"></div>
+    </div>
+</div>
+
+<script type="text/javascript" language="javascript" src="${rc.contextPath}/js/echarts/echarts.min.js">
+</script>
+
+<script>
+    $(document).ready(function(){
+        chartInit();
+    });
+
+    function chartInit(){
+        // 基于准备好的dom，初始化echarts图表
+        myChart1 = echarts.init(document.getElementById('main1'));
+        myChart2 = echarts.init(document.getElementById('main2'));
+
+        option1 = {
+            title: {
+                text: '近7日用户增长量'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['普通用户','销售']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'普通用户',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name:'销售',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[220, 182, 191, 234, 290, 330, 310]
+                }
+            ]
+        };
+        option2 = {
+            title: {
+                text: '近7日订单增长量'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['未支付订单','已支付订单','已完成订单']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'未支付订单',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name:'已支付订单',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name:'已完成订单',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[150, 232, 201, 154, 190, 330, 410]
+                }
+            ]
+        };
+        myChart1.setOption(option1);
+        myChart2.setOption(option2);
+    }
+
+</script>
 </@dt.init>

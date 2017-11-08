@@ -1,11 +1,12 @@
 (function (e) {
-    var buyingPower = e.init(document.getElementById('buying-power'));
-    var buyingPowerData = new Array(10).fill(1).map(function () {return (Math.random() * 100000 + 10).toFixed()});
-    var buyingPowerDatacopy = [...buyingPowerData];
-    var buyingPowerSortData = buyingPowerDatacopy.sort();
+    var singleGoods = e.init(document.getElementById('buying-power'));
+    var data = new Array(10).fill(1).map(function () {return (Math.random() * 10000 + 10).toFixed()});
+    var data1 = new Array(10).fill(1).map(function () {return (Math.random() * 1000 + 10).toFixed()});
+    var datacopy = [...data];
+    var sortData = datacopy.sort();
     var options = {
         backgroundColor: '#2d323b',
-        tooltip : {
+        tooltip: {
             trigger: 'axis'
         },
         grid: {
@@ -15,57 +16,41 @@
             bottom: '10%',
             containLabel: true
         },
-        calculable : true,
-        xAxis : [
-            {
-                type : 'category',
-                data : ['琴酒','伏特加','苦艾酒','基尔酒','卡慕','龙舌兰','马丁尼','匹斯可','人头马','轩尼诗'],
-                axisLine: {
-                    lineStyle: {
-                        color: '#eee'
-                    }
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: data.sort(),
+            axisLabel: {
+                formatter: '{value} 人',
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#eee'
                 }
             }
-        ],
-        yAxis : [
-            {
-                type : 'value',
-                axisLine: {
-                    lineStyle: {
-                        color: '#eee'
-                    }
-                }
-            }
-        ],
-        grid: {
-            top: '12%',
-            left: '4%',
-            right: '10%',
-            bottom: '10%',
-            containLabel: true
         },
-        series : [
-            {
-                name:'新增用户数',
-                type:'bar',
-                barWidth: 15,
-                data: buyingPowerData,
-                markPoint : {
-                    data : [
-                        {name : '年最高', value : 9201, xAxis: buyingPowerData.findIndex(function (item) {return item === buyingPowerSortData[buyingPowerData.length - 1]}), yAxis: buyingPowerSortData[buyingPowerData.length - 1] },
-                        {name : '年最低', value : 1030, xAxis: buyingPowerData.findIndex(function (item) {return item === buyingPowerSortData[0]}), yAxis: buyingPowerSortData[0]}
-                    ]
-                },
-                markLine : {
-                    data : [
-                        {type : 'average', name : '平均值'}
-                    ]
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} 元',
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#eee'
                 }
+            }
+        },
+        series: [
+            {
+                name:'价格',
+                type:'line',
+                stack: '总量',
+                data: data1.sort()
             }
         ],
         itemStyle: {
             normal: {
-                color: '#7dd899',
+                color: '#f7d66c',
                 // 阴影的大小
                 shadowBlur: 10,
                 // 阴影水平方向上的偏移
@@ -77,5 +62,5 @@
             }
         }
     };
-    buyingPower.setOption(options);
+    singleGoods.setOption(options);
 })(echarts);

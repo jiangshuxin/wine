@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./addUser/index.css">
+    <link rel="stylesheet" href="./totalSale/index.css">
+    <link rel="stylesheet" href="./buyingPower/index.css">
+    <link rel="stylesheet" href="./singleGoods/index.css">
+    <link rel="stylesheet" href="./todayOrder/index.css">
+    <link rel="stylesheet" href="./nationData/index.css">
+    <script src="./src/jquery3.2.js"></script>
+    <script src="./src/echarts.min.js"></script>
+    <script src="./index.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="header">汇达阳光生态酒庄</div>
+    <div class="top">
+        <div class="top-left">
+            <div class="today-order-top">
+                <h4>今日订单数</h4>
+                <p>928,128<span>/日</span></p>
+            </div>
+            <ul class="today-order">
+                <li><span>总订单数</span><span>38,938,685</span></li>
+                <li><span>年订单数</span><span>17,256,119</span></li>
+                <li><span>月订单数</span><span>2,285,754</span></li>
+                <li><span>已支付订单数</span><span>21,455,873</span></li>
+                <li><span>已发货订单数</span><span>21,450,343</span></li>
+                <li><span>已签收订单数</span><span>21,447,184</span></li>
+            </ul>
+        </div>
+        <div class="top-right">
+            <div class="top-charts">
+                <div class="top-charts-item">
+                    <div class="top-charts-item-top add-user-top">
+                        <h4>新增用户</h4>
+                        <p>18,906<span>/日</span></p>
+                    </div>
+                    <div id="add-user" class="add-user"></div>
+                </div>
+                <div class="top-charts-item">
+                    <div class="top-charts-item-top total-sale-top">
+                        <h4>销售额</h4>
+                        <p>824,822<span>/元</span></p>
+                    </div>
+                    <div id="total-sale" class="total-sale"></div>
+                </div>
+                <div class="top-charts-item">
+                    <div class="top-charts-item-top buying-power-top">
+                        <h4>用户购买力排行TOP10</h4>
+                        <p>600-800<span>/元</span></p>
+                    </div>
+                    <div id="buying-power" class="buying-power"></div>
+                </div>
+                <div class="top-charts-item">
+                    <div class="top-charts-item-top single-goods-top">
+                        <h4>单品销售排行TOP10</h4>
+                        <p>258,006<span>/千红裕·钻石级</span></p>
+                    </div>
+                    <div id="single-goods" class="single-goods" style="height: 145px;"></div>
+                </div>
+            </div>
+            <div class="data-pool">
+                <ul class="data-pool-item">
+                    <li>总用户数 1,348,880 <span>人</span></li>
+                    <li>年新增数 623,375 <span>人</span></li>
+                    <li>月新增数 106,855 <span>人</span></li>
+                </ul>
+                <ul class="data-pool-item">
+                    <li>总销售额 122,753,933 <span>元</span></li>
+                    <li>年销售额 76,232,880 <span>元</span></li>
+                    <li>月销售额 18,081,809 <span>元</span></li>
+                </ul>
+                <ul class="data-pool-item">
+                    <li>最畅销价格范围 800-1000 <span>元</span></li>
+                    <li>年畅销价格范围 600-800 <span>元</span></li>
+                    <li>月畅销价格范围 400-600 <span>元</span></li>
+                </ul>
+                <ul class="data-pool-item">
+                    <li>最畅销单品 贝娜尼 <span>1.22千万</span></li>
+                    <li>年畅销单品 千红裕·钻石级 <span>896万</span></li>
+                    <li>月畅销单品 陇尚红·经典 <span>103万</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div id="nation-data" style="height: 100%"></div>
+    </div>
+</div>
+<script>
+    var geo = {
+        _convertData: function (coordMap) {
+            return function (data) {
+                var res = [];
+                for (var i = 0; i < data.length; i++) {
+                    var geoCoord = coordMap[data[i].name];
+                    if (geoCoord) {
+                        res.push({
+                            name: data[i].name,
+                            value: geoCoord.concat(data[i].value)
+                        });
+                    }
+                }
+                return res;
+            }
+        }
+    };
+    Object.defineProperty(geo, 'coordMap', {
+        get() {
+            return geo._coordMap;
+        },
+        set(coordMap) {
+            this._coordMap = coordMap;
+            this.convertData = this._convertData(coordMap);
+        }
+    });
+</script>
+<script src="/wine/charts/todayOrder/index.js"></script>
+<script src="/wine/charts/addUser/index.js"></script>
+<script src="/wine/charts/totalSale/index.js"></script>
+<script src="/wine/charts/buyingPower/index.js"></script>
+<script src="/wine/charts/singleGoods/index.js"></script>
+
+<!-- 地图坐标 -->
+<script src="./nationData/geoCoordMap.js"></script>
+<!-- 数据 -->
+<script src="./nationData/geoData.js"></script>
+<!-- 生成配置方法 -->
+<script src="./nationData/geoOption.js"></script>
+<!-- 生成柱状图配置方法 -->
+<script src="./nationData/brushed.js"></script>
+<!-- 初始化选择范围方法 -->
+<script src="./nationData/dispatch.js"></script>
+
+<script src="./nationData/index.js"></script>
+</body>
+</html>

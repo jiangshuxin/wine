@@ -36,7 +36,9 @@ public class ForwardAction {
 
     @RequestMapping("/index")
     public String index(ModelMap modelMap, HttpServletRequest request, HttpSession session){
+//        modelMap.put("moduleName", "index");
         return "index";
+//        return "redirect:/charts/index.html";
     }
 
     @RequestMapping("/overview")
@@ -72,7 +74,7 @@ public class ForwardAction {
 //                "陇尚红 经典 赤霞珠干红葡萄酒",
 //                "贝乐丝 桃红 葡萄酒",
 //                "千红裕·东二区 赤霞珠干红葡萄酒",
-//                "千红裕·东三区 赤霞珠干红葡萄酒",
+//                "车 赤霞珠干红葡萄酒",
 //                "泽风 洋葱 干红葡萄酒",
 //                "千红裕·黄金级 赤霞珠干红葡萄酒",
 //                "千红裕·铂金级 赤霞珠干红葡萄酒"};
