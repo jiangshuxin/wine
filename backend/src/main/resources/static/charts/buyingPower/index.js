@@ -11,9 +11,9 @@
         },
         grid: {
             top: '12%',
-            left: '4%',
-            right: '10%',
-            bottom: '10%',
+            left: '2%',
+            right: '3%',
+            bottom: '3%',
             containLabel: true
         },
         xAxis: {
@@ -45,8 +45,19 @@
                 name:'价格',
                 type:'line',
                 stack: '总量',
-                data: data1.sort()
-            }
+                data: data1.sort(),
+                markLine : {
+                    symbol: 'arrow',
+                    symbolSize: 5,
+                    precision: 0,
+                    label: {
+                        normal: {position: 'middle'}
+                    },
+                    data : [
+                        {type : 'average', name : '平均值'}
+                    ]
+                }
+            },
         ],
         itemStyle: {
             normal: {

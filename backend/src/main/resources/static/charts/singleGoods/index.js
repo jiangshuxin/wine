@@ -1,5 +1,8 @@
 (function (e) {
-    var buyingPower = e.init(document.getElementById('single-goods'));
+    var buyingPower = e.init(document.getElementById('single-goods'), {
+        top: 'middle',
+        left: 'center'
+    });
     var buyingPowerData = new Array(10).fill(1).map(function () {return (Math.random() * 100000 + 10).toFixed()});
     var buyingPowerDatacopy = [...buyingPowerData];
     var buyingPowerSortData = buyingPowerDatacopy.sort();
@@ -10,9 +13,9 @@
         },
         grid: {
             top: '12%',
-            left: '4%',
-            right: '10%',
-            bottom: '10%',
+            left: '2%',
+            right: '3%',
+            bottom: '3%',
             containLabel: true
         },
         calculable : true,
@@ -37,26 +40,28 @@
                 }
             }
         ],
-        grid: {
-            top: '12%',
-            left: '4%',
-            right: '10%',
-            bottom: '10%',
-            containLabel: true
-        },
         series : [
             {
-                name:'新增用户数',
+                name:'单品销售额',
                 type:'bar',
                 barWidth: 15,
                 data: buyingPowerData,
                 markPoint : {
+                    symbol: 'pin',
+                    symbolSize: 30,
+                    symbolOffset: [0, 6],
                     data : [
                         {name : '年最高', value : 9201, xAxis: buyingPowerData.findIndex(function (item) {return item === buyingPowerSortData[buyingPowerData.length - 1]}), yAxis: buyingPowerSortData[buyingPowerData.length - 1] },
                         {name : '年最低', value : 1030, xAxis: buyingPowerData.findIndex(function (item) {return item === buyingPowerSortData[0]}), yAxis: buyingPowerSortData[0]}
                     ]
                 },
                 markLine : {
+                    symbol: 'arrow',
+                    symbolSize: 5,
+                    precision: 0,
+                    label: {
+                        normal: {position: 'middle'}
+                    },
                     data : [
                         {type : 'average', name : '平均值'}
                     ]

@@ -2,6 +2,13 @@
     var addUser = e.init(document.getElementById('add-user'));
     var options = {
         backgroundColor: '#2d323b',
+        grid: {
+            top: '12%',
+            left: '2%',
+            right: '3%',
+            bottom: '3%',
+            containLabel: true
+        },
         tooltip : {
             trigger: 'axis'
         },
@@ -27,13 +34,6 @@
                 }
             }
         ],
-        grid: {
-            top: '12%',
-            left: '4%',
-            right: '10%',
-            bottom: '10%',
-            containLabel: true
-        },
         series : [
             {
                 name:'新增用户数',
@@ -41,14 +41,28 @@
                 barWidth: 15,
                 data:[1030, 1823, 3281, 4023, 1237, 5831, 4212, 3221, 9201, 4821, 2381, 4281],
                 markPoint : {
+                    symbol: 'pin',
+                    symbolSize: 30,
+                    symbolOffset: [0, 6],
                     data : [
                         {name : '年最高', value : 9201, xAxis: 8, yAxis: 9201},
                         {name : '年最低', value : 1030, xAxis: 0, yAxis: 1030}
                     ]
                 },
                 markLine : {
+                    symbol: 'arrow',
+                    symbolSize: 5,
+                    precision: 0,
+                    label: {
+                        normal: {
+                            position: 'middle'
+                        }
+                    },
                     data : [
-                        {type : 'average', name : '平均值'}
+                        {
+                            type : 'average',
+                            name : '平均值'
+                        }
                     ]
                 }
             }

@@ -9,9 +9,9 @@
         backgroundColor: '#2d323b',
         grid: {
             top: '12%',
-            left: '4%',
-            right: '10%',
-            bottom: '10%',
+            left: '2%',
+            right: '3%',
+            bottom: '3%',
             containLabel: true
         },
         tooltip : {
@@ -44,18 +44,27 @@
         ],
         series : [
             {
-                name:'新增用户数',
+                name:'销售额',
                 type:'bar',
                 barGap: '50%',
                 barWidth: 15,
                 data:[13230, 18323, 33281, 24023, 11237, 15831, 14212, 21221, 29201, 14821, 22381, 44281],
                 markPoint : {
+                    symbol: 'pin',
+                    symbolSize: 30,
+                    symbolOffset: [0, 6],
                     data : [
                         {name : '年最高', value : 9201, xAxis: 11, yAxis: 44281},
                         {name : '年最低', value : 1030, xAxis: 4, yAxis: 11237}
                     ]
                 },
                 markLine : {
+                    symbol: 'arrow',
+                    symbolSize: 5,
+                    precision: 0,
+                    label: {
+                        normal: {position: 'middle'}
+                    },
                     data : [
                         {type : 'average', name : '平均值'}
                     ]
