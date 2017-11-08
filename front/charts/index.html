@@ -11,54 +11,133 @@
     <link rel="stylesheet" href="./buyingPower/index.css">
     <link rel="stylesheet" href="./singleGoods/index.css">
     <link rel="stylesheet" href="./todayOrder/index.css">
+    <link rel="stylesheet" href="./nationData/index.css">
+    <script src="./src/jquery3.2.js"></script>
     <script src="./src/echarts.min.js"></script>
     <script src="./index.js"></script>
 </head>
 <body>
     <div class="wrapper">
         <div class="header">鹏胜酒庄</div>
-        <div class="top-charts">
-            <div class="top-charts-item">
-                <div class="top-charts-item-top today-order-top">
+        <div class="top">
+            <div class="top-left">
+                <div class="today-order-top">
                     <h4>今日订单数</h4>
                     <p>928,128<span>/日</span></p>
                 </div>
-                <div class="today-order"></div>
+                <ul class="today-order">
+                    <li><span>总订单数</span><span>329,238,938,685</span></li>
+                    <li><span>总订单数</span><span>329,238,938,685</span></li>
+                    <li><span>总订单数</span><span>329,238,938,685</span></li>
+                    <li><span>总订单数</span><span>329,238,938,685</span></li>
+                    <li><span>总订单数</span><span>329,238,938,685</span></li>
+                    <li><span>总订单数</span><span>329,238,938,685</span></li>
+                </ul>
             </div>
-            <div class="top-charts-item">
-                <div class="top-charts-item-top add-user-top">
-                    <h4>今日订单数</h4>
-                    <p>928,128<span>/日</span></p>
+            <div class="top-right">
+                <div class="top-charts">
+                    <div class="top-charts-item">
+                        <div class="top-charts-item-top add-user-top">
+                            <h4>今日订单数</h4>
+                            <p>928,128<span>/日</span></p>
+                        </div>
+                        <div id="add-user" class="add-user"></div>
+                    </div>
+                    <div class="top-charts-item">
+                        <div class="top-charts-item-top total-sale-top">
+                            <h4>今日订单数</h4>
+                            <p>928,128<span>/日</span></p>
+                        </div>
+                        <div id="total-sale" class="total-sale"></div>
+                    </div>
+                    <div class="top-charts-item">
+                        <div class="top-charts-item-top buying-power-top">
+                            <h4>今日订单数</h4>
+                            <p>928,128<span>/日</span></p>
+                        </div>
+                        <div id="buying-power" class="buying-power"></div>
+                    </div>
+                    <div class="top-charts-item">
+                        <div class="top-charts-item-top single-goods-top">
+                            <h4>今日订单数</h4>
+                            <p>928,128<span>/日</span></p>
+                        </div>
+                        <div id="single-goods" class="single-goods" style="height: 145px;"></div>
+                    </div>
                 </div>
-                <div id="add-user" class="add-user"></div>
-            </div>
-            <div class="top-charts-item">
-                <div class="top-charts-item-top total-sale-top">
-                    <h4>今日订单数</h4>
-                    <p>928,128<span>/日</span></p>
+                <div class="data-pool">
+                    <ul class="data-pool-item">
+                        <li>总用户数 237,348,880 <span>人</span></li>
+                        <li>年新增数 47,028 <span>人</span></li>
+                        <li>月新增数 1,081 <span>人</span></li>
+                    </ul>
+                    <ul class="data-pool-item">
+                        <li>总用户数 237,348,880 <span>人</span></li>
+                        <li>年新增数 47,028 <span>人</span></li>
+                        <li>月新增数 1,081 <span>人</span></li>
+                    </ul>
+                    <ul class="data-pool-item">
+                        <li>总用户数 237,348,880 <span>人</span></li>
+                        <li>年新增数 47,028 <span>人</span></li>
+                        <li>月新增数 1,081 <span>人</span></li>
+                    </ul>
+                    <ul class="data-pool-item">
+                        <li>总用户数 237,348,880 <span>人</span></li>
+                        <li>年新增数 47,028 <span>人</span></li>
+                        <li>月新增数 1,081 <span>人</span></li>
+                    </ul>
                 </div>
-                <div id="total-sale" class="total-sale"></div>
-            </div>
-            <div class="top-charts-item">
-                <div class="top-charts-item-top buying-power-top">
-                    <h4>今日订单数</h4>
-                    <p>928,128<span>/日</span></p>
-                </div>
-                <div id="buying-power" class="buying-power"></div>
-            </div>
-            <div class="top-charts-item">
-                <div class="top-charts-item-top single-goods-top">
-                    <h4>今日订单数</h4>
-                    <p>928,128<span>/日</span></p>
-                </div>
-                <div id="single-goods" class="single-goods" style="height: 145px;"></div>
             </div>
         </div>
+        <div class="content">
+            <div id="nation-data" style="height: 100%"></div>
+        </div>
     </div>
+    <script>
+        var geo = {
+            _convertData: function (coordMap) {
+                return function (data) {
+                    var res = [];
+                    for (var i = 0; i < data.length; i++) {
+                        var geoCoord = coordMap[data[i].name];
+                        if (geoCoord) {
+                            res.push({
+                                name: data[i].name,
+                                value: geoCoord.concat(data[i].value)
+                            });
+                        }
+                    }
+                    return res;
+                }
+            }
+        };
+        Object.defineProperty(geo, 'coordMap', {
+            get() {
+                return geo._coordMap;
+            },
+            set(coordMap) {
+                this._coordMap = coordMap;
+                this.convertData = this._convertData(coordMap);
+            }
+        });
+    </script>
     <script src="./todayOrder/index.js"></script>
     <script src="./addUser/index.js"></script>
     <script src="./totalSale/index.js"></script>
     <script src="./buyingPower/index.js"></script>
     <script src="./singleGoods/index.js"></script>
+
+    <!-- 地图坐标 -->
+    <script src="./nationData/geoCoordMap.js"></script>
+    <!-- 数据 -->
+    <script src="./nationData/geoData.js"></script>
+    <!-- 生成配置方法 -->
+    <script src="./nationData/geoOption.js"></script>
+    <!-- 生成柱状图配置方法 -->
+    <script src="./nationData/brushed.js"></script>
+    <!-- 初始化选择范围方法 -->
+    <script src="./nationData/dispatch.js"></script>
+
+    <script src="./nationData/index.js"></script>
 </body>
 </html>

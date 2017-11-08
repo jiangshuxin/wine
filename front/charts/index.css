@@ -1,12 +1,19 @@
-html,
-body,
-h4,
-p {
+html, body {
+    height: 100%;
+}
+html, body, h4, p, ul, li {
     margin: 0;
     padding: 0;
 }
+ul, li {
+    list-style: none;
+}
+
 .wrapper {
+    display: flex;
+    flex-direction: column;
     padding: 0 10px;
+    height: 100%;
     background: #272c34
 }
 
@@ -17,7 +24,20 @@ p {
     font-weight: bold;
     color: #fff;
 }
+.top {
+    display: flex
+}
 
+.top-left {
+    margin-right: 20px;
+    width: 285px;
+}
+
+.top-right {
+    flex: 1;
+}
+
+/* 顶部右侧 小图表 */
 .top-charts {
     display: flex
 }
@@ -30,34 +50,69 @@ p {
     margin-left: 20px;
 }
 
-.top-charts-item-top {
+.top-charts-item-top,
+.today-order-top {
     padding: 20px 10px;
     height: 130px;
     box-sizing: border-box;
 }
 
-.top-charts-item-top h4 {
+.top-charts-item-top h4,
+.today-order-top h4 {
     font-size: 18px;
     font-weight: normal;
     color: #fff;
 }
 
-.top-charts-item-top p {
+.top-charts-item-top p,
+.today-order-top p {
     font-size: 40px;
     font-weight: normal;
     color: #fff;
 }
 
-.top-charts-item-top p span {
+.top-charts-item-top p span,
+.today-order-top p span {
     font-size: 18px;
     font-weight: normal;
     color: #fff;
 }
 
-.today-order,
 .add-user,
 .total-sale,
 .buying-power,
 .single-goods {
     height: 145px;
+}
+
+/* 顶部右侧下半部分 数据集合 */
+.data-pool {
+    display: flex;
+    margin-top: 20px;
+    height: 90px;
+    background: #2d323b;
+}
+
+.data-pool-item {
+    flex: 1;
+    padding: 6px 10px;
+    font-size: 16px;
+    color: #fff;
+    box-sizing: border-box;
+}
+.data-pool-item + .data-pool-item {
+    margin-left: 20px;
+}
+
+.data-pool-item li {
+    height: 26px;
+    line-height: 26px;
+}
+
+.data-pool-item li span {
+    font-size: 12px;
+}
+
+.content {
+    flex: 1;
 }
