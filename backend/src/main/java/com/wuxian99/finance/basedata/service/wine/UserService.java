@@ -23,8 +23,8 @@ public class UserService {
     @Autowired
     UserAddressRepository userAddressRepository;
 
-    public UserEntity findByUserName(String userName) {
-        return userRepository.findByUserName(userName);
+    public UserEntity findByMerchantIdAndUserName(String merchantId, String userName) {
+        return userRepository.findByMerchantIdAndUserName(merchantId, userName);
     }
 
     public UserEntity findByReferralCode(String referralCode) {

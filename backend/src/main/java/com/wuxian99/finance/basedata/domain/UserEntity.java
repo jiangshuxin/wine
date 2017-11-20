@@ -18,6 +18,12 @@ public class UserEntity implements Serializable {
   private Long id;
 
   /**
+   * 酒庄编号
+   */
+  @Column(name = "merchantid")
+  private String merchantId;
+
+  /**
    * 分销上级用户ID
    */
   @Column(name = "parentid")
@@ -181,6 +187,14 @@ public class UserEntity implements Serializable {
 
   public void setReferralCode(String referralCode) {
     this.referralCode = referralCode;
+  }
+
+  public String getMerchantId() {
+    return merchantId;
+  }
+
+  public void setMerchantId(String merchantId) {
+    this.merchantId = merchantId;
   }
 
   @Override

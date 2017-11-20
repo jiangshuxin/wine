@@ -352,14 +352,17 @@ public class WineController {
      * @param userName
      * @return
      */
-    @RequestMapping(value="verifyUserName/{userName}", method={RequestMethod.POST,RequestMethod.GET})
-    public Result<Map<String, Boolean>> verifyUserName(@PathVariable String userName){
-        logger.info("verifyUserName request: {}", userName);
+    @RequestMapping(value="verifyUserName/{userName}/{merchantId}", method={RequestMethod.POST,RequestMethod.GET})
+    public Result<Map<String, Boolean>> verifyUserName(@PathVariable String userName, @PathVariable String merchantId){
+        logger.info("verifyUserName request: {}, {}", userName, merchantId);
+        if(StringUtils.isBlank(merchantId)){
+            return Result.buildFail("酒庄编号不能为空");
+        }
         if(StringUtils.isBlank(userName) || !StringUtils.isNumeric(userName) || userName.length() != 11){
             return Result.buildFail("手机号不正确");
         }
 
-        UserEntity user = userService.findByUserName(userName);
+        UserEntity user = userService.findByMerchantIdAndUserName(merchantId, userName);
         Boolean isExist = false;
         if(user != null){
             isExist = true;
@@ -412,6 +415,10 @@ public class WineController {
     public Result<UserInfoDto> login(@RequestBody LoginDto paras){
         logger.info("login request: {}", paras);
         String userName = paras.getUserName();
+        String merchantId = paras.getMerchantId();
+        if(StringUtils.isBlank(merchantId)){
+            return Result.buildFail("酒庄编号不能为空");
+        }
         if(StringUtils.isBlank(userName) || !StringUtils.isNumeric(userName) || userName.length() != 11){
             return Result.buildFail("用户名不正确");
         }
@@ -419,7 +426,7 @@ public class WineController {
         if(type != 1 && type != 2){
             return Result.buildFail("登录类型不正确");
         }
-        UserEntity user = userService.findByUserName(userName);
+        UserEntity user = userService.findByMerchantIdAndUserName(merchantId, userName);
 
         //验证码登录
         if(type == 2L){
@@ -428,6 +435,7 @@ public class WineController {
             }
             if(user == null){
                 user = new UserEntity();
+                user.setMerchantId(merchantId);
                 user.setUserName(userName);
                 user.setStatus(1L);
                 user.setType(2L);

@@ -1,9 +1,7 @@
 package com.wuxian99.finance.basedata.service.wine;
 
-import com.wuxian99.finance.basedata.domain.DistributionConfigEntity;
-import com.wuxian99.finance.basedata.domain.OrderDetailEntity;
-import com.wuxian99.finance.basedata.domain.OrderEntity;
-import com.wuxian99.finance.basedata.domain.UserEntity;
+import com.wuxian99.finance.basedata.domain.*;
+import com.wuxian99.finance.basedata.repository.wine.AmountDetailRepository;
 import com.wuxian99.finance.basedata.repository.wine.DistributionConfigRepository;
 import com.wuxian99.finance.basedata.repository.wine.OrderDetailRepository;
 import com.wuxian99.finance.basedata.repository.wine.OrderRepository;
@@ -49,6 +47,9 @@ public class OrderService {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    AmountDetailRepository amountDetailRepository;
 
     @Autowired
     UserService userService;
@@ -273,7 +274,7 @@ public class OrderService {
      * 分销返佣
      * @return
      */
-    public int commission(){
+    public int  commission(){
         List<OrderEntity> orders = orderRepository.findCommissionOrders();
         if(CollectionUtils.isNotEmpty(orders)){
             for(OrderEntity order : orders){
@@ -305,9 +306,9 @@ public class OrderService {
     @Transactional
     public void calculateOrderCommission(OrderEntity order, List<DistributionConfigEntity> configs, UserEntity user){
         List<OrderDetailEntity> details = orderDetailRepository.findByOrderId(order.getId());
-        Integer rebateAmount1 = 0;
-        Integer rebateAmount2 = 0;
-        Integer rebateAmount3 = 0;
+        Long rebateAmount1 = 0L;
+        Long rebateAmount2 = 0L;
+        Long rebateAmount3 = 0L;
         for(OrderDetailEntity detail : details){
             DistributionConfigEntity detailConfig = null;
             logger.info("返佣计算================");
@@ -332,6 +333,18 @@ public class OrderService {
         Long preBalance1 = rebateUser1.getBalance();
         rebateUser1.setBalance(preBalance1 + rebateAmount1);
         userService.updateUser(rebateUser1);
+
+        AmountDetailEntity detail1 = new AmountDetailEntity();
+        detail1.setOperator("system");
+        detail1.setPreBalance(preBalance1);
+        detail1.setAmount(rebateAmount1);
+        detail1.setAfterBalance(preBalance1 + rebateAmount1);
+        detail1.setType(1L);
+        detail1.setUserId(order.getUserId());
+        detail1.setUserName(user.getUserName());
+        detail1.setOrderId(order.getId());
+        amountDetailRepository.save(detail1);
+
         logger.info("用户[{}]获得一级返佣金额[{}], 返佣前余额[{}], 返佣后余额[{}], 订单号[{}], 订单金额[{}]",
                 rebateUser1.getUserName(), rebateAmount1, preBalance1, rebateUser1.getBalance(), order.getId(), order.getAmount());
 
@@ -340,6 +353,18 @@ public class OrderService {
             Long preBalance2 = rebateUser2.getBalance();
             rebateUser2.setBalance(preBalance2 + rebateAmount2);
             userService.updateUser(rebateUser2);
+
+            AmountDetailEntity detail2 = new AmountDetailEntity();
+            detail2.setOperator("system");
+            detail2.setPreBalance(preBalance2);
+            detail2.setAmount(rebateAmount2);
+            detail2.setAfterBalance(preBalance2 + rebateAmount2);
+            detail2.setType(2L);
+            detail2.setUserId(rebateUser2.getId());
+            detail2.setUserName(rebateUser2.getUserName());
+            detail2.setOrderId(order.getId());
+            amountDetailRepository.save(detail2);
+
             logger.info("用户[{}]获得二级返佣金额[{}], 返佣前余额[{}], 返佣后余额[{}], 订单号[{}], 订单金额[{}]",
                     rebateUser2.getUserName(), rebateAmount2, preBalance2, rebateUser2.getBalance(), order.getId(), order.getAmount());
 
@@ -348,6 +373,18 @@ public class OrderService {
                 Long preBalance3 = rebateUser3.getBalance();
                 rebateUser3.setBalance(preBalance3 + rebateAmount3);
                 userService.updateUser(rebateUser3);
+
+                AmountDetailEntity detail3 = new AmountDetailEntity();
+                detail3.setOperator("system");
+                detail3.setPreBalance(preBalance3);
+                detail3.setAmount(rebateAmount3);
+                detail3.setAfterBalance(preBalance3 + rebateAmount3);
+                detail3.setType(3L);
+                detail3.setUserId(rebateUser3.getId());
+                detail3.setUserName(rebateUser3.getUserName());
+                detail3.setOrderId(order.getId());
+                amountDetailRepository.save(detail3);
+
                 logger.info("用户[{}]获得三级返佣金额[{}], 返佣前余额[{}], 返佣后余额[{}], 订单号[{}], 订单金额[{}]",
                         rebateUser3.getUserName(), rebateAmount3, preBalance3, rebateUser3.getBalance(), order.getId(), order.getAmount());
             }
@@ -355,6 +392,7 @@ public class OrderService {
 
         order.setCommissionFlag(1L);
         orderRepository.save(order);
+
     }
 
     /**

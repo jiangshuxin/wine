@@ -7,6 +7,7 @@ import com.google.gson.Gson;
  */
 public class LoginDto {
 
+    private String merchantId;
     private String userName;
     private String password;
     //1:密码登录，2:验证码登录
@@ -44,6 +45,14 @@ public class LoginDto {
 
     public void setReferralCode(String referralCode) {
         this.referralCode = referralCode;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
     }
 
     @Override

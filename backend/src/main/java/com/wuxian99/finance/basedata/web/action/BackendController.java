@@ -1,9 +1,11 @@
 package com.wuxian99.finance.basedata.web.action;
 
+import com.wuxian99.finance.basedata.domain.AmountDetailEntity;
 import com.wuxian99.finance.basedata.domain.MerchantEntity;
 import com.wuxian99.finance.basedata.domain.UserEntity;
 import com.wuxian99.finance.basedata.domain.model.Select;
 import com.wuxian99.finance.basedata.domain.model.SigninUser;
+import com.wuxian99.finance.basedata.repository.wine.AmountDetailRepository;
 import com.wuxian99.finance.basedata.service.wine.MerchantService;
 import com.wuxian99.finance.basedata.service.wine.OrderService;
 import com.wuxian99.finance.basedata.service.wine.UserService;
@@ -39,6 +41,9 @@ public class BackendController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    AmountDetailRepository amountDetailRepository;
+
     @RequestMapping(value="/merchant/queryAll", method={RequestMethod.POST,RequestMethod.GET})
     public Result<List<Select>> getAllMerchant(HttpSession session){
         List<Select> selectList = new ArrayList<>();
@@ -71,7 +76,7 @@ public class BackendController {
     }
 
     @RequestMapping(value="/user/updateBalance", method={RequestMethod.POST})
-    public Result<Integer> changeUserBalance(@Validated @RequestBody ChangeBalanceDto changeBalanceDto, BindingResult bindingResult){
+    public Result<Integer> changeUserBalance(@Validated @RequestBody ChangeBalanceDto changeBalanceDto, BindingResult bindingResult, HttpSession session){
         if(bindingResult.hasErrors()){
             return Result.buildFail(bindingResult.getFieldError());
         }
@@ -85,6 +90,18 @@ public class BackendController {
         }
         BigDecimal balance = original.subtract(changeBalanceDto.getAmount());
         int result = userService.updateBalanceByUserId(balance.longValue(), changeBalanceDto.getUserId());
+
+        SigninUser operator = (SigninUser)session.getAttribute("signinUser");
+        AmountDetailEntity detail1 = new AmountDetailEntity();
+        detail1.setOperator(operator.getAccount());
+        detail1.setPreBalance(original.longValue());
+        detail1.setAmount(changeBalanceDto.getAmount().longValue());
+        detail1.setAfterBalance(original.longValue() - changeBalanceDto.getAmount().longValue());
+        detail1.setType(4L);
+        detail1.setUserId(userEntity.getId());
+        detail1.setUserName(userEntity.getUserName());
+        amountDetailRepository.save(detail1);
+
         return Result.buildSuccess(result);
     }
 }
